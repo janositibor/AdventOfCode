@@ -47,8 +47,7 @@ class TableTest {
     @Test
     void CellValueTest(){
         Table table =new Table(3010,3019);
-        System.out.println(table.cellValue());
-
+        assertEquals(8997277,table.cellValue());
     }
 
 }

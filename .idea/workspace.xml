@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="849392b0-36e7-4fbf-a2ef-af42f800b1ab" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/TZJanosi/y2024/day01/TotalDistance.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/TZJanosi/y2024/day01/TotalDistanceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TZJanosi/y2024/day01/TotalDistance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TZJanosi/y2024/day01/TotalDistance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/TZJanosi/y2024/day01/TotalDistanceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TZJanosi/y2024/day01/TotalDistanceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,8 +57,8 @@
       <recent name="TZJanosi.y2015.day25" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TotalDistanceTest.totalDistanceWithRealDataTest">
-    <configuration name="TotalDistanceTest.differentLengthsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.TotalDistanceTest">
+    <configuration name="TotalDistanceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="AdventOfCode" />
       <extension name="coverage">
         <pattern>
@@ -68,13 +68,28 @@
       </extension>
       <option name="PACKAGE_NAME" value="TZJanosi.y2024.day01" />
       <option name="MAIN_CLASS_NAME" value="TZJanosi.y2024.day01.TotalDistanceTest" />
-      <option name="METHOD_NAME" value="differentLengthsTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TotalDistanceTest.similarityScoreTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="AdventOfCode" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="TZJanosi.y2024.day01.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="TZJanosi.y2024.day01" />
+      <option name="MAIN_CLASS_NAME" value="TZJanosi.y2024.day01.TotalDistanceTest" />
+      <option name="METHOD_NAME" value="similarityScoreTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TotalDistanceTest.invalidPackagesWeightTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TotalDistanceTest.similarityScoreWithRealDataTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="AdventOfCode" />
       <extension name="coverage">
         <pattern>
@@ -84,23 +99,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="TZJanosi.y2024.day01" />
       <option name="MAIN_CLASS_NAME" value="TZJanosi.y2024.day01.TotalDistanceTest" />
-      <option name="METHOD_NAME" value="invalidPackagesWeightTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TotalDistanceTest.orderTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="AdventOfCode" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="TZJanosi.y2024.day01.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="TZJanosi.y2024.day01" />
-      <option name="MAIN_CLASS_NAME" value="TZJanosi.y2024.day01.TotalDistanceTest" />
-      <option name="METHOD_NAME" value="orderTest" />
+      <option name="METHOD_NAME" value="similarityScoreWithRealDataTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -140,11 +139,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TotalDistanceTest" />
+        <item itemvalue="JUnit.TotalDistanceTest.similarityScoreWithRealDataTest" />
+        <item itemvalue="JUnit.TotalDistanceTest.similarityScoreTest" />
         <item itemvalue="JUnit.TotalDistanceTest.totalDistanceWithRealDataTest" />
         <item itemvalue="JUnit.TotalDistanceTest.totalDistanceTest" />
-        <item itemvalue="JUnit.TotalDistanceTest.differentLengthsTest" />
-        <item itemvalue="JUnit.TotalDistanceTest.invalidPackagesWeightTest" />
-        <item itemvalue="JUnit.TotalDistanceTest.orderTest" />
       </list>
     </recent_temporary>
   </component>
@@ -197,7 +196,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733062304942</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="2024 day1 part 1 solved">
+      <option name="closed" value="true" />
+      <created>1733064882494</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1733064882494</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -206,18 +213,10 @@
     <MESSAGE value="2015 day25 solved" />
     <MESSAGE value="2015 day25 CellValueTest altered" />
     <MESSAGE value="2015 day24 almost done" />
-    <option name="LAST_COMMIT_MESSAGE" value="2015 day24 almost done" />
+    <MESSAGE value="2024 day1 part 1 solved" />
+    <option name="LAST_COMMIT_MESSAGE" value="2024 day1 part 1 solved" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/TZJanosi/y2024/day01/TotalDistance.java</url>
-          <line>29</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="JUnit">
         <watch expression="node.isValid()" language="JAVA" />

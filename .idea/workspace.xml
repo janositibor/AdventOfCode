@@ -5,16 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="849392b0-36e7-4fbf-a2ef-af42f800b1ab" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/TZJanosi/y2015/day24/Container.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/TZJanosi/y2015/day24/Node.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/TZJanosi/y2015/day24/Sleigh.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/TZJanosi/y2015/day24/SleighService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/TZJanosi/y2015/day24/Tree.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/TZJanosi/y2015/day24/ContainerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/TZJanosi/y2015/day24/SleighTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/TZJanosi/y2015/day24/TreeTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/TZJanosi/y2024/day01/TotalDistance.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/TZJanosi/y2024/day01/TotalDistanceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,89 +52,99 @@
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="TZJanosi.y2024.day01" />
       <recent name="TZJanosi.y2015.day24" />
       <recent name="TZJanosi.y2015.day25" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TreeTest.treeTest">
-    <configuration name="SleighServiceTest.sleighServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.TotalDistanceTest.totalDistanceWithRealDataTest">
+    <configuration name="TotalDistanceTest.differentLengthsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="AdventOfCode" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="TZJanosi.y2015.day24.*" />
+          <option name="PATTERN" value="TZJanosi.y2024.day01.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="TZJanosi.y2015.day24" />
-      <option name="MAIN_CLASS_NAME" value="TZJanosi.y2015.day24.SleighServiceTest" />
-      <option name="METHOD_NAME" value="sleighServiceTest" />
+      <option name="PACKAGE_NAME" value="TZJanosi.y2024.day01" />
+      <option name="MAIN_CLASS_NAME" value="TZJanosi.y2024.day01.TotalDistanceTest" />
+      <option name="METHOD_NAME" value="differentLengthsTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SleighTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TotalDistanceTest.invalidPackagesWeightTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="AdventOfCode" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="TZJanosi.y2015.day24.*" />
+          <option name="PATTERN" value="TZJanosi.y2024.day01.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="TZJanosi.y2015.day24" />
-      <option name="MAIN_CLASS_NAME" value="TZJanosi.y2015.day24.SleighTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SleighTest.replaceNextElementTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="AdventOfCode" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="TZJanosi.y2015.day24.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="TZJanosi.y2015.day24" />
-      <option name="MAIN_CLASS_NAME" value="TZJanosi.y2015.day24.SleighTest" />
-      <option name="METHOD_NAME" value="replaceNextElementTest" />
+      <option name="PACKAGE_NAME" value="TZJanosi.y2024.day01" />
+      <option name="MAIN_CLASS_NAME" value="TZJanosi.y2024.day01.TotalDistanceTest" />
+      <option name="METHOD_NAME" value="invalidPackagesWeightTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TreeTest.treeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TotalDistanceTest.orderTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="AdventOfCode" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="TZJanosi.y2015.day24.*" />
+          <option name="PATTERN" value="TZJanosi.y2024.day01.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="TZJanosi.y2015.day24" />
-      <option name="MAIN_CLASS_NAME" value="TZJanosi.y2015.day24.TreeTest" />
-      <option name="METHOD_NAME" value="treeTest" />
+      <option name="PACKAGE_NAME" value="TZJanosi.y2024.day01" />
+      <option name="MAIN_CLASS_NAME" value="TZJanosi.y2024.day01.TotalDistanceTest" />
+      <option name="METHOD_NAME" value="orderTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="day24 in AdventOfCode" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TotalDistanceTest.totalDistanceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="AdventOfCode" />
-      <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/src/test/java/TZJanosi/y2015/day24" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="TZJanosi.y2024.day01.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="TZJanosi.y2024.day01" />
+      <option name="MAIN_CLASS_NAME" value="TZJanosi.y2024.day01.TotalDistanceTest" />
+      <option name="METHOD_NAME" value="totalDistanceTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TotalDistanceTest.totalDistanceWithRealDataTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="AdventOfCode" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="TZJanosi.y2024.day01.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="TZJanosi.y2024.day01" />
+      <option name="MAIN_CLASS_NAME" value="TZJanosi.y2024.day01.TotalDistanceTest" />
+      <option name="METHOD_NAME" value="totalDistanceWithRealDataTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TreeTest.treeTest" />
-        <item itemvalue="JUnit.SleighTest.replaceNextElementTest" />
-        <item itemvalue="JUnit.day24 in AdventOfCode" />
-        <item itemvalue="JUnit.SleighServiceTest.sleighServiceTest" />
-        <item itemvalue="JUnit.SleighTest" />
+        <item itemvalue="JUnit.TotalDistanceTest.totalDistanceWithRealDataTest" />
+        <item itemvalue="JUnit.TotalDistanceTest.totalDistanceTest" />
+        <item itemvalue="JUnit.TotalDistanceTest.differentLengthsTest" />
+        <item itemvalue="JUnit.TotalDistanceTest.invalidPackagesWeightTest" />
+        <item itemvalue="JUnit.TotalDistanceTest.orderTest" />
       </list>
     </recent_temporary>
   </component>
@@ -186,7 +189,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732936437939</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="2015 day24 almost done">
+      <option name="closed" value="true" />
+      <created>1733062304942</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1733062304942</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -194,25 +205,16 @@
     <MESSAGE value="README.md created" />
     <MESSAGE value="2015 day25 solved" />
     <MESSAGE value="2015 day25 CellValueTest altered" />
-    <option name="LAST_COMMIT_MESSAGE" value="2015 day25 CellValueTest altered" />
+    <MESSAGE value="2015 day24 almost done" />
+    <option name="LAST_COMMIT_MESSAGE" value="2015 day24 almost done" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/TZJanosi/y2015/day24/SleighService.java</url>
-          <line>20</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/TZJanosi/y2015/day24/Tree.java</url>
-          <line>25</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/TZJanosi/y2015/day24/Tree.java</url>
-          <line>10</line>
-          <option name="timeStamp" value="11" />
+          <url>file://$PROJECT_DIR$/src/main/java/TZJanosi/y2024/day01/TotalDistance.java</url>
+          <line>29</line>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

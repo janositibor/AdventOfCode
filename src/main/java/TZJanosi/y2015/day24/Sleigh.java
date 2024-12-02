@@ -11,7 +11,7 @@ public class Sleigh {
     private int weightLimit=0;
     private List<Container> slots= Arrays.asList(new Container(),new Container(),new Container());
     private boolean valid=true;
-    private Sleigh parent;
+//    private Sleigh parent;
 
     public Sleigh(List<Integer> allPackages) {
         this.allPackages = List.copyOf(allPackages);
@@ -55,9 +55,9 @@ public class Sleigh {
         return packagesToWorkWith.size()==0;
     }
     public void setValid(){
-        if(packagesToWorkWith.size()==0){
-            valid=true;
-        }
+//        if(packagesToWorkWith.size()==0){
+//            valid=true;
+//        }
         if(slots.stream().anyMatch(container->container.getWeight()>weightLimit)){
             valid=false;
         }
@@ -79,13 +79,13 @@ public class Sleigh {
         weightLimit=totalWeight/3;
     }
 
-        public Sleigh getParent() {
-        return parent;
-    }
-
-    public void setParent(Sleigh parent) {
-        this.parent = parent;
-    }
+//        public Sleigh getParent() {
+//        return parent;
+//    }
+//
+//    public void setParent(Sleigh parent) {
+//        this.parent = parent;
+//    }
 
     public int getWeightLimit() {
         return weightLimit;

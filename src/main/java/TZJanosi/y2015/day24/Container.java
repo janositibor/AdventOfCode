@@ -7,7 +7,7 @@ public class Container {
     private Set<Integer> packages=new HashSet<>();
     private int numberOfPackages=0;
     private int weight=0;
-    private int qe=0;
+    private long qe=0;
 
     public Container() {
     }
@@ -43,7 +43,7 @@ public class Container {
         return numberOfPackages;
     }
 
-    public int getQe() {
+    public long getQe() {
         return qe;
     }
 

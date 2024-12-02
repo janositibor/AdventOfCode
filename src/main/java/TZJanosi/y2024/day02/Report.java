@@ -1,5 +1,6 @@
 package TZJanosi.y2024.day02;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Report {
@@ -37,7 +38,27 @@ public class Report {
     }
 
     public boolean isSafe(){
-        return(isCorrectStepSize() && (isIncreasing() || isDecreasing()));
+        return((isCorrectStepSize() && (isIncreasing() || isDecreasing())));
+    }
+
+    public boolean isSafeWithDampener(){
+        return((isCorrectStepSize() && (isIncreasing() || isDecreasing())) || isDampenerSafe());
+    }
+
+    public boolean isDampenerSafe(){
+        int i=0;
+        Report report;
+        List<Integer> listToWorkWith;
+        while(i < values.size()){
+            listToWorkWith=new ArrayList<>(values);
+            listToWorkWith.remove(i);
+            report =new Report(new ArrayList<>(listToWorkWith));
+            if(report.isSafe()){
+                return true;
+            }
+            i++;
+        }
+        return false;
     }
 
 }

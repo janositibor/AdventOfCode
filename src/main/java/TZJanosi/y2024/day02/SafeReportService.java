@@ -24,4 +24,9 @@ public class SafeReportService {
         Map<Boolean, Long> numberOfSafeAndUnsafeReports=listOfReports.stream().collect(Collectors.partitioningBy(Report::isSafe,Collectors.counting()));
         return numberOfSafeAndUnsafeReports.get(true);
     }
+
+    public long getNumberOfDampenerSafeReports(){
+        Map<Boolean, Long> numberOfSafeAndUnsafeReports=listOfReports.stream().collect(Collectors.partitioningBy(Report::isDampenerSafe,Collectors.counting()));
+        return numberOfSafeAndUnsafeReports.get(true);
+    }
 }

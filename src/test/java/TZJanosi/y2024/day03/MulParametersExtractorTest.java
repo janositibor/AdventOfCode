@@ -37,7 +37,7 @@ class MulParametersExtractorTest {
         MulParametersExtractor mulParametersExtractor= new MulParametersExtractor(input);
         mulParametersExtractor.calculateResultForEnabledParameters();
         List<List<Integer>> parameters=mulParametersExtractor.getMulParameters();
-        System.out.println(parameters);
+//        System.out.println(parameters);
         assertEquals(6,parameters.size());
         assertEquals(true, parameters.stream().allMatch(l->l.size()==2));
         assertThat(parameters).contains(List.of(111, 222),List.of(55, 555),List.of(99, 88));

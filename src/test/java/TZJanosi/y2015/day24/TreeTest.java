@@ -18,7 +18,7 @@ class TreeTest {
 
         tree.process(sleigh);
         Tree.orderSucceedList();
-        System.out.println("Results: "+Tree.getOrderedSucceed());
+//        System.out.println("Results: "+Tree.getOrderedSucceed());
 //        System.out.println("The QE is: "+Tree.getOrderedSucceed().get(0).getSlots().get(0).getQe());
         assertEquals(11266889531L,Tree.getOrderedSucceed().get(0).getSlots().get(0).getQe());
 //        11266889531

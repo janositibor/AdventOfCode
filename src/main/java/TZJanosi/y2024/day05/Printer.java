@@ -8,41 +8,74 @@ public class Printer {
     private List<List<Integer>> pageOrders;
     private List<List<Integer>> validPageOrders=new ArrayList<>();
     private int sumOfCentralElements;
+    private List<List<Integer>> fixedPageOrders=new ArrayList<>();
+    private int sumOfFixedCentralElements;
 
     public Printer(List<Integer[]> restrictions, List<List<Integer>> pageOrders) {
         this.restrictions = restrictions;
-        this.pageOrders = pageOrders;
+        this.pageOrders = ListInList.deepClone(pageOrders);
         setValidPageOrders();
-        setSumOfCentralElements();
+        sumOfCentralElements=setSumOfCentralElements(validPageOrders);
+        sumOfFixedCentralElements=setSumOfCentralElements(fixedPageOrders);
+
+
     }
 
-    private void setSumOfCentralElements(){
+    private int setSumOfCentralElements(List<List<Integer>> inputPageOrders){
         int result=0;
-        for (List<Integer> pageOrder:validPageOrders) {
+        for (List<Integer> pageOrder:inputPageOrders) {
             result+=pageOrder.get((pageOrder.size()-1)/2);
         }
-        sumOfCentralElements=result;
+        return result;
     }
     private void setValidPageOrders(){
-        for (List<Integer> pageOrder:pageOrders) {
-            if(isValidPageOrder(pageOrder)){
+        for (int i = 0; i < pageOrders.size(); i++) {
+            List<Integer> pageOrder=pageOrders.get(i);
+            if(isValidPageOrder(pageOrder)<0){
                 validPageOrders.add(pageOrder);
+            }
+            else{
+                fixPageOrder(i);
             }
         }
     }
 
-    private boolean isValidPageOrder(List<Integer> pageOrder) {
-        for (Integer[] restrict:restrictions) {
+    private void fixPageOrder(int index) {
+        int indexOfRestriction;
+        int temp;
+        int i;
+        int j;
+        List<Integer> fixedPageOrder = new ArrayList<>(pageOrders.get(index));
+        while ((indexOfRestriction=isValidPageOrder(fixedPageOrder))>=0){
+            Integer[] restrict= restrictions.get(indexOfRestriction);
+            i = fixedPageOrder.indexOf(restrict[0]);
+            j = fixedPageOrder.indexOf(restrict[1]);
+
+            temp=fixedPageOrder.get(i);
+            fixedPageOrder.set(i,fixedPageOrder.get(j));
+            fixedPageOrder.set(j,temp);
+        }
+        if(fixedPageOrder.size()%2==0){
+            throw new IllegalStateException("Even: "+fixedPageOrder.size()+fixedPageOrder.toString());
+        }
+        fixedPageOrders.add(fixedPageOrder);
+    }
+
+    private int isValidPageOrder(List<Integer> pageOrder) {
+        int result=-1;
+        for (int i = 0; i < restrictions.size(); i++) {
+            Integer[] restrict= restrictions.get(i);
             if(!fulfilCriterion(pageOrder,restrict)){
-                return false;
+                return i;
             }
         }
-        return true;
+        return result;
     }
 
     private boolean fulfilCriterion(List<Integer> pageOrder, Integer[] restrict) {
         int i;
         int j;
+
         if((i = pageOrder.indexOf(restrict[0]))<0 || (j= pageOrder.indexOf(restrict[1]))<0){
             return true;
         }
@@ -63,5 +96,13 @@ public class Printer {
 
     public int getSumOfCentralElements() {
         return sumOfCentralElements;
+    }
+
+    public List<List<Integer>> getFixedPageOrders() {
+        return fixedPageOrders;
+    }
+
+    public int getSumOfFixedCentralElements() {
+        return sumOfFixedCentralElements;
     }
 }

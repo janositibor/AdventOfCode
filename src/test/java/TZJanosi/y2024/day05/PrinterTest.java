@@ -46,8 +46,26 @@ class PrinterTest {
     void findWithProblemDataTest(){
         ReadData readData=new ReadData();
         Printer printer=new Printer(readData.readRestriction("restrictions.txt"),readData.readPpageOrders("pageOrders.txt"));
-//        System.out.println(printer.getSumOfCentralElements());
         assertEquals(5588,printer.getSumOfCentralElements());
     }
-
+    @Test
+    void fixPageOrdersTest(){
+        ReadData readData=new ReadData();
+        Printer printer=new Printer(readData.readRestriction("testRestrictions.txt"),readData.readPpageOrders("testPageOrders.txt"));
+        List<List<Integer>> fixedPageOrders=printer.getFixedPageOrders();
+//        System.out.println(fixedPageOrders);
+        assertThat(fixedPageOrders).hasSize(3)
+                .contains(List.of(97, 75, 47, 61, 53))
+                .contains(List.of(61, 29, 13))
+                .contains(List.of(97, 75, 47, 29, 13));
+//        System.out.println(printer.getSumOfFixedCentralElements());
+        assertEquals(123,printer.getSumOfFixedCentralElements());
+    }
+    @Test
+    void fixPageOrdersWithProblemDataTest(){
+        ReadData readData=new ReadData();
+        Printer printer=new Printer(readData.readRestriction("restrictions.txt"),readData.readPpageOrders("pageOrders.txt"));
+        List<List<Integer>> fixedPageOrders=printer.getFixedPageOrders();
+        assertEquals(5331,printer.getSumOfFixedCentralElements());
+    }
 }

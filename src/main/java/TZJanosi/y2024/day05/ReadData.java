@@ -37,7 +37,7 @@ public class ReadData {
             while((line= reader.readLine())!=null){
                 arrayFromLine=line.split(",");
                 listFromLine= Arrays.stream(arrayFromLine).map(s->Integer.valueOf(s)).collect(Collectors.toList());
-                result.add(List.copyOf(listFromLine));
+                result.add(new ArrayList<>(listFromLine));
             }
         }
         catch(IOException ioe){

@@ -41,15 +41,17 @@ class MatrixTest {
         ReadData readData = new ReadData("testMatrix.txt");
         char[][] inputMatrix=readData.getInputMatrix();
         char[][] matrix=Matrix.shiftUpGraduallyChar(inputMatrix);
-        System.out.println(Arrays.deepToString(matrix));
-//        assertEquals(5,matrix.length);
-//        assertEquals(11+5-1,matrix[0].length);
-//        assertEquals(11+5-1,matrix[matrix.length-1].length);
-//        assertEquals('o',matrix[0][0]);
-//        assertEquals('S',matrix[0][5]);
-//        assertEquals('X',matrix[0][14]);
-//        assertEquals('X',matrix[4][0]);
-//        assertEquals('X',matrix[4][10]);
+//        System.out.println(Arrays.deepToString(matrix));
+        assertEquals(15,matrix.length);
+        assertEquals(11,matrix[0].length);
+        assertEquals(11,matrix[matrix.length-1].length);
+        assertEquals('o',matrix[0][0]);
+        assertEquals('X',matrix[0][10]);
+        assertEquals('X',matrix[14][0]);
+        assertEquals('o',matrix[14][1]);
+        assertEquals('A',matrix[10][2]);
+        assertEquals('S',matrix[7][4]);
+
     }
 
     @Test
@@ -57,14 +59,15 @@ class MatrixTest {
         ReadData readData = new ReadData("testMatrix.txt");
         char[][] inputMatrix=readData.getInputMatrix();
         char[][] matrix=Matrix.shiftDownGraduallyChar(inputMatrix);
-        System.out.println(Arrays.deepToString(matrix));
-//        assertEquals(5,matrix.length);
-//        assertEquals(11+5-1,matrix[0].length);
-//        assertEquals(11+5-1,matrix[matrix.length-1].length);
-//        assertEquals('o',matrix[0][0]);
-//        assertEquals('S',matrix[0][5]);
-//        assertEquals('X',matrix[0][14]);
-//        assertEquals('X',matrix[4][0]);
-//        assertEquals('X',matrix[4][10]);
+//        System.out.println(Arrays.deepToString(matrix));
+        assertEquals(15,matrix.length);
+        assertEquals(11,matrix[0].length);
+        assertEquals(11,matrix[matrix.length-1].length);
+        assertEquals('X',matrix[0][0]);
+        assertEquals('o',matrix[0][1]);
+        assertEquals('M',matrix[2][1]);
+        assertEquals('X',matrix[14][10]);
+        assertEquals('A',matrix[12][8]);
+        assertEquals('o',matrix[12][7]);
     }
 }

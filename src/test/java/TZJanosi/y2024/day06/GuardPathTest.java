@@ -14,7 +14,7 @@ class GuardPathTest {
         char[][] inputMatrix=readData.getInputMatrix();
         GuardPath guardPath=new GuardPath(inputMatrix);
 //        System.out.println(Arrays.toString(guardPath.getCoordinates()));
-        assertEquals("[5, 6]",Arrays.toString(guardPath.getCoordinates()));
+        assertEquals("[6, 4]",Arrays.toString(guardPath.getCoordinates()));
 
     }
     @Test
@@ -24,9 +24,10 @@ class GuardPathTest {
         GuardPath guardPath=new GuardPath(inputMatrix);
 //        System.out.println(Arrays.toString(guardPath.getCoordinates()));
 //        System.out.println(Arrays.deepToString(guardPath.getMatrixMap()));
-        guardPath.findPath();
+        guardPath.findPath(false);
 //        System.out.println(Arrays.deepToString(guardPath.getMatrixMap()));
-        System.out.println(guardPath.countVisitedPlaces());
+//        System.out.println(guardPath.countVisitedPlaces());
+        assertEquals(41,guardPath.countVisitedPlaces());
     }
 
     @Test
@@ -36,9 +37,10 @@ class GuardPathTest {
         GuardPath guardPath=new GuardPath(inputMatrix);
 //        System.out.println(Arrays.toString(guardPath.getCoordinates()));
 //        System.out.println(Arrays.deepToString(guardPath.getMatrixMap()));
-        guardPath.findPath();
+        guardPath.findPath(false);
 //        System.out.println(Arrays.deepToString(guardPath.getMatrixMap()));
-        System.out.println(guardPath.countVisitedPlaces());
+//        System.out.println(guardPath.countVisitedPlaces());
+        assertEquals(5067,guardPath.countVisitedPlaces());
     }
 
 

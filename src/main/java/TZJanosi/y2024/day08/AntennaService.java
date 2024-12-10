@@ -15,8 +15,8 @@ public class AntennaService {
         }
     }
 
-    public void setAntinodes() {
-        this.antinodes = antennaMap.calculateAntinodes();
+    public void setAntinodes(boolean extended) {
+        this.antinodes = antennaMap.calculateAntinodes(extended);
     }
     public int countAntinodes(){
         return antinodes.size();

@@ -37,12 +37,34 @@ class DiskTest {
         String input=readData.getInput();
         Disk disk=new Disk();
         disk.init(input);
-//        System.out.println(disk.getArea());
-
         disk.refragment();
-//        System.out.println(disk.getArea());
-//        System.out.println(disk.calculateCheckSum());
         assertEquals(6283404590840L,disk.calculateCheckSum());
     }
+
+    @Test
+    void rearrangeFilesTest(){
+        ReadData readData=new ReadData("testInput.txt");
+        String input=readData.getInput();
+        Disk disk=new Disk();
+        disk.init(input);
+        System.out.println(disk.getArea());
+        disk.rearrangeFiles();
+        System.out.println(disk.getArea());
+        System.out.println(disk.calculateCheckSum());
+        assertEquals(2858,disk.calculateCheckSum());
+    }
+    @Test
+    void rearrangeFilesWithProblemDataTest(){
+        ReadData readData=new ReadData("input.txt");
+        String input=readData.getInput();
+        Disk disk=new Disk();
+        disk.init(input);
+//        System.out.println(disk.getArea());
+        disk.rearrangeFiles();
+//        System.out.println(disk.getArea());
+        System.out.println(disk.calculateCheckSum());
+        assertEquals(6304576012713L,disk.calculateCheckSum());
+    }
+
 
 }

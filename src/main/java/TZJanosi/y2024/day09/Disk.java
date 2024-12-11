@@ -32,21 +32,41 @@ public class Disk {
     }
 
     public void rearrangeFiles(){
-        Optional<Fragment> findLaststDataFragment=findLaststDataFragment();
-        Optional<Fragment> findProperBlank=findFirstLongEnoughBlank(findLaststDataFragment.get().getLength());
-        while(findProperBlank.isPresent() && (findProperBlank.get().getOrder()<findLaststDataFragment.get().getOrder())){
-            System.out.println(findProperBlank.get().getOrder()+" <? "+findLaststDataFragment.get().getOrder());
-            move(findLaststDataFragment.get(),findProperBlank.get());
-            findLaststDataFragment=findLaststDataFragment();
-            findProperBlank=findFirstLongEnoughBlank(findLaststDataFragment.get().getLength());
-
+        int maxFileId=getMaxFileId();
+        for (int i = maxFileId; i >=0 ; i--) {
+            Optional<Fragment> findLaststDataFragment=findDataFragment(i);
+            Fragment from=findLaststDataFragment.get();
+            Optional<Fragment> findProperBlank=findFirstLongEnoughBlank(from.getLength());
+            if(findProperBlank.isPresent()) {
+                Fragment to = findProperBlank.get();
+                if(to.getOrder() < from.getOrder()) {
+                    System.out.println(to.getOrder() + " <? " + from.getOrder() + "(" +from.getFileID()+")");
+                    move(from, to);
+                }
+            }
         }
 
     }
 
+    private Optional<Fragment> findDataFragment(int fileId) {
+        return area.stream()
+                .filter(f->(f.getFileID()==fileId))
+                .findFirst();
+    }
+
+    private int getMaxFileId() {
+        return area.stream()
+                .filter(f->((f.isData()) && (f.getLength()>0)))
+                .sorted(Comparator.comparingInt((Fragment f)->f.getOrder()).reversed())
+                .findFirst()
+                .get()
+                .getFileID();
+    }
+
+
     private Optional<Fragment> findFirstLongEnoughBlank(int length) {
         return area.stream()
-                .filter(f->((!f.isData()) && (f.getLength()>length)))
+                .filter(f->((!f.isData()) && (f.getLength()>=length)))
                 .sorted(Comparator.comparingInt(f->f.getOrder()))
                 .findFirst();
     }
@@ -77,7 +97,10 @@ public class Disk {
         to.setData(true);
         to.setLength(dataLengthToMove);
         to.setFileID(from.getFileID());
-        from.setLength(from.getLength()-dataLengthToMove);
+        if(! emptyFrom){
+            from.setLength(from.getLength()-dataLengthToMove);
+        }
+
         if(emptyFrom){
             from.setData(false);
             from.setFileID(-1);

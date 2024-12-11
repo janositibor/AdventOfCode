@@ -39,12 +39,12 @@ public class Hike {
         }
     }
 
-    public int calculatePaths(){
+    public Map<String,Integer> calculatePaths(){
         for (int i = params.get("max"); i >= params.get("min") ; i--) {
             NumberOfPathsFrom(i);
 //            System.out.println(resultMap);
         }
-        return countPaths();
+        return Map.ofEntries(Map.entry("peaks",countPaths()),Map.entry("paths",countDistinctPaths())) ;
     }
 
     private int countPaths() {

@@ -13,7 +13,7 @@ public class Stone {
         return value;
     }
 
-    private String getValueAsString(){
+    public String getValueAsString(){
         return String.valueOf(value);
     }
 

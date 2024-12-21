@@ -25,16 +25,93 @@ public class Service {
     public long calculateCost(){
         return regions.stream().mapToLong(r->r.getCost()).sum();
     }
+    public long calculateDiscountCost(){
+        return regions.stream().mapToLong(r->r.getDiscountCost()).sum();
+    }
 
     public void calculation(){
         Point point;
         Region region;
         while((point=getNextNotEmptyPoint())!=null){
             region=createRegionFrom(point);
+            region.setNumberOfFence(getNumberOfFence());
             region.calculateCost();
             regions.add(region);
             emptyRegion();
         }
+    }
+
+    private int getNumberOfFence() {
+        int output=0;
+        output+=(2*getNumberOfHorizontalFences());
+//        output+= getNumberOfVerticalFences();
+        
+        return output;
+    }
+
+    private int getNumberOfVerticalFences() {
+        int output=0;
+        for (int i = 0; i <= limit.getX(); i++) {
+            output+=getNumberOfEdgesInColumn(i);
+        }
+        return output;
+    }
+
+    private int getNumberOfEdgesInColumn(int j) {
+        int output=0;
+        boolean state=false;
+        for (int i = 0; i < limit.getY(); i++) {
+            char previous=(j==0?Service.EMPTY_CHARACTER:points.get(new Coordinate(j-1,i)));
+            char actual=(j==limit.getX()?Service.EMPTY_CHARACTER:points.get(new Coordinate(j,i)));
+
+            if(previous==Service.REPLACE_CHARACTER || actual==Service.REPLACE_CHARACTER) {
+                if (!state && (actual != previous)) {
+                    output++;
+                    state = true;
+                }
+                if (state && (actual == previous)) {
+                    state = false;
+                }
+            }
+        }
+        return output;
+    }
+
+    private int getNumberOfHorizontalFences() {
+        int output=0;
+        for (int i = 0; i <= limit.getY(); i++) {
+            output+=getNumberOfEdgesInLine(i);
+        }
+        return output;
+    }
+
+    private int getNumberOfEdgesInLine(int i) {
+        int output=0;
+        boolean state=false;
+        char oldDirection=Service.REPLACE_CHARACTER;
+        for (int j = 0; j < limit.getX(); j++) {
+            char previous=(i==0?Service.EMPTY_CHARACTER:points.get(new Coordinate(j,i-1)));
+            char actual=(i==limit.getY()?Service.EMPTY_CHARACTER:points.get(new Coordinate(j,i)));
+            if(previous!=Service.EMPTY_CHARACTER && previous!=Service.REPLACE_CHARACTER){
+                previous=Service.EMPTY_CHARACTER;
+            }
+            if(actual!=Service.EMPTY_CHARACTER && actual!=Service.REPLACE_CHARACTER){
+                actual=Service.EMPTY_CHARACTER;
+            }
+            if(state || (previous==Service.REPLACE_CHARACTER || actual==Service.REPLACE_CHARACTER)) {
+                char direction=(actual==Service.REPLACE_CHARACTER?actual:Service.EMPTY_CHARACTER);
+
+                if ((actual != previous) && ((!state) || (state && (direction!=oldDirection) && (previous==Service.REPLACE_CHARACTER || actual==Service.REPLACE_CHARACTER)))) {
+                    output++;
+                    state = true;
+                    oldDirection=direction;
+                }
+                if (state && (actual == previous)) {
+                    state = false;
+                }
+            }
+        }
+        return output;
     }
 
     private void emptyRegion() {
@@ -68,6 +145,9 @@ public class Service {
             }
         }
     }
+
+
+
 
     private Set<Point> getChildCoordinatesToProcess(Point point) {
         Set<Point> result=new HashSet<>();

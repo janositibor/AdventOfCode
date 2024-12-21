@@ -12,6 +12,10 @@ public class Coordinate {
         this.x = x;
         this.y = y;
     }
+    public Coordinate(Coordinate original){
+        x = original.x;
+        y = original.y;
+    }
 
     public Set<Coordinate> getNeighbours(Coordinate limit){
         Set<Coordinate> result=new HashSet<>();

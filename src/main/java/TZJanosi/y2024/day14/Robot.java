@@ -3,16 +3,21 @@ package TZJanosi.y2024.day14;
 public class Robot {
     private Coordinate position;
     private Coordinate velocity;
+    private Coordinate limit;
     private Coordinate transformedPosition;
 
-    public Robot(Coordinate position, Coordinate velocity) {
+    public Robot(Coordinate position, Coordinate velocity, Coordinate limit) {
         this.position = position;
         this.velocity = velocity;
+        this.limit=limit;
+        transformPosition();
     }
     public void positionAfterTime(int time){
         position.shift(velocity.multiply(time));
+        transformPosition();
+
     }
-    public int getQuadrant(Coordinate limit){
+    public int getQuadrant(){
         int result=0;
         int xLength=(limit.getX()-1)/2;
         int yLength=(limit.getY()-1)/2;
@@ -32,12 +37,16 @@ public class Robot {
     }
 
     private boolean inside(Coordinate limit, int xFrom, int xTo, int yFrom, int yTo) {
+
+        return (xFrom<=transformedPosition.getX() && transformedPosition.getX()<=xTo && yFrom<= transformedPosition.getY() && transformedPosition.getY()<=yTo);
+    }
+
+    private void transformPosition() {
         int xActual= position.getX()% limit.getX();
         xActual=(xActual<0?xActual+ limit.getX():xActual);
         int yActual= position.getY()% limit.getY();
         yActual=(yActual<0?yActual+ limit.getY():yActual);
         transformedPosition=new Coordinate(xActual,yActual);
-        return (xFrom<=xActual && xActual<=xTo && yFrom<=yActual && yActual<=yTo);
     }
 
     @Override
@@ -55,5 +64,9 @@ public class Robot {
 
     public Coordinate getVelocity() {
         return velocity;
+    }
+
+    public Coordinate getTransformedPosition() {
+        return transformedPosition;
     }
 }

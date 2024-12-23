@@ -23,7 +23,25 @@ public class Coordinate {
     public void shift(Coordinate shift){
         x+=shift.x;
         y+=shift.y;
-    }public Coordinate add(Coordinate shift){
+    }
+    public Set<Coordinate> getNeighbours(Coordinate limit){
+        Set<Coordinate> result=new HashSet<>();
+        Coordinate neighbour;
+        for (int i = -1; i <= 1; i+=2) {
+            neighbour=new Coordinate(x+i,y);
+            if(neighbour.isInsideArea(limit)){
+                result.add(neighbour);
+            }
+        }
+        for (int j = -1; j <= 1; j+=2) {
+            neighbour=new Coordinate(x,y+j);
+            if(neighbour.isInsideArea(limit)){
+                result.add(neighbour);
+            }
+        }
+        return result;
+    }
+    public Coordinate add(Coordinate shift){
         return new Coordinate(x+shift.x,y+shift.y);
     }
     public boolean isInsideArea(Coordinate limit){

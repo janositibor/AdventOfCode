@@ -39,17 +39,10 @@ class ServiceTest {
         ReadData readData=new ReadData("testInput.txt");
         Service service=new Service(readData.getOutput(),new Coordinate(11,7));
         service.draw(0);
+
 //        service.setMaxArea();
 //        System.out.println(service.getMaxArea());
 //        assertEquals(2, service.getMaxArea());
-    }
-    @Test
-    void drawWithProblemDataTest(){
-        ReadData readData=new ReadData("input.txt");
-        Service service=new Service(readData.getOutput(),new Coordinate(101,103));
-        int steps=7138;
-        service.move(steps);
-        service.draw(steps);
     }
     @Test
     void maxAreaTest(){

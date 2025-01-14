@@ -35,7 +35,27 @@ public class Train {
     public Coordinate findNextPosition(){
         return moveableMapObjects.get(moveableMapObjects.size()-1).getPosition().add(direction.getShift());
     }
+    public List<Coordinate> findNextPositions(){
+        List<Coordinate> output=new ArrayList<>();
+        for (MoveableMapObject element: moveableMapObjects) {
+            Coordinate coordinateToCheck=element.getPosition().add(direction.getShift());
+            if(!containsCoordinate(coordinateToCheck) && !output.contains(coordinateToCheck)){
+                output.add(coordinateToCheck);
+            }
+
+        }
+        return output;
+    }
+
+    public boolean containsCoordinate(Coordinate coordianteToCheck) {
+        return moveableMapObjects.stream().anyMatch(m->m.getPosition().equals(coordianteToCheck));
+    }
+
     public void setDirection(Direction direction) {
         this.direction = direction;
+    }
+
+    public List<MoveableMapObject> getMoveableMapObjects() {
+        return moveableMapObjects;
     }
 }

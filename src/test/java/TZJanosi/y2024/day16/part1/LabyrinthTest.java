@@ -32,8 +32,8 @@ class LabyrinthTest {
     void minimalCostTest(String fileName,int expectedResult){
         ReadData readData = new ReadData(fileName);
         Labyrinth labyrinth = new Labyrinth(readData.getOutput());
-        System.out.println("start: "+labyrinth.getStart());
-        System.out.println("end: "+labyrinth.getEnd());
+//        System.out.println("start: "+labyrinth.getStart());
+//        System.out.println("end: "+labyrinth.getEnd());
         assertEquals(expectedResult,labyrinth.calculateWay());
     }
 

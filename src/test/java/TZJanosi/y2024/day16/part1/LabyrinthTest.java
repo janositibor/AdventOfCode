@@ -1,16 +1,10 @@
 package TZJanosi.y2024.day16.part1;
 
-
-import TZJanosi.y2024.day16.part1.Coordinate;
-import TZJanosi.y2024.day16.part1.Labyrinth;
-import TZJanosi.y2024.day16.part1.ReadData;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -43,5 +37,4 @@ class LabyrinthTest {
         Labyrinth labyrinth = new Labyrinth(readData.getOutput());
         assertEquals(85480,labyrinth.calculateWay());
     }
-
 }

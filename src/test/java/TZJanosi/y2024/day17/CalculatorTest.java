@@ -129,20 +129,43 @@ class CalculatorTest {
         calculator=new Calculator(63687530,0,0);
         calculator.setProgram("2,4,1,3,7,5,0,3,1,5,4,1,5,5,3,0");
         calculator.exec();
-//        System.out.println(calculator.getOutput());
         assertThat(calculator.getOutput()).isEqualTo("1,6,7,4,3,0,5,0,6");
     }
 
     @Test
-    void part2Test(){
+    void part2SampleDataTest(){
         Calculator calculator;
         calculator=new Calculator(117440,0,0);
-        calculator.setProgram("0,3,5,4,3,0");
+        String program="0,3,5,4,3,0";
+        calculator.setProgram(program);
         calculator.exec();
-//        System.out.println(calculator.getOutput());
-        assertThat(calculator.getOutput()).isEqualTo("0,3,5,4,3,0");
+        assertThat(calculator.getOutput()).isEqualTo(program);
+    }
+
+    @Test
+    void part2SampleDataVer2Test(){
+        Calculator calculator;
+        calculator=new Calculator(0,0,0);
+        long identity=calculator.findIdentity("0,3,5,4,3,0",0,1);
+        assertEquals(117440,identity);
+    }
+    @Test
+    void part2ProblemDataTest(){
+        Calculator calculator;
+        calculator=new Calculator(216148338630253L,0,0);
+        String program="2,4,1,3,7,5,0,3,1,5,4,1,5,5,3,0";
+        calculator.setProgram(program);
+        calculator.exec();
+        assertEquals(program,calculator.getOutput());
     }
 
 
+    @Test
+    void part2ProblemDataVer2Test(){
+        Calculator calculator;
+        calculator=new Calculator(0,0,0);
+        long identity=calculator.findIdentity("2,4,1,3,7,5,0,3,1,5,4,1,5,5,3,0",0,1);
+        assertEquals(216148338630253L,identity);
+    }
 
 }

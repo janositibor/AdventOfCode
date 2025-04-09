@@ -7,18 +7,15 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class Calculator {
-    private int registerA;
-    private int registerB;
-    private int registerC;
-
+    private long registerA;
+    private long registerB;
+    private long registerC;
     private String output="";
-
     private List<Integer> operatorsWithComboOperands=List.of(0,2,5,6,7);
-
-    private Map<Integer, Consumer<Integer>> operators=new HashMap<>();
+    private Map<Integer, Consumer<Long>> operators=new HashMap<>();
     private List<List<Integer>> program=new ArrayList<>();
 
-    public Calculator(int registerA, int registerB, int registerC) {
+    public Calculator(long registerA, int registerB, int registerC) {
         this.registerA = registerA;
         this.registerB = registerB;
         this.registerC = registerC;
@@ -50,12 +47,48 @@ public class Calculator {
         operators.put(6,t->bdv(t));
         operators.put(7,t->cdv(t));
     }
+    public long findIdentity(String program, long incomingNumber, int lengthOfIncomingNumber){
+        int length=program.length()/2+1;
+        if(length+1==lengthOfIncomingNumber){
+            return incomingNumber;
+        }
+        long temp=8*incomingNumber;
+        long output;
+
+        for (int i = 0; i < 8; i++) {
+            long numberToCheck=temp+i;
+            if(checkNumber(program, numberToCheck,lengthOfIncomingNumber)) {
+//                System.out.println("Found! Level: "+lengthOfIncomingNumber+" number: "+numberToCheck);
+                output= findIdentity(program, numberToCheck, lengthOfIncomingNumber + 1);
+                if(output>0) {
+                    return output;
+                }
+            }
+        }
+        return -1;
+    }
+
+    private boolean checkNumber(String program, long incomingNumber, int lengthOfIncomingNumber) {
+        initialize(incomingNumber);
+        setProgram(program);
+        exec();
+        return output.equals(program.substring(program.length() - (2 * lengthOfIncomingNumber - 1)));
+    }
+
+    private void initialize(long n) {
+        registerA= n;
+        registerB=0;
+        registerC=0;
+        resetOutput();
+    }
+
     public void exec(){
         for (int i = 0; i < program.size(); i++) {
             int operatorCode=program.get(i).get(0);
             int inputOperand=program.get(i).get(1);
             if(operatorCode!=3) {
                 executeOperation(operatorCode, inputOperand);
+//                System.out.println(this);
             }
             else{
                 if(registerA!=0){
@@ -67,16 +100,16 @@ public class Calculator {
 
     private void executeOperation(int operatorCode,int inputOperand){
         boolean comboOperand=operatorsWithComboOperands.contains(operatorCode);
-        Consumer<Integer> operator= operators.get(operatorCode);
+        Consumer<Long> operator= operators.get(operatorCode);
         operator.accept(getOperand(inputOperand,comboOperand));
     }
 
-    private int getOperand(int inputOperand, boolean comboOperand){
+    private long getOperand(int inputOperand, boolean comboOperand){
         if(!comboOperand){
             return inputOperand;
         }
         else {
-            int output;
+            long output;
             if (inputOperand < 4) {
                 output = inputOperand;
             } else {
@@ -97,53 +130,57 @@ public class Calculator {
             return output;
         }
     }
-    private void adv(Integer operand){
-        int result=registerA/((int) Math.pow(2, operand));
+    private void adv(Long operand){
+        long result=registerA/((int) Math.pow(2, operand));
         registerA=result;
     }
-    private void bxl(Integer operand){
-        int result=registerB ^ operand;
+    private void bxl(Long operand){
+        long result=registerB ^ operand;
         registerB=result;
     }
-    private void bst(Integer operand){
-        int result=operand%8;
+    private void bst(Long operand){
+        long result=operand%8;
         registerB=result;
     }
-    private void bxc(Integer operand){
-        int result=registerB ^ registerC;
+    private void bxc(Long operand){
+        long result=registerB ^ registerC;
         registerB=result;
     }
-    private void out(Integer operand){
-        int result=operand%8;
+    private void out(Long operand){
+        long result=operand%8;
         concatenateToOutput(result);
     }
-    private void bdv(Integer operand){
-        int result=registerA/((int) Math.pow(2, operand));
+    private void bdv(Long operand){
+        long result=registerA/((int) Math.pow(2, operand));
         registerB=result;
     }
-    private void cdv(Integer operand){
-        int result=registerA/((int) Math.pow(2, operand));
+    private void cdv(Long operand){
+        long result=registerA/((int) Math.pow(2, operand));
         registerC=result;
     }
 
 
-    private void concatenateToOutput(int result) {
+    private void concatenateToOutput(long result) {
         if(!output.isEmpty()){
             output+=",";
         }
         output+=result;
     }
 
+    private void resetOutput(){
+        output="";
+    }
 
-    public int getRegisterA() {
+
+    public long getRegisterA() {
         return registerA;
     }
 
-    public int getRegisterB() {
+    public long getRegisterB() {
         return registerB;
     }
 
-    public int getRegisterC() {
+    public long getRegisterC() {
         return registerC;
     }
 
@@ -162,7 +199,7 @@ public class Calculator {
                 ", registerB=" + registerB +
                 ", registerC=" + registerC +
                 ", output='" + output + '\'' +
-                ", operators=" + operators +
+                ", program=" + program +
                 '}';
     }
 }

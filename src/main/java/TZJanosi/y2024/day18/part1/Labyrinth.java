@@ -1,4 +1,4 @@
-package TZJanosi.y2024.day18;
+package TZJanosi.y2024.day18.part1;
 
 import java.util.*;
 

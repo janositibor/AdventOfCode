@@ -1,4 +1,4 @@
-package TZJanosi.y2024.day18;
+package TZJanosi.y2024.day18.part1;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

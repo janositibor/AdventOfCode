@@ -1,4 +1,4 @@
-package TZJanosi.y2024.day19.part1;
+package TZJanosi.y2024.day19.part2;
 
 import java.io.BufferedReader;
 import java.io.IOException;

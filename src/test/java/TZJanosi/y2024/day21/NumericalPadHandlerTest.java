@@ -9,7 +9,6 @@ class NumericalPadHandlerTest {
     @Test
     void testCode() {
         NumericalPadHandler numericalPadHandler = new NumericalPadHandler("029A");
-        System.out.println(numericalPadHandler.code());
         assertThat(numericalPadHandler.code()).contains("<A^A>^^AvvvA", "<A^A^>^AvvvA", "<A^A^^>AvvvA");
     }
 

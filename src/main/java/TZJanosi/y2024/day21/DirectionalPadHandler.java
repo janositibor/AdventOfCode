@@ -1,6 +1,8 @@
 package TZJanosi.y2024.day21;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DirectionalPadHandler {
     private static Map<StringIntegerPair, Long> deepMemory = new HashMap<>();
@@ -81,13 +83,14 @@ public class DirectionalPadHandler {
     }
 
     private List<String> extractASeparatedSteps(String input) {
-        String actual = input;
         List<String> output = new ArrayList<>();
-        while (actual.contains("A")) {
-            int positionOfA = actual.indexOf("A");
-            output.add(actual.substring(0, positionOfA + 1));
-            actual = actual.substring(positionOfA + 1);
+        Pattern pattern = Pattern.compile(".*?A");
+        Matcher matcher = pattern.matcher(input);
+
+        while (matcher.find()) {
+            output.add(matcher.group());
         }
+
         return output;
     }
 

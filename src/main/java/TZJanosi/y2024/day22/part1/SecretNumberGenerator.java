@@ -1,4 +1,4 @@
-package TZJanosi.y2024.day22;
+package TZJanosi.y2024.day22.part1;
 
 public class SecretNumberGenerator {
     private static int FIRST_MULTIPLIER = 64;

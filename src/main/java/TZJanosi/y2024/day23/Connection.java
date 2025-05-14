@@ -1,4 +1,4 @@
-package TZJanosi.y2024.day23.part1;
+package TZJanosi.y2024.day23;
 
 import java.util.HashSet;
 import java.util.List;

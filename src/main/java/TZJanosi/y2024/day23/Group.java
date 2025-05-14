@@ -1,7 +1,9 @@
-package TZJanosi.y2024.day23.part1;
+package TZJanosi.y2024.day23;
 
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Group {
     private Set<String> computers;
@@ -14,12 +16,34 @@ public class Group {
         this.computers = Set.of(computer1, computer2, computer3);
     }
 
-    public boolean containsConnection() {
+    public String getPassword() {
+        return computers.stream().sorted(Comparator.naturalOrder()).collect(Collectors.joining(","));
+    }
+
+    public boolean containsConnection(Connection connection) {
+        Set<String> computersToCheck = connection.getComputers();
+        for (String computer : computersToCheck) {
+            if (containsComputer(computer)) {
+                return true;
+            }
+        }
         return false;
+    }
+
+    public boolean containsComputer(String computer) {
+        return computers.stream().anyMatch(c -> c.equals(computer));
     }
 
     public boolean containsComputerWithPrefix(String prefix) {
         return computers.stream().anyMatch(c -> c.startsWith(prefix));
+    }
+
+    public void addComputer(String computer) {
+        computers.add(computer);
+    }
+
+    public Set<String> getComputers() {
+        return computers;
     }
 
     @Override
@@ -40,4 +64,6 @@ public class Group {
                 "computers=" + computers +
                 '}';
     }
+
+
 }

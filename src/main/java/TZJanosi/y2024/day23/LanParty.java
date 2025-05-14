@@ -1,9 +1,6 @@
-package TZJanosi.y2024.day23.part1;
+package TZJanosi.y2024.day23;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class LanParty {
     private Set<Connection> connections = new HashSet<>();
@@ -13,6 +10,52 @@ public class LanParty {
 
     public LanParty(List<String> input) {
         processInput(input);
+    }
+
+    public String getPasswordOfBiggerGroup() {
+        Group group = bigGroups.stream().max(Comparator.comparingInt(g -> g.getComputers().size())).orElseThrow(() -> new IllegalStateException("Empty bigGroups!"));
+        return group.getPassword();
+    }
+
+    public void createBigGroups() {
+        for (Connection connection : connections) {
+            if (!bigGroupsContainsConnection(connection)) {
+                Group group = createBigGroup(connection);
+                bigGroups.add(group);
+            }
+        }
+    }
+
+    private boolean bigGroupsContainsConnection(Connection connection) {
+        for (Group group : bigGroups) {
+            if (group.containsConnection(connection)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Group createBigGroup(Connection connection) {
+        Group group = new Group(connection.getComputers());
+        for (int i = 0; i < computers.size(); i++) {
+            String candidate = computers.get(i);
+            if (!group.containsComputer(candidate)) {
+                if (matchGroupAndCandidate(group, candidate)) {
+                    group.addComputer(candidate);
+                }
+            }
+        }
+        return group;
+    }
+
+    private boolean matchGroupAndCandidate(Group group, String candidate) {
+        for (String computer : group.getComputers()) {
+            Connection connectionToCheck = new Connection(computer, candidate);
+            if (!connections.contains(connectionToCheck)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void processInput(List<String> input) {
@@ -105,5 +148,9 @@ public class LanParty {
 
     public Set<Group> getGroups() {
         return groups;
+    }
+
+    public Set<Group> getBigGroups() {
+        return bigGroups;
     }
 }

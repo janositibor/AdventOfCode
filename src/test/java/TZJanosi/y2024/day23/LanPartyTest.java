@@ -1,8 +1,6 @@
-package TZJanosi.y2024.day23.part1;
+package TZJanosi.y2024.day23;
 
 import org.junit.jupiter.api.Test;
-
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,8 +13,6 @@ class LanPartyTest {
         assertThat(lanParty.getComputers())
                 .hasSize(16)
                 .contains("kh", "tc", "qp", "de", "cg", "ka", "co", "yn", "wq");
-//        System.out.println(lanParty.getComputers());
-//        System.out.println(lanParty.getConnections());
         assertThat(lanParty.getConnections())
                 .hasSize(32)
                 .contains(new Connection("kh", "tc"),
@@ -31,7 +27,6 @@ class LanPartyTest {
         ReadData readData = new ReadData("testInput.txt");
         LanParty lanParty = new LanParty(readData.getOutput());
         lanParty.findGroups();
-//        System.out.println(lanParty.getGroups());
         assertThat(lanParty.getGroups())
                 .hasSize(12)
                 .containsOnly(new Group("aq", "cg", "yn"),

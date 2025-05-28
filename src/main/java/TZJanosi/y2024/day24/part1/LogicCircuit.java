@@ -1,6 +1,4 @@
-package TZJanosi.y2024.day24;
-
-import org.flywaydb.core.internal.util.JsonUtils;
+package TZJanosi.y2024.day24.part1;
 
 import java.util.*;
 import java.util.stream.Collectors;

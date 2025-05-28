@@ -1,4 +1,4 @@
-package TZJanosi.y2024.day24;
+package TZJanosi.y2024.day24.part2;
 
 import java.util.Objects;
 
@@ -29,7 +29,7 @@ public class Operand {
         }
     }
 
-    private void setValues(int intValue) {
+    public void setValues(int intValue) {
         this.intValue = intValue;
         value = (intValue == 1);
         valid = true;
@@ -39,6 +39,10 @@ public class Operand {
         this.value = value;
         intValue = (value ? 1 : 0);
         valid = true;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
     }
 
     public boolean isValid() {
@@ -75,5 +79,23 @@ public class Operand {
     @Override
     public int hashCode() {
         return Objects.hashCode(name);
+    }
+
+//    @Override
+//    public String toString() {
+//        return "Operand{" +
+//                "name='" + name + '\'' +
+//                ", intValue=" + intValue +
+//                '}';
+//    }
+
+
+    @Override
+    public String toString() {
+        return "Operand{" +
+                "name='" + name + '\'' +
+                ", intValue=" + intValue +
+                ", valid=" + valid +
+                '}';
     }
 }

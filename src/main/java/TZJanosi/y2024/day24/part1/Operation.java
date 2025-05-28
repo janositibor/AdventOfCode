@@ -1,4 +1,4 @@
-package TZJanosi.y2024.day24;
+package TZJanosi.y2024.day24.part1;
 
 public class Operation {
     public Operand operand1;

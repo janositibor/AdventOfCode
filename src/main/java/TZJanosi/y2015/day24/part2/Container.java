@@ -1,34 +1,34 @@
-package TZJanosi.y2015.day24;
+package TZJanosi.y2015.day24.part2;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class Container {
-    private Set<Integer> packages=new HashSet<>();
-    private int numberOfPackages=0;
-    private int weight=0;
-    private long qe=0;
+    private Set<Integer> packages = new HashSet<>();
+    private int numberOfPackages = 0;
+    private int weight = 0;
+    private long qe = 0;
 
     public Container() {
     }
 
-    public Container(Container original){
-        numberOfPackages= original.numberOfPackages;
-        weight=original.weight;
-        qe= original.qe;
-        packages=new HashSet<>(original.packages);
+    public Container(Container original) {
+        numberOfPackages = original.numberOfPackages;
+        weight = original.weight;
+        qe = original.qe;
+        packages = new HashSet<>(original.packages);
 
     }
 
-    public void addPackage(int value){
+    public void addPackage(int value) {
         packages.add(value);
         updatePackageProperties(value);
     }
 
     private void updatePackageProperties(int value) {
         numberOfPackages++;
-        weight+=value;
-        qe=(qe==0?value:value*qe);
+        weight += value;
+        qe = (qe == 0 ? value : value * qe);
     }
 
     public Set<Integer> getPackages() {

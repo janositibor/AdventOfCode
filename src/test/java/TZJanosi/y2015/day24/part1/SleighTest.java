@@ -1,10 +1,11 @@
-package TZJanosi.y2015.day24;
+package TZJanosi.y2015.day24.part1;
 
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class SleighTest {
     @Test

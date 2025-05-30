@@ -1,4 +1,4 @@
-package TZJanosi.y2015.day24;
+package TZJanosi.y2015.day24.part1;
 
 import java.util.ArrayList;
 import java.util.Arrays;

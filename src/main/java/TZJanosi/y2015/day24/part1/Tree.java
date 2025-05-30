@@ -1,15 +1,14 @@
-package TZJanosi.y2015.day24;
+package TZJanosi.y2015.day24.part1;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 public class Tree {
-    private static List<Sleigh> succeed=new ArrayList<>();
-    private static List<Sleigh> orderedSucceed=new ArrayList<>();
-    private static int shortest=Integer.MAX_VALUE;
-    private static long bestQE=Long.MAX_VALUE;
+    private List<Sleigh> succeed = new ArrayList<>();
+    private List<Sleigh> orderedSucceed = new ArrayList<>();
+    private int shortest = Integer.MAX_VALUE;
+    private long bestQE = Long.MAX_VALUE;
 
     private boolean interestingSleigh(Sleigh sleigh){
         Container footContainer=sleigh.getSlots().get(0);
@@ -22,7 +21,7 @@ public class Tree {
         return true;
     }
     private void addSleighToSucced(Sleigh sleigh){
-        Tree.succeed.add(new Sleigh(sleigh));
+        succeed.add(new Sleigh(sleigh));
         Container footContainer=sleigh.getSlots().get(0);
         if(footContainer.getNumberOfPackages()<shortest){
             shortest=footContainer.getNumberOfPackages();
@@ -51,7 +50,7 @@ public class Tree {
         }
     }
 
-    public static void orderSucceedList(){
+    public void orderSucceedList() {
         orderedSucceed=succeed.stream().sorted(Comparator
                 .comparing((Sleigh s)->s.getSlots().get(0).getNumberOfPackages())
                 .thenComparing((Sleigh s)->s.getSlots().get(0).getQe())
@@ -59,11 +58,11 @@ public class Tree {
                 .toList();
     }
 
-    public static List<Sleigh> getSucceed() {
+    public List<Sleigh> getSucceed() {
         return succeed;
     }
 
-    public static List<Sleigh> getOrderedSucceed() {
+    public List<Sleigh> getOrderedSucceed() {
         return orderedSucceed;
     }
 }

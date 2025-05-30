@@ -1,6 +1,5 @@
 package TZJanosi.y2024.day01;
 
-import TZJanosi.y2015.day24.Sleigh;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

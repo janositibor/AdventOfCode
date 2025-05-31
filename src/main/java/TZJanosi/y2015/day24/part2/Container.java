@@ -12,6 +12,23 @@ public class Container {
     public Container() {
     }
 
+    public Container(Set<Integer> packages) {
+        this.packages = packages;
+        numberOfPackages = packages.size();
+        weight = calculateWeight();
+        qe = calculateQe();
+    }
+
+    private long calculateQe() {
+        long qeLong = packages.stream().reduce(1L, (Long i, Integer j) -> i * j, (a, b) -> a * b);
+
+        return qeLong;
+    }
+
+    private int calculateWeight() {
+        return packages.stream().mapToInt(x -> x.intValue()).sum();
+    }
+
     public Container(Container original) {
         numberOfPackages = original.numberOfPackages;
         weight = original.weight;
@@ -51,6 +68,7 @@ public class Container {
     public String toString() {
         return "Container{" +
                 "packages=" + packages +
+                ", qe=" + qe +
                 '}';
     }
 }

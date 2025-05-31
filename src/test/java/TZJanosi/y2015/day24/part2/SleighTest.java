@@ -23,7 +23,7 @@ class SleighTest {
     void replaceNextElementTest() {
         Sleigh sleigh = new Sleigh(Arrays.asList(1, 2, 3, 4, 5, 6, 27), 3);
         assertEquals(0, sleigh.getSlots().get(1).getNumberOfPackages());
-        Sleigh altered = sleigh.replaceNextElementIntoASlot(1, Integer.MAX_VALUE, Long.MAX_VALUE);
+        Sleigh altered = sleigh.replaceNextElementIntoASlot(1);
         assertEquals(1, sleigh.getSlots().get(1).getNumberOfPackages());
         assertEquals(1, altered.getSlots().get(1).getNumberOfPackages());
     }

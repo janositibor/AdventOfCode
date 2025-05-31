@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Sleigh {
     private List<Integer> allPackages;
+    int numberOfSlots;
     private List<Integer> packagesToWorkWith;
     private int weightLimit = 0;
     private List<Container> slots = new ArrayList<>();
@@ -13,6 +14,7 @@ public class Sleigh {
 
     public Sleigh(List<Integer> allPackages, int numberOfSlots) {
         this.allPackages = List.copyOf(allPackages);
+        this.numberOfSlots = numberOfSlots;
         packagesToWorkWith = new ArrayList<>(this.allPackages);
         buildSlots(numberOfSlots);
         setWeightLimit();
@@ -76,7 +78,7 @@ public class Sleigh {
                 '}';
     }
 
-    public Sleigh replaceNextElementIntoASlot(int i, int shortest, long bestQE) {
+    public Sleigh replaceNextElementIntoASlot(int i) {
         if (packagesToWorkWith.size() == 0) {
             throw new IllegalStateException("No more package to replace!");
         }
@@ -86,7 +88,7 @@ public class Sleigh {
         int value = packagesToWorkWith.get(packagesToWorkWith.size() - 1);
         packagesToWorkWith.remove(packagesToWorkWith.size() - 1);
         slots.get(i).addPackage(value);
-        setValid(shortest, bestQE);
+        setValid();
         return this;
     }
 
@@ -94,34 +96,12 @@ public class Sleigh {
         return packagesToWorkWith.size() == 0;
     }
 
-    public void setValid(int shortest, long bestQE) {
-//        if(packagesToWorkWith.size()==0){
-//            valid=true;
-//        }
-        Container footContainer = getSlots().get(0);
-        if (footContainer.getNumberOfPackages() > shortest) {
-            valid = false;
-            return;
-        }
-        if (footContainer.getQe() >= bestQE) {
-            valid = false;
-            return;
-        }
-        if (footContainer.getWeight() + getReachableIncrement(shortest) < weightLimit) {
-            valid = false;
-            return;
-        }
+    public void setValid() {
+
         if (slots.stream().anyMatch(container -> container.getWeight() > weightLimit)) {
             valid = false;
-            return;
         }
-        if (isPacked()) {
-            Container footSlot = slots.get(0);
-            int numberOfPackagesAtFoot = footSlot.getNumberOfPackages();
-            if (slots.stream().anyMatch(container -> container.getNumberOfPackages() < numberOfPackagesAtFoot)) {
-                valid = false;
-            }
-        }
+
     }
 
     private void setWeightLimit() {
@@ -153,5 +133,15 @@ public class Sleigh {
         return slots;
     }
 
+    public List<Integer> getAllPackages() {
+        return allPackages;
+    }
 
+    public List<Integer> getMaxReachableIncrement() {
+        return maxReachableIncrement;
+    }
+
+    public int getNumberOfSlots() {
+        return numberOfSlots;
+    }
 }

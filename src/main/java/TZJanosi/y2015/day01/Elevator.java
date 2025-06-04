@@ -16,6 +16,18 @@ public class Elevator {
         return output;
     }
 
+    public int whenWillReachBasement() {
+        String[] inputAsStringArray = input.split("");
+        int index = 0;
+        int floor = 0;
+        while (floor > -1 && index < inputAsStringArray.length) {
+            index++;
+            floor += movement(inputAsStringArray[index - 1]);
+
+        }
+        return index;
+    }
+
     private int movement(String s) {
         switch (s) {
             case "(":

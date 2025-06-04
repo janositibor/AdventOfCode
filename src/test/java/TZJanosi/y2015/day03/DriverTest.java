@@ -2,7 +2,7 @@ package TZJanosi.y2015.day03;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DriverTest {
     @Test
@@ -19,4 +19,10 @@ class DriverTest {
         assertEquals(2081, driver.countVisitedHouses());
     }
 
+    @Test
+    void countVisitedHousesWithRoboSanta() {
+        ReadData readData = new ReadData("input.txt");
+        Driver driver = new Driver(readData.getOutput().get(0));
+        assertEquals(2341, driver.countVisitedHousesWithRoboSanta());
+    }
 }

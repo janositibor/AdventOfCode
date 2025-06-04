@@ -18,9 +18,10 @@ class MinerTest {
         Miner miner = new Miner("yzbqklnj", "00000");
         assertEquals(282749, miner.findFirstMatch());
     }
-//    @Test
-//    void problemDataPart2(){
-//        Miner miner=new Miner("yzbqklnj","000000");
-//        assertEquals(282749,miner.findFirstMatch());
-//    }
+
+    @Test
+    void problemDataPart2() {
+        Miner miner = new Miner("yzbqklnj", "000000");
+        assertEquals(9962624, miner.findFirstMatch());
+    }
 }

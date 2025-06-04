@@ -21,4 +21,11 @@ class WrapperTest {
         assertEquals(1606483, wrapper.calculateWrapperArea());
     }
 
+    @Test
+    void calculateRibbonLength() {
+        ReadData readData = new ReadData("input.txt");
+        Wrapper wrapper = new Wrapper(readData.getOutput());
+        assertEquals(3842356, wrapper.calculateRibbonLength());
+    }
+
 }

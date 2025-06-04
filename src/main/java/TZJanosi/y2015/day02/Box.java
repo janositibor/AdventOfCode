@@ -14,6 +14,18 @@ public class Box {
         this.c = c;
     }
 
+    public int calculateRibbonLengthForWrapper() {
+        return calculateShortestPerimeter() + calculateVolume();
+    }
+
+    private int calculateShortestPerimeter() {
+        return 2 * (a + b);
+    }
+
+    private int calculateVolume() {
+        return a * b * c;
+    }
+
     public int calculateSurfaceForWrapper() {
         return calculateArea() + calculateExtraSurface();
     }

@@ -14,6 +14,10 @@ public class Wrapper {
         }
     }
 
+    public long calculateRibbonLength() {
+        return boxes.stream().mapToInt(b -> b.calculateRibbonLengthForWrapper()).sum();
+    }
+
     public long calculateWrapperArea() {
         return boxes.stream().mapToInt(b -> b.calculateSurfaceForWrapper()).sum();
     }

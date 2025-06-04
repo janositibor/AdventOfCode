@@ -19,4 +19,12 @@ class BoxTest {
         assertEquals(String.format("The third argument should be the longest: %d, %d, %d", 2, 3, 2), iae.getMessage());
     }
 
+    @Test
+    void calculateRibbonLengthForWrapper() {
+        Box box1 = new Box(2, 3, 4);
+        assertEquals(34, box1.calculateRibbonLengthForWrapper());
+        Box box2 = new Box(1, 1, 10);
+        assertEquals(14, box2.calculateRibbonLengthForWrapper());
+    }
+
 }

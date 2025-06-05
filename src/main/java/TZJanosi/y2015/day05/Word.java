@@ -13,6 +13,34 @@ public class Word {
         return hasThreeVowels() && hasDouble() && !containsForbiddenStrings();
     }
 
+    public boolean isNicePart2() {
+        return hasDuplicatePairs() && hasseparatedDuplicateLetters();
+    }
+
+    private boolean hasseparatedDuplicateLetters() {
+        int index = 0;
+        String[] valueAsString = value.split("");
+        while (index < valueAsString.length - 2) {
+            if (valueAsString[index].equals(valueAsString[index + 2])) {
+                return true;
+            }
+            index++;
+        }
+        return false;
+    }
+
+    private boolean hasDuplicatePairs() {
+        int index = 0;
+        while (index < value.length() - 3) {
+            String pairToFind = value.substring(index, index + 2);
+            if (value.lastIndexOf(pairToFind) > index + 1) {
+                return true;
+            }
+            index++;
+        }
+        return false;
+    }
+
     private boolean containsForbiddenStrings() {
         List<String> forbiddenStrings = List.of("ab", "cd", "pq", "xy");
         return forbiddenStrings

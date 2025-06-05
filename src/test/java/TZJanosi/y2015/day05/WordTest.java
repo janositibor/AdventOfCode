@@ -19,4 +19,15 @@ class WordTest {
         assertEquals(false, word5.isNice());
     }
 
+    @Test
+    void isNicePart2() {
+        Word word1 = new Word("qjhvhtzxzqqjkmpb");
+        assertEquals(true, word1.isNicePart2());
+        Word word2 = new Word("xxyxx");
+        assertEquals(true, word2.isNicePart2());
+        Word word3 = new Word("uurcxstgmygtbstg");
+        assertEquals(false, word3.isNicePart2());
+        Word word4 = new Word("ieodomkazucvgmuy");
+        assertEquals(false, word4.isNicePart2());
+    }
 }

@@ -17,4 +17,8 @@ public class Verifier {
         return (int) words.stream().filter(w -> w.isNice()).count();
     }
 
+    public int countNiceStringsPart2() {
+        return (int) words.stream().filter(w -> w.isNicePart2()).count();
+    }
+
 }

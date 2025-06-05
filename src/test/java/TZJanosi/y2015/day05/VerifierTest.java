@@ -12,4 +12,11 @@ class VerifierTest {
         assertEquals(238, verifier.countNiceStrings());
     }
 
+    @Test
+    void countNiceStringsPart2() {
+        ReadData readData = new ReadData("input.txt");
+        Verifier verifier = new Verifier(readData.getOutput());
+        assertEquals(69, verifier.countNiceStringsPart2());
+    }
+
 }

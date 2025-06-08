@@ -37,5 +37,13 @@ class LogicCircuitTest {
         assertEquals(46065, circuit.getResult("a"));
     }
 
+    @Test
+    void problemDataPart2() {
+        ReadData readData = new ReadData("inputPart2.txt");
+        LogicCircuit circuit = new LogicCircuit(readData.getOutput());
+        circuit.run();
+        assertEquals(14134, circuit.getResult("a"));
+    }
+
 
 }

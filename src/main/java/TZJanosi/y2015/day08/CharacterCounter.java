@@ -5,17 +5,35 @@ import java.util.List;
 public class CharacterCounter {
     private int countOfCharactersInCode;
     private int countOfCharactersInString;
+    private int countOfCharactersInEncoded;
 
     public CharacterCounter(List<String> input) {
         System.out.println("input.size: " + input.size());
         for (int i = 0; i < input.size(); i++) {
             String line = input.get(i);
-            processLine(line.substring(1, line.length() - 1));
+            processLinePart1(line.substring(1, line.length() - 1));
+            processLinePart2(line);
+
         }
     }
 
-    private void processLine(String line) {
-        System.out.println(line + ": ");
+    private void processLinePart2(String line) {
+//        System.out.println(line + ": ");
+        int countOfCharactersInTheLine = line.length();
+        int countOfDoubleChars = 0;
+        char[] charArray = line.toCharArray();
+        for (int i = 0; i < charArray.length; i++) {
+            if (charArray[i] == '\\' || charArray[i] == '"') {
+                countOfDoubleChars++;
+            }
+        }
+        int output = 2 + countOfCharactersInTheLine + countOfDoubleChars;
+//        System.out.println(output);
+        countOfCharactersInEncoded += (output);
+    }
+
+    private void processLinePart1(String line) {
+//        System.out.println(line + ": ");
         int countOfCharactersInTheLine = line.length();
         int countOfDoubleChars = 0;
         int countOfHexadecimalChars = 0;
@@ -33,11 +51,15 @@ public class CharacterCounter {
             }
         }
         int output = countOfCharactersInTheLine - countOfDoubleChars - (3 * countOfHexadecimalChars);
-        System.out.println(output);
+//        System.out.println(output);
         countOfCharactersInString += (output);
     }
 
-    public int getCountOfCharacters() {
+    public int getCountOfCharactersPart1() {
         return countOfCharactersInCode - countOfCharactersInString;
+    }
+
+    public int getCountOfCharactersPart2() {
+        return countOfCharactersInEncoded - countOfCharactersInCode;
     }
 }

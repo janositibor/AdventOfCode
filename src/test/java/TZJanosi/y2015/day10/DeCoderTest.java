@@ -36,9 +36,11 @@ class DeCoderTest {
         assertEquals(329356, deCoder.lengthOfCodeAfterRepetition(40, "3113322113"));
     }
 
-//    @Test
-//    void DeCoderTest3(){
-//
-//    }
+    @Test
+    void problemDataTestPart2() {
+        assertEquals(4666278, deCoder.lengthOfCodeAfterRepetition(50, "3113322113"));
+    }
+
+
 
 }

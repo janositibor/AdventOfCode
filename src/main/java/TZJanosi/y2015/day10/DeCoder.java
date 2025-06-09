@@ -2,7 +2,6 @@ package TZJanosi.y2015.day10;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class DeCoder {
     private List<Pair> codeList = new ArrayList<>();

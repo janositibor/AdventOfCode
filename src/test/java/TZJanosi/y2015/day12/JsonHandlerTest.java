@@ -56,4 +56,17 @@ class JsonHandlerTest {
         assertEquals(119433, handler.getSumOfNumbers());
     }
 
+    @Test
+    void getNumbersProblemDataPart1() {
+        ReadData readData = new ReadData("input.txt");
+        handler.setInput(readData.getOutput().get(0));
+        assertEquals(119433, handler.getNumbers(t -> false));
+    }
+
+    @Test
+    void getNumbersProblemDataPart2() {
+        ReadData readData = new ReadData("input.txt");
+        handler.setInput(readData.getOutput().get(0));
+        assertEquals(68466, handler.getNumbers(t -> handler.containsRed(t)));
+    }
 }

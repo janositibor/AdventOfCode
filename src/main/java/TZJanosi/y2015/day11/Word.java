@@ -17,6 +17,15 @@ public class Word {
         return getWordAsString();
     }
 
+    public String findNextValidWordPart2(String input) {
+        setWord(input);
+        do {
+            increment();
+        }
+        while (!isValid());
+        return getWordAsString();
+    }
+
     public void setWord(String input) {
         wordAsBytes = input.getBytes();
     }

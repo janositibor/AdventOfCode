@@ -107,4 +107,9 @@ class WordTest {
         assertEquals("cqjxxyzz", word.findNextValidWord("cqjxjnds"));
     }
 
+    @Test
+    void findNextValidWordForProblemDataPart2() {
+        assertEquals("cqkaabcc", word.findNextValidWordPart2("cqjxxzzz"));
+    }
+
 }

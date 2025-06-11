@@ -19,4 +19,11 @@ class HandlerTest {
         assertEquals(709, handler.findHappiestWay());
     }
 
+    @Test
+    void problemDataPart2() {
+        ReadData readData = new ReadData("input.txt");
+        Handler handler = new Handler(readData.getOutput());
+        assertEquals(668, handler.findHappiestWayWithYou());
+    }
+
 }

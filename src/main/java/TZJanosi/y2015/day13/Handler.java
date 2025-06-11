@@ -10,6 +10,13 @@ public class Handler {
         this.input = input;
     }
 
+    public int findHappiestWayWithYou() {
+        TablePlanner start = new TablePlanner(input);
+        start.addNewPlayer();
+        buildHappiestWay(start);
+        return maximalHappiness;
+    }
+
     public int findHappiestWay() {
         TablePlanner start = new TablePlanner(input);
         buildHappiestWay(start);

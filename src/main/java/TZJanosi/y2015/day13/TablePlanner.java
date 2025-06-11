@@ -115,6 +115,15 @@ public class TablePlanner {
                 .orElseThrow(() -> new IllegalArgumentException(String.format("No couple found between %s and %s", name1, name2)));
     }
 
+    public void addNewPlayer() {
+        String you = "you";
+        for (String name : lookForPlace) {
+            Couple couple = new Couple(you, name, 0);
+            couples.add(couple);
+        }
+        lookForPlace.add(you);
+    }
+
     @Override
     public String toString() {
         return "TablePlanner{" +

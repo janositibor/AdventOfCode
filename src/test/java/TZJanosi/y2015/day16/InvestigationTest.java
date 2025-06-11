@@ -40,7 +40,14 @@ class InvestigationTest {
     void filter() {
         ReadData readData = new ReadData("input.txt");
         Investigation investigation = new Investigation(readData.getOutput());
-        assertEquals(373, investigation.filter());
+        assertEquals(373, investigation.filterPart1());
+    }
+
+    @Test
+    void filterPart2() {
+        ReadData readData = new ReadData("input.txt");
+        Investigation investigation = new Investigation(readData.getOutput());
+        assertEquals(260, investigation.filterPart2());
     }
 
 }

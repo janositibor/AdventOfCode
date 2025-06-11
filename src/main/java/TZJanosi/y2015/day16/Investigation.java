@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 public class Investigation {
     private List<Sue> sues = new ArrayList<>();
@@ -17,12 +18,20 @@ public class Investigation {
         }
     }
 
-    public int filter() {
+    public int filterPart1() {
+        return filter(s -> s.fulfill(criteria));
+    }
+
+    public int filterPart2() {
+        return filter(s -> s.fulfillPart2(criteria));
+    }
+
+    private int filter(Predicate<Sue> condition) {
         return sues.stream()
-                .filter(s -> s.fulfill(criteria))
+                .filter(s -> condition.test(s))
                 .mapToInt(Sue::getId)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(String.format("No Sue found with these criteria: %", criteria.toString())));
+                .orElseThrow(() -> new IllegalArgumentException(String.format("No Sue found with these criteria: %s", criteria)));
     }
 
     private void processLine(String line) {

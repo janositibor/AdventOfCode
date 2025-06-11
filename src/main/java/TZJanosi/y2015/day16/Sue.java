@@ -25,6 +25,31 @@ public class Sue {
         return true;
     }
 
+    public boolean fulfillPart2(Map<String, Integer> criteria) {
+        for (Map.Entry<String, Integer> entry : properties.entrySet()) {
+            if (entry.getValue() != null) {
+                String key = entry.getKey();
+                switch (key) {
+                    case "cats", "trees":
+                        if (entry.getValue() <= criteria.get(key)) {
+                            return false;
+                        }
+                        break;
+                    case "pomeranians", "goldfish":
+                        if (entry.getValue() >= criteria.get(key)) {
+                            return false;
+                        }
+                        break;
+                    default:
+                        if (entry.getValue() != criteria.get(key)) {
+                            return false;
+                        }
+                }
+            }
+        }
+        return true;
+    }
+
     private void createNullProperties() {
         properties.put("children", null);
         properties.put("cats", null);
@@ -53,5 +78,7 @@ public class Sue {
                 ", properties=" + properties +
                 '}';
     }
+
+
 }
 

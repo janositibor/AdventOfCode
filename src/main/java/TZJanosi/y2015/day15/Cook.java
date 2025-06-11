@@ -3,6 +3,7 @@ package TZJanosi.y2015.day15;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class Cook {
     private List<Ingredient> ingredients = new ArrayList<>();
@@ -15,12 +16,20 @@ public class Cook {
         }
     }
 
-    public int findMaxScore() {
-        findRatio(new ArrayList<>());
+    public int findMaxScorePart2() {
+        return findMaxScore(t -> t == 500);
+    }
+
+    public int findMaxScorePart1() {
+        return findMaxScore(t -> true);
+    }
+
+    private int findMaxScore(Predicate<Integer> condition) {
+        findRatio(new ArrayList<>(), condition);
         return maxScore;
     }
 
-    private void findRatio(List<Integer> ratios) {
+    private void findRatio(List<Integer> ratios, Predicate<Integer> condition) {
         int alreadyUsed = ratios.stream().mapToInt(x -> x.intValue()).sum();
         int countOfIngredients = ingredients.size();
         for (int i = 0; i <= numberOfTeeSpoons - alreadyUsed; i++) {
@@ -29,26 +38,29 @@ public class Cook {
             nextRatios.add(i);
             if (nextRatios.size() == countOfIngredients - 1) {
                 nextRatios.add(numberOfTeeSpoons - nextAlreadyUsed);
-                calculateScore(nextRatios);
+                calculateScore(nextRatios, condition);
             } else {
-                findRatio(nextRatios);
+                findRatio(nextRatios, condition);
             }
         }
     }
 
-    private void calculateScore(List<Integer> amounts) {
+    private void calculateScore(List<Integer> amounts, Predicate<Integer> condition) {
         setAmount(amounts);
-        buildScore();
+        buildScore(condition);
     }
 
-    private void buildScore() {
-        int totalCapacity = Math.max(0, buildScoreForProperty(Ingredient::getTotalCapacity));
-        int totalDurability = Math.max(0, buildScoreForProperty(Ingredient::getTotalDurability));
-        int totalFlavor = Math.max(0, buildScoreForProperty(Ingredient::getTotalFlavor));
-        int totalTexture = Math.max(0, buildScoreForProperty(Ingredient::getTotalTexture));
+    private void buildScore(Predicate<Integer> condition) {
+        int totalCalories = Math.max(0, buildScoreForProperty(Ingredient::getTotalCalories));
+        if (condition.test(totalCalories)) {
+            int totalCapacity = Math.max(0, buildScoreForProperty(Ingredient::getTotalCapacity));
+            int totalDurability = Math.max(0, buildScoreForProperty(Ingredient::getTotalDurability));
+            int totalFlavor = Math.max(0, buildScoreForProperty(Ingredient::getTotalFlavor));
+            int totalTexture = Math.max(0, buildScoreForProperty(Ingredient::getTotalTexture));
 
-        int actualScore = totalCapacity * totalDurability * totalFlavor * totalTexture;
-        maxScore = Math.max(maxScore, actualScore);
+            int actualScore = totalCapacity * totalDurability * totalFlavor * totalTexture;
+            maxScore = Math.max(maxScore, actualScore);
+        }
     }
 
     private int buildScoreForProperty(Function<Ingredient, Integer> function) {

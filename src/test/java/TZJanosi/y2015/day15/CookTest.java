@@ -17,17 +17,31 @@ class CookTest {
     }
 
     @Test
-    void testData() {
+    void testDataPart1() {
         ReadData readData = new ReadData("testInput.txt");
         Cook cook = new Cook(readData.getOutput());
-        assertEquals(62842880, cook.findMaxScore());
+        assertEquals(62842880, cook.findMaxScorePart1());
     }
 
     @Test
-    void problemData() {
+    void problemDataPart1() {
         ReadData readData = new ReadData("input.txt");
         Cook cook = new Cook(readData.getOutput());
-        assertEquals(18965440, cook.findMaxScore());
+        assertEquals(18965440, cook.findMaxScorePart1());
+    }
+
+    @Test
+    void testDataPart2() {
+        ReadData readData = new ReadData("testInput.txt");
+        Cook cook = new Cook(readData.getOutput());
+        assertEquals(57600000, cook.findMaxScorePart2());
+    }
+
+    @Test
+    void problemDataPart2() {
+        ReadData readData = new ReadData("input.txt");
+        Cook cook = new Cook(readData.getOutput());
+        assertEquals(15862900, cook.findMaxScorePart2());
     }
 
 }

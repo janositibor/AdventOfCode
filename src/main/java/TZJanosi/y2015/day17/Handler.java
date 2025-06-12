@@ -21,6 +21,16 @@ public class Handler {
         start = new Container(buckets);
     }
 
+    public int findNumbersOfCombinationWithMinimalBucketNumbers() {
+        buildValidFilling(start, 0);
+        int minimalNumberOfBuckets = getMinimalNumberOfBucketsInValidFilling();
+        return (int) validFilling.stream().filter(s -> s.size() == minimalNumberOfBuckets).count();
+    }
+
+    private int getMinimalNumberOfBucketsInValidFilling() {
+        return validFilling.stream().mapToInt(s -> s.size()).min().getAsInt();
+    }
+
     public int findNumbersOfValidFilling() {
         buildValidFilling(start, 0);
         return validFilling.size();

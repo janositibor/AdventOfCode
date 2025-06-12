@@ -23,17 +23,31 @@ class HandlerTest {
     }
 
     @Test
-    void testDatafindNumbersOfValidFilling() {
+    void testDataFindNumbersOfValidFilling() {
         ReadData readData = new ReadData("testInput.txt");
         Handler handler = new Handler(25, readData.getOutput());
         assertEquals(4, handler.findNumbersOfValidFilling());
     }
 
     @Test
-    void problemDatafindNumbersOfValidFilling() {
+    void problemDataFindNumbersOfValidFilling() {
         ReadData readData = new ReadData("input.txt");
         Handler handler = new Handler(150, readData.getOutput());
         assertEquals(1638, handler.findNumbersOfValidFilling());
+    }
+
+    @Test
+    void testDataFindNumbersOfCombinationWithMinimalBucketNumbers() {
+        ReadData readData = new ReadData("testInput.txt");
+        Handler handler = new Handler(25, readData.getOutput());
+        assertEquals(3, handler.findNumbersOfCombinationWithMinimalBucketNumbers());
+    }
+
+    @Test
+    void problemDataFindNumbersOfCombinationWithMinimalBucketNumbers() {
+        ReadData readData = new ReadData("input.txt");
+        Handler handler = new Handler(150, readData.getOutput());
+        assertEquals(17, handler.findNumbersOfCombinationWithMinimalBucketNumbers());
     }
 
 }

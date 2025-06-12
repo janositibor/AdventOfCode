@@ -1,12 +1,10 @@
-package TZJanosi.y2015.day18;
+package TZJanosi.y2015.day18.part1;
 
 import java.util.Objects;
 
-//public class Coordinate implements Comparable<Coordinate> {
 public class Coordinate {
     private int x;
     private int y;
-//    private int limit;
 
     public Coordinate(int x, int y) {
         this.x = x;
@@ -23,11 +21,6 @@ public class Coordinate {
         return true;
     }
 
-//    @Override
-//    public int compareTo(Coordinate o) {
-//        return (limit * (y - o.y) + (x - o.x));
-//    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -40,10 +33,6 @@ public class Coordinate {
         return Objects.hash(x, y);
     }
 
-//    public void setLimit(int limit) {
-//        this.limit = limit;
-//    }
-
     public int getX() {
         return x;
     }
@@ -51,10 +40,6 @@ public class Coordinate {
     public int getY() {
         return y;
     }
-
-//    public int getLimit() {
-//        return limit;
-//    }
 
     @Override
     public String toString() {

@@ -1,4 +1,4 @@
-package TZJanosi.y2015.day18;
+package TZJanosi.y2015.day18.part2;
 
 import java.util.Objects;
 

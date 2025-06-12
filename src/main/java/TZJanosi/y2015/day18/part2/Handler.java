@@ -1,4 +1,4 @@
-package TZJanosi.y2015.day18;
+package TZJanosi.y2015.day18.part2;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +20,7 @@ public class Handler {
 
     private void animation() {
         for (int i = 0; i < numberOfSteps; i++) {
-            System.out.println(i);
+            System.out.println(String.format("%d / %d", i, numberOfSteps));
             step();
         }
     }

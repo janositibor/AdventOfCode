@@ -1,6 +1,7 @@
-package TZJanosi.y2015.day18;
+package TZJanosi.y2015.day18.part2;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.Map;
 public class Grid {
     private Map<Coordinate, Bulb> bulbs = new HashMap<>();
     private Coordinate limit;
+    private List<Coordinate> corners;
 
     public Grid(List<String> input) {
         for (int i = 0; i < input.size(); i++) {
@@ -23,6 +25,20 @@ public class Grid {
                 bulbs.put(coordinate, bulb);
             }
         }
+        fillCorners();
+        turnOnCorners();
+    }
+
+    private void turnOnCorners() {
+        corners.stream().forEach(c -> bulbs.get(c).turnOn());
+    }
+
+    private void fillCorners() {
+        corners = List.of(new Coordinate(0, 0),
+                new Coordinate(0, limit.getY()),
+                new Coordinate(limit.getX(), 0),
+                new Coordinate(limit.getX(), limit.getY())
+        );
     }
 
     public Grid(Grid original) {
@@ -31,6 +47,7 @@ public class Grid {
             bulbs.put(new Coordinate(entry.getKey().getX(), entry.getKey().getY()), new Bulb(entry.getValue().isOn()));
         }
         limit = new Coordinate(original.limit.getX(), original.limit.getY());
+        corners = new ArrayList<>(original.corners);
     }
 
     private boolean hasToToggle(int numberOfActiveBulbInArea, boolean on) {
@@ -43,6 +60,9 @@ public class Grid {
     }
 
     public boolean hasToToggle(Coordinate coordinate, boolean on) {
+        if (corners.contains(coordinate)) {
+            return false;
+        }
         Coordinate from = createFrom(coordinate);
         Coordinate to = createTo(coordinate);
         int numberOfActiveBulbInArea = numberOfActiveBulbInArea(from, to);

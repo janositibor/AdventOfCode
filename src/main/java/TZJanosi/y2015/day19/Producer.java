@@ -13,12 +13,20 @@ public class Producer {
         }
     }
 
+    public Producer(Producer original) {
+        replacements = new HashMap<>();
+        for (Map.Entry<String, List<String>> entry : original.replacements.entrySet()) {
+            replacements.put(entry.getKey(), new ArrayList<>(entry.getValue()));
+        }
+    }
+
     public int findNumberOfNewMolecules() {
         replace();
         return createdMolecules.size();
     }
 
     private void replace() {
+        createdMolecules.clear();
         for (Map.Entry<String, List<String>> entry : replacements.entrySet()) {
             String old = entry.getKey();
             List<String> newParts = entry.getValue();
@@ -69,6 +77,10 @@ public class Producer {
         }
         List<String> newParts = replacements.get(original);
         newParts.add(newPart);
+    }
+
+    public void setBasicMolecule(String basicMolecule) {
+        this.basicMolecule = basicMolecule;
     }
 
     public Map<String, List<String>> getReplacements() {

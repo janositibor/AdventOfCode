@@ -9,8 +9,9 @@ public class Arena {
     private Character you = new Character("You", 100, 0, 0);
     private Fight fight = new Fight(you, boss);
     private Map<Integer, Set<Item>> winnerSets = new HashMap<>();
+    private Map<Integer, Set<Item>> loserSets = new HashMap<>();
 
-    private void findWinnerSets() {
+    private void findSets() {
         Item[] weapons = Weapon.values();
         Item[] armors = Armor.values();
         Item[] rings = Ring.values();
@@ -29,6 +30,8 @@ public class Arena {
 
                         if (fight.fight().equals("You")) {
                             winnerSets.put(you.getCost(), you.getItems());
+                        } else {
+                            loserSets.put(you.getCost(), you.getItems());
                         }
                         fight.getPlayer1().reset();
                     }
@@ -37,8 +40,10 @@ public class Arena {
         }
     }
 
-    public int findCheapest() {
-        findWinnerSets();
+    public int findCheapestWinner() {
+        if (winnerSets.isEmpty()) {
+            findSets();
+        }
 //        System.out.println(winnerSets);
         return winnerSets.entrySet()
                 .stream()
@@ -47,7 +52,15 @@ public class Arena {
                 .orElseThrow(() -> new IllegalStateException("Empty items set!"));
     }
 
-    public Map<Integer, Set<Item>> getWinnerSets() {
-        return winnerSets;
+    public int findMostExpensiveLoser() {
+        if (loserSets.isEmpty()) {
+            findSets();
+        }
+//        System.out.println(loserSets);
+        return loserSets.entrySet()
+                .stream()
+                .mapToInt(e -> e.getKey())
+                .max()
+                .orElseThrow(() -> new IllegalStateException("Empty items set!"));
     }
 }

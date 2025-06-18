@@ -1,5 +1,6 @@
 package TZJanosi.y2015.day20;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -36,10 +37,25 @@ class HouseTest {
         );
     }
 
+    private static Stream<Arguments> presentsValuePart2Test() {
+        return Stream.of(
+                Arguments.of(1, 11),
+                Arguments.of(2, 33),
+                Arguments.of(3, 44),
+                Arguments.of(4, 77),
+                Arguments.of(5, 66),
+                Arguments.of(6, 132),
+                Arguments.of(7, 88),
+                Arguments.of(8, 165),
+                Arguments.of(9, 143)
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("dividersTest")
     void dividersTest(int id, Set<Integer> expectedResult) {
         House house = new House(id);
+        house.getPresentsValuePart1();
         assertThat(house.getDividers()).containsAll(expectedResult);
     }
 
@@ -47,8 +63,37 @@ class HouseTest {
     @MethodSource("presentsValueTest")
     void presentsValueTest(int id, int expectedResult) {
         House house = new House(id);
-        assertEquals(expectedResult, house.getPresentsValue());
-//        assertThat(haus.getDividers()).containsAll(expectedResult);
+        assertEquals(expectedResult, house.getPresentsValuePart1());
+    }
+
+    @ParameterizedTest
+    @MethodSource("presentsValuePart2Test")
+    void presentsValuePart2Test(int id, int expectedResult) {
+        House house = new House(id);
+        assertEquals(expectedResult, house.getPresentsValuePart2());
+    }
+
+    @Test
+    void part2Test() {
+        House house;
+        house = new House(50);
+        assertEquals(house.getPresentsValuePart1() / 10, (house.getPresentsValuePart2()) / 11);
+        house = new House(51);
+        assertEquals(house.getPresentsValuePart1() / 10, (house.getPresentsValuePart2() / 11) + 1);
+        house = new House(100);
+        assertEquals(house.getPresentsValuePart1() / 10, (house.getPresentsValuePart2() / 11) + 1);
+        house = new House(101);
+        assertEquals(house.getPresentsValuePart1() / 10, (house.getPresentsValuePart2() / 11) + 1);
+        house = new House(102);
+        assertEquals(house.getPresentsValuePart1() / 10, (house.getPresentsValuePart2() / 11) + 1 + 2);
+        house = new House(150);
+        assertEquals(house.getPresentsValuePart1() / 10, (house.getPresentsValuePart2() / 11) + 1 + 2);
+        house = new House(151);
+        assertEquals(house.getPresentsValuePart1() / 10, (house.getPresentsValuePart2() / 11) + 1);
+        house = new House(152);
+        assertEquals(house.getPresentsValuePart1() / 10, (house.getPresentsValuePart2() / 11) + 1 + 2);
+        house = new House(153);
+        assertEquals(house.getPresentsValuePart1() / 10, (house.getPresentsValuePart2() / 11) + 1 + 3);
     }
 
 }

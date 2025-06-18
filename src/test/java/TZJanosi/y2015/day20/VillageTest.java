@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class VillageTest {
 
-    private static Stream<Arguments> findTheLuckyTest() {
+    private static Stream<Arguments> findTheLuckyPart1Test() {
         return Stream.of(
                 Arguments.of(40, 3),
                 Arguments.of(70, 4),
@@ -23,16 +23,22 @@ class VillageTest {
     }
 
     @ParameterizedTest
-    @MethodSource("findTheLuckyTest")
-    void findTheLuckyTest(int targetToReach, int expectedResult) {
+    @MethodSource("findTheLuckyPart1Test")
+    void findTheLuckyPart1Test(int targetToReach, int expectedResult) {
         Village village = new Village();
-        assertEquals(expectedResult, village.findTheLucky(targetToReach));
+        assertEquals(expectedResult, village.findTheLuckyPart1(targetToReach));
     }
 
     @Test
-    void findTheLuckyProblemDataTest() {
+    void findTheLuckyPart1ProblemDataTest() {
         Village village = new Village();
-        assertEquals(776160, village.findTheLucky(33100000));
+        assertEquals(776160, village.findTheLuckyPart1(33100000));
+    }
+
+    @Test
+    void findTheLuckyPart2ProblemDataTest() {
+        Village village = new Village();
+        assertEquals(786240, village.findTheLuckyPart2(33100000));
     }
 
 }

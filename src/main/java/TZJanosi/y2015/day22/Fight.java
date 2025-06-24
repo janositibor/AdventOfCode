@@ -19,6 +19,17 @@ public class Fight {
         cost = original.getCost();
     }
 
+    public void turn(Spell spell, boolean hard) {
+        if (hard) {
+            player.setHitPoints(player.getHitPoints() - 1);
+        }
+        if (!isAlive(player)) {
+            winner = "Boss";
+        } else {
+            turn(spell);
+        }
+    }
+
     public void fight(List<Spell> spells) {
         for (int i = 0; i < spells.size(); i++) {
             Spell spell = spells.get(i);
@@ -28,39 +39,25 @@ public class Fight {
 
     public void turn(Spell spell) {
         playerAttack();
-        if (isAlive(boss)) {
-            if (player.hasMana()) {
-                cost += player.buy(spell);
-                playerAttack();
-                if (isAlive(boss)) {
-                    bossAttack();
-                    if (!isAlive(player)) {
-                        winner = "Boss";
-//                        System.out.println("Player is dead!\n");
-                    }
-                } else {
-                    winner = "Player";
-//                    System.out.println("Boss is dead!\n");
+
+        if (player.hasMana()) {
+            cost += player.buy(spell);
+            playerAttack();
+            if (isAlive(boss)) {
+                bossAttack();
+                if (!isAlive(player)) {
+                    winner = "Boss";
                 }
             } else {
-                winner = "Boss";
-//                System.out.println("Player lost, not having enough mana!");
+                winner = "Player";
             }
         } else {
-            winner = "Player";
-//            System.out.println("Boss is dead!\n");
+            winner = "Boss";
         }
-//        info();
     }
 
     private boolean isAlive(Character character) {
         return character.getHitPoints() > 0;
-    }
-
-    private void info() {
-        System.out.println(boss);
-        System.out.println(player);
-        System.out.println();
     }
 
     private void playerAttack() {

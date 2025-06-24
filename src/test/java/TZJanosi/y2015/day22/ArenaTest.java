@@ -13,7 +13,7 @@ class ArenaTest {
         Fight fight = new Fight(boss, player);
         Arena arena = new Arena();
 
-        arena.findMinCostToWin(fight);
+        arena.findMinCostToWin(fight, false);
         assertEquals(226, arena.getMinCost());
         assertThat(arena.getCheapestSpells()).containsExactly(Spell.create("Poison"),
                 Spell.create("MagicMissile"));
@@ -26,7 +26,7 @@ class ArenaTest {
         Fight fight = new Fight(boss, player);
         Arena arena = new Arena();
 
-        arena.findMinCostToWin(fight);
+        arena.findMinCostToWin(fight, false);
         assertEquals(641, arena.getMinCost());
         assertThat(arena.getCheapestSpells()).containsExactly(Spell.create("Recharge"), Spell.create("Shield"), Spell.create("Drain"), Spell.create("Poison"), Spell.create("MagicMissile"));
     }
@@ -38,7 +38,18 @@ class ArenaTest {
         Fight fight = new Fight(boss, player);
         Arena arena = new Arena();
 
-        arena.findMinCostToWin(fight);
+        arena.findMinCostToWin(fight, false);
         assertEquals(953, arena.getMinCost());
+    }
+
+    @Test
+    void problemDataPart2() {
+        Boss boss = new Boss(55);
+        Player player = new Player(50, 500);
+        Fight fight = new Fight(boss, player);
+        Arena arena = new Arena();
+
+        arena.findMinCostToWin(fight, true);
+        assertEquals(1289, arena.getMinCost());
     }
 }

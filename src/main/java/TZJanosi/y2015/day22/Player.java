@@ -76,7 +76,6 @@ public class Player extends Character {
                 '}';
     }
 
-
     public boolean hasMana() {
         return mana >= 53;
     }

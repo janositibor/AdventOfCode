@@ -3,7 +3,9 @@ package TZJanosi.y2024.day09;
 import java.util.*;
 
 public class Disk {
-    private List<Fragment> area = new LinkedList<>();
+    private List<Fragment> area = new ArrayList<>();
+    private int indexOfFirstBlank = 0;
+    private int indexOfLastDataFragment;
     public void init(String input){
         List<Integer> inputList=createInputListFromString(input);
         fillArea(inputList);
@@ -11,23 +13,16 @@ public class Disk {
 
     public long calculateCheckSum(){
         return area.stream().mapToLong(f->f.checkSum()).reduce(0,(n,m)->n+m);
-//        int result=0;
-//        for (int i = 0; i < area.size(); i++) {
-//            result+=area.get(i).checkSum();
-//            System.out.println(i +" -> "+area.get(i).checkSum()+" -> "+result);
-//
-//        }
-//        return result;
     }
 
     public void refragment(){
         Optional<Fragment> findFirstBlank=findFirstBlank();
-        Optional<Fragment> findLaststDataFragment=findLaststDataFragment();
+        Optional<Fragment> findLaststDataFragment = findLastDataFragment();
         while(findFirstBlank.isPresent() && (findFirstBlank.get().getOrder()<findLaststDataFragment.get().getOrder())){
-            System.out.println(findFirstBlank.get().getOrder()+" <? "+findLaststDataFragment.get().getOrder());
+//            System.out.println(findFirstBlank.get().getOrder()+" <? "+findLaststDataFragment.get().getOrder());
             move(findLaststDataFragment.get(),findFirstBlank.get());
             findFirstBlank=findFirstBlank();
-            findLaststDataFragment=findLaststDataFragment();
+            findLaststDataFragment = findLastDataFragment();
         }
     }
 
@@ -40,7 +35,7 @@ public class Disk {
             if(findProperBlank.isPresent()) {
                 Fragment to = findProperBlank.get();
                 if(to.getOrder() < from.getOrder()) {
-                    System.out.println(to.getOrder() + " <? " + from.getOrder() + "(" +from.getFileID()+")");
+//                    System.out.println(to.getOrder() + " <? " + from.getOrder() + "(" +from.getFileID()+")");
                     move(from, to);
                 }
             }
@@ -72,16 +67,37 @@ public class Disk {
     }
 
     private Optional<Fragment> findFirstBlank(){
-        return area.stream()
-                .filter(f->((!f.isData()) && (f.getLength()>0)))
-                .sorted(Comparator.comparingInt(f->f.getOrder()))
-                .findFirst();
+//        It works but the code below much faster
+//        return area.stream()
+//                .filter(f->((!f.isData()) && (f.getLength()>0)))
+//                .sorted(Comparator.comparingInt(f->f.getOrder()))
+//                .findFirst();
+
+        for (int i = indexOfFirstBlank; i < indexOfLastDataFragment; i++) {
+            Fragment fragment = area.get(i);
+            if ((!fragment.isData()) && (fragment.getLength() > 0)) {
+                indexOfFirstBlank = i;
+                return Optional.of(fragment);
+            }
+        }
+        return Optional.empty();
     }
-    private Optional<Fragment> findLaststDataFragment(){
-        return area.stream()
-                .filter(f->((f.isData()) && (f.getLength()>0)))
-                .sorted(Comparator.comparingInt((Fragment f)->f.getOrder()).reversed())
-                .findFirst();
+
+    private Optional<Fragment> findLastDataFragment() {
+//        It works but the code below much faster
+//        return area.stream()
+//                .filter(f->((f.isData()) && (f.getLength()>0)))
+//                .sorted(Comparator.comparingInt((Fragment f)->f.getOrder()).reversed())
+//                .findFirst();
+
+        for (int i = indexOfLastDataFragment; i > indexOfFirstBlank; i--) {
+            Fragment fragment = area.get(i);
+            if ((fragment.isData()) && (fragment.getLength() > 0)) {
+                indexOfLastDataFragment = i;
+                return Optional.of(fragment);
+            }
+        }
+        return Optional.empty();
     }
 
     private void move(Fragment from, Fragment to){
@@ -149,6 +165,7 @@ public class Disk {
             isData=!isData;
             startFrom+=length;
         }
+        indexOfLastDataFragment = area.size() - 1;
     }
 
     private List<Integer> createInputListFromString(String input){

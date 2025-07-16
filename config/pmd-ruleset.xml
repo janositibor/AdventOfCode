@@ -1,0 +1,59 @@
+<ruleset name="Custom Rules"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+
+    <description>
+        My custom rules
+    </description>
+
+
+    <rule ref="category/java/codestyle.xml">
+        <exclude name="UselessParentheses"/>
+        <exclude name="UseUnderscoresInNumericLiterals"/>
+        <exclude name="MethodArgumentCouldBeFinal"/>
+        <exclude name="LocalVariableCouldBeFinal"/>
+        <exclude name="LongVariable"/>
+        <exclude name="ShortVariable"/>
+        <exclude name="ShortMethodName"/>
+        <exclude name="OnlyOneReturn"/>
+        <exclude name="AtLeastOneConstructor"/>
+        <exclude name="ShortClassName"/>
+    </rule>
+
+    <rule ref="category/java/bestpractices.xml">
+        <exclude name="SystemPrintln"/>
+        <exclude name="ForLoopCanBeForeach"/>
+        <exclude name="PreserveStackTrace"/>
+        <exclude name="AvoidReassigningLoopVariables"/>
+        <exclude name="AvoidPrintStackTrace"/>
+        <exclude name="AbstractClassWithoutAbstractMethod"/>
+        <exclude name="ArrayIsStoredDirectly"/>
+        <exclude name="AvoidStringBufferField"/>
+        <exclude name="MethodReturnsInternalArray"/>
+        <exclude name="UseVarargs"/>
+    </rule>
+
+    <rule ref="category/java/design.xml">
+        <exclude name="ImmutableField"/>
+        <exclude name="SingularField"/>
+        <exclude name="TooManyMethods"/>
+        <exclude name="LawOfDemeter"/>
+        <exclude name="DataClass"/>
+        <exclude name="GodClass"/>
+    </rule>
+
+    <rule ref="category/java/errorprone.xml">
+        <exclude name="AssignmentInOperand"/>
+        <exclude name="NonSerializableClass"/>
+        <exclude name="AvoidLiteralsInIfCondition"/>
+        <exclude name="AvoidDuplicateLiterals"/>
+    </rule>
+
+    <rule ref="category/java/multithreading.xml"/>
+    <rule ref="category/java/performance.xml">
+        <exclude name="AvoidInstantiatingObjectsInLoops"/>
+    </rule>
+    <rule ref="category/java/security.xml"/>
+
+</ruleset>

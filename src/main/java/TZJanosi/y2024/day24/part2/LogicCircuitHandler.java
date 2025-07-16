@@ -1,17 +1,15 @@
-package TZJanosi.y2024.day24.part2;
+package tzjanosi.y2024.day24.part2;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class LogicCircuitHandler {
-    List<String> originalInput;
     private LogicCircuit originalLogicCircuit;
     private LogicCircuit workLogicCircuit;
-    List<Operation> operations;
+    private List<Operation> operations;
     private List<String> operandsToSwap = new ArrayList<>();
 
     public LogicCircuitHandler(List<String> input) {
-        originalInput = input;
         originalLogicCircuit = new LogicCircuit(input);
         operations = originalLogicCircuit.getOperations();
         workLogicCircuit = originalLogicCircuit;
@@ -32,20 +30,13 @@ public class LogicCircuitHandler {
     private String checkXor(int digit, String previousResidualName, String tempXOR, String resultName) {
         String output = tempXOR;
         if (resultName(previousResidualName, tempXOR, Operator.XOR).isEmpty() || !resultName.equals(resultName(previousResidualName, tempXOR, Operator.XOR).get())) {
-            if (!matchResultAndOperator(previousResidualName, Operator.XOR, resultName) && !matchResultAndOperator(tempXOR, Operator.XOR, resultName)) {
-//                System.out.println("NOK, z: "+getOperandName("z", digit));
-//                System.out.println("Helyette: "+ resultName(previousResidualName,tempXOR,Operator.XOR).get());
-                swap(getOperandName("z", digit), resultName(previousResidualName, tempXOR, Operator.XOR).get());
-            } else {
-//                if(!matchResultAndOperator(previousResidualName,Operator.XOR,resultName)){
-//                    System.out.println("NOK, previousResidual: "+previousResidualName);
-//                }
+            if (matchResultAndOperator(previousResidualName, Operator.XOR, resultName) || matchResultAndOperator(tempXOR, Operator.XOR, resultName)) {
                 if (!matchResultAndOperator(tempXOR, Operator.XOR, resultName)) {
-//                    System.out.println("NOK, tempXOR: "+tempXOR);
-//                    System.out.println("Helyette: "+ findOtherOperand(previousResidualName,Operator.XOR,resultName).get());
                     swap(tempXOR, findOtherOperand(previousResidualName, Operator.XOR, resultName).get());
                     output = findOtherOperand(previousResidualName, Operator.XOR, resultName).get();
                 }
+            } else {
+                swap(getOperandName("z", digit), resultName(previousResidualName, tempXOR, Operator.XOR).get());
             }
         }
         return output;
@@ -61,27 +52,28 @@ public class LogicCircuitHandler {
         String tempANDXOR = resultName(previousResidualName, tempXOR, Operator.AND).get();
 
         Optional<String> optionalResidual = resultName(tempAND, tempANDXOR, Operator.OR);
-        optionalResidual = setOptionalResidual(optionalResidual, tempAND, tempANDXOR);
+        optionalResidual = findOptionalResidual(optionalResidual, tempAND, tempANDXOR);
 
         return optionalResidual.get();
     }
 
-    private Optional<String> setOptionalResidual(Optional<String> optionalResidual, String tempAND, String tempANDXOR) {
+    private Optional<String> findOptionalResidual(Optional<String> optionalResidual, String tempAND, String tempANDXOR) {
+        String localTempAND = tempAND;
         Optional<String> output = optionalResidual;
         if (optionalResidual.isEmpty()) {
             if (!matchResultAndOperator(tempAND, Operator.OR, null)) {
 //                System.out.println("NOK, tempAND: "+tempAND);
 //                System.out.println("Helyette: "+ findOtherOperand(tempANDXOR,Operator.OR,null).get());
                 addOperandNameToSwapList(tempAND, findOtherOperand(tempANDXOR, Operator.OR, null).get());
-                tempAND = findOtherOperand(tempANDXOR, Operator.OR, null).get();
+                localTempAND = findOtherOperand(tempANDXOR, Operator.OR, null).get();
 
             }
             if (!matchResultAndOperator(tempANDXOR, Operator.OR, null)) {
 //                System.out.println("NOK, tempANDXOR: "+tempANDXOR);
 //                System.out.println("Helyette: "+ findOtherOperand(tempAND,Operator.OR,null));
-                addOperandNameToSwapList(tempANDXOR, findOtherOperand(tempAND, Operator.OR, null).get());
+                addOperandNameToSwapList(tempANDXOR, findOtherOperand(localTempAND, Operator.OR, null).get());
             }
-            output = resultName(tempAND, tempANDXOR, Operator.OR);
+            output = resultName(localTempAND, tempANDXOR, Operator.OR);
         }
         return output;
     }

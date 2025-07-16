@@ -36,4 +36,19 @@ class DriveTest {
         assertEquals(246, distance);
     }
 
+    @Test
+    void testDataPart2() {
+        Drive drive = new Drive("R8, R4, R4, R8");
+        int distance = drive.processPart2();
+        assertEquals(4, distance);
+    }
+
+    @Test
+    void problemDataPart2() {
+        ReadData readData = new ReadData("input.txt");
+        Drive drive = new Drive(readData.getOutput().get(0));
+        int distance = drive.processPart2();
+        assertEquals(124, distance)
+    }
+
 }

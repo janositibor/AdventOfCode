@@ -6,9 +6,11 @@ import java.util.List;
 public class Drive {
     private Taxi taxi = new Taxi();
     private List<Instruction> instructions = new ArrayList<>();
+    private List<Coordinate> route = new ArrayList<>();
 
     public Drive(String input) {
         fillInstructions(input);
+        route.add(new Coordinate(0, 0));
     }
 
     public int process() {
@@ -16,6 +18,33 @@ public class Drive {
             taxi.move(instructions.get(i));
         }
         return taxi.calculateDistance();
+    }
+
+    public int processPart2() {
+        for (int i = 0; i < instructions.size(); i++) {
+            taxi.move(instructions.get(i));
+            Coordinate newLocation = taxi.getLocation();
+            if (isCrossing(newLocation)) {
+                break;
+            }
+        }
+        return route.getLast().intLength();
+    }
+
+    private boolean isCrossing(Coordinate end) {
+        Coordinate start = route.getLast();
+        Coordinate direction = end.minus(start);
+        int length = direction.intLength();
+        Coordinate unitDirection = direction.unitDirection();
+        for (int i = 1; i <= length; i++) {
+            Coordinate newCoordinate = start.add(unitDirection.multiply(i));
+            route.add(newCoordinate);
+            if (route.indexOf(newCoordinate) < route.size() - 1) {
+                return true;
+            }
+        }
+        return false;
+
     }
 
     public Coordinate getLocation() {

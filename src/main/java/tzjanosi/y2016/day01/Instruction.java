@@ -5,6 +5,9 @@ public class Instruction {
     private int stepLength;
 
     public Instruction(String rotationDirection, int stepLength) {
+        if (stepLength < 1) {
+            throw new IllegalArgumentException(String.format("The step length must be at least 1"));
+        }
         this.rotationDirection = rotationDirection;
         this.stepLength = stepLength;
     }

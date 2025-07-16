@@ -15,8 +15,21 @@ public class Coordinate {
         return new Coordinate(m * x, m * y);
     }
 
+    public Coordinate unitDirection() {
+        int length = intLength();
+        return new Coordinate(x / length, y / length);
+    }
+
     public Coordinate add(Coordinate shift) {
         return new Coordinate(x + shift.x, y + shift.y);
+    }
+
+    public Coordinate minus(Coordinate from) {
+        return new Coordinate(x - from.x, y - from.y);
+    }
+
+    public int intLength() {
+        return Math.abs(x) + Math.abs(y);
     }
 
     @Override

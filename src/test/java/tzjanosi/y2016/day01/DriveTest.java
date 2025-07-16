@@ -48,7 +48,7 @@ class DriveTest {
         ReadData readData = new ReadData("input.txt");
         Drive drive = new Drive(readData.getOutput().get(0));
         int distance = drive.processPart2();
-        assertEquals(124, distance)
+        assertEquals(124, distance);
     }
 
 }

@@ -21,6 +21,24 @@ public class Miner {
         }
     }
 
+    public void buildPassWordPart2() {
+        for (int i = 0; i < 8; i++) {
+            findFirstMatch(i);
+        }
+    }
+
+    public void findFirstMatch(int index) {
+        String md5Hash;
+        long numberToCheck = 0;
+        String tempPrefix = prefix + index;
+        do {
+            numberToCheck++;
+            md5Hash = generateMD5HashForANumber(numberToCheck);
+        }
+        while (!md5Hash.startsWith(tempPrefix));
+        password += md5Hash.substring(6, 7);
+    }
+
     private int findNextMatch(int startFrom) {
         String md5Hash;
         int numberToCheck = startFrom;

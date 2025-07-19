@@ -20,7 +20,18 @@ public class Service {
         int sectorId = Integer.parseInt(line.substring(positionOfLastDash + 1, positionOfSquareBrace));
         String checkSum = line.substring(positionOfSquareBrace + 1, line.length() - 1);
         Room room = new Room(name, sectorId, checkSum);
+        room.decryptName();
         rooms.add(room);
+    }
+
+    public int sectorIDForNorthPoleObjects() {
+        return rooms.stream()
+                .filter(Room::isValid)
+//                .peek(r-> System.out.println(r.getDecryptedName()))
+                .filter(r -> "northpole object storage".equals(r.getDecryptedName()))
+                .mapToInt(Room::getSectorID)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("No room found ..."));
     }
 
     public int calculateSumOfSectorIDsForRealRooms() {

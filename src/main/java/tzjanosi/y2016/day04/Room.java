@@ -1,5 +1,6 @@
 package tzjanosi.y2016.day04;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -7,6 +8,7 @@ import java.util.stream.Collectors;
 
 public class Room {
     private String name;
+    private String decryptedName;
     private int sectorID;
     private String checkSum;
     private Map<Character, Integer> numberOfLetters = new ConcurrentHashMap<>();
@@ -27,6 +29,27 @@ public class Room {
                 }
                 numberOfLetters.put(letter, numberOfLetters.get(letter) + 1);
             }
+        }
+    }
+
+    public void decryptName() {
+        decryptedName = Arrays.stream(name.split(""))
+                .map(this::decryptLetter)
+                .collect(Collectors.joining());
+    }
+
+    private String decryptLetter(String letter) {
+        if ("-".equals(letter)) {
+            return " ";
+        } else {
+            int period = 'z' - 'a' + 1;
+            int shift = sectorID % period;
+            char letterToDecrypt = letter.charAt(0);
+            int outputAsInt = letterToDecrypt + shift;
+            if (letterToDecrypt + shift > 'z') {
+                outputAsInt -= period;
+            }
+            return String.valueOf((char) outputAsInt);
         }
     }
 
@@ -58,10 +81,15 @@ public class Room {
         return sectorID;
     }
 
+    public String getDecryptedName() {
+        return decryptedName;
+    }
+
     @Override
     public String toString() {
         return "Room{" +
                 "name='" + name + '\'' +
+                ", decryptedName='" + decryptedName + '\'' +
                 ", sectorID=" + sectorID +
                 ", checkSum='" + checkSum + '\'' +
                 ", numberOfLetters=" + numberOfLetters +

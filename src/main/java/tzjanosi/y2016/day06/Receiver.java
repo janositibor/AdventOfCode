@@ -40,4 +40,20 @@ public class Receiver {
         }
         return output.toString();
     }
+
+    public String getMessagePart2() {
+        StringBuilder output = new StringBuilder();
+        for (int i = 0; i < repeatedMessage.size(); i++) {
+            Map<Character, Integer> letterMap = repeatedMessage.get(i);
+            String findLetter = letterMap.entrySet().stream()
+                    .sorted(
+                            Comparator.comparingInt((ToIntFunction<Map.Entry<Character, Integer>>) Map.Entry::getValue)
+                    )
+                    .map(e -> String.valueOf(e.getKey()))
+                    .findFirst()
+                    .get();
+            output.append(findLetter);
+        }
+        return output.toString();
+    }
 }

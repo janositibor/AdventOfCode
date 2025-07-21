@@ -19,4 +19,18 @@ class ReceiverTest {
         assertEquals("wkbvmikb", receiver.getMessage());
     }
 
+    @Test
+    void testPart2() {
+        ReadData readData = new ReadData("testInput.txt");
+        Receiver receiver = new Receiver(readData.getOutput());
+        assertEquals("advent", receiver.getMessagePart2());
+    }
+
+    @Test
+    void problemDataPart2Test() {
+        ReadData readData = new ReadData("input.txt");
+        Receiver receiver = new Receiver(readData.getOutput());
+        assertEquals("evakwaga", receiver.getMessagePart2());
+    }
+
 }

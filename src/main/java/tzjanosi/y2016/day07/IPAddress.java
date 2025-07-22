@@ -22,6 +22,42 @@ public class IPAddress {
         outsideBrackets.add(stringToProcess);
     }
 
+    public boolean supportSSL() {
+        for (int i = 0; i < outsideBrackets.size(); i++) {
+            if (isAba(outsideBrackets.get(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isAba(String input) {
+        for (int i = 0; i < input.length() - 2; i++) {
+            if (isAbaAtPosition(input, i)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isAbaAtPosition(String input, int index) {
+        if (input.charAt(index) == input.charAt(index + 2)
+                && input.charAt(index) != input.charAt(index + 1)) {
+            String stringToFind = new String(new char[]{input.charAt(index + 1), input.charAt(index), input.charAt(index + 1)});
+            return inContains(stringToFind);
+        }
+        return false;
+    }
+
+    private boolean inContains(String stringToFind) {
+        for (int i = 0; i < insideBrackets.size(); i++) {
+            if (insideBrackets.get(i).contains(stringToFind)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean supportTLS() {
         return !insideIsAbba() && outsideIsAbba();
     }

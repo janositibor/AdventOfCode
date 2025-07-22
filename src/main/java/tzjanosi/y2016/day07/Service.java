@@ -22,4 +22,10 @@ public class Service {
                 .filter(IPAddress::supportTLS)
                 .count();
     }
+
+    public int calculateNumberOfSSLSupporters() {
+        return (int) ipAddresses.stream()
+                .filter(IPAddress::supportSSL)
+                .count();
+    }
 }

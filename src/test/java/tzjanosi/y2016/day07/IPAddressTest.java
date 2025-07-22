@@ -20,6 +20,15 @@ class IPAddressTest {
         );
     }
 
+    public static Stream<Arguments> supportSSL() {
+        return Stream.of(
+                Arguments.of("aba[bab]xyz", true),
+                Arguments.of("xyx[xyx]xyx", false),
+                Arguments.of("aaa[kek]eke", true),
+                Arguments.of("zazbz[bzb]cdb", true)
+        );
+    }
+
     @Test
     void create() {
         IPAddress ipAddress = new IPAddress("wysextplwqpvipxdv[srzvtwbfzqtspxnethm]syqbzgtboxxzpwr[kljvjjkjyojzrstfgrw]obdhcczonzvbfby[svotajtpttohxsh]cooktbyumlpxostt");
@@ -52,5 +61,12 @@ class IPAddressTest {
     void supportTLS(String input, boolean result) {
         IPAddress ipAddress = new IPAddress(input);
         assertEquals(result, ipAddress.supportTLS());
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    void supportSSL(String input, boolean result) {
+        IPAddress ipAddress = new IPAddress(input);
+        assertEquals(result, ipAddress.supportSSL());
     }
 }

@@ -19,4 +19,18 @@ class ServiceTest {
         assertEquals(118, service.calculateNumberOfTLSSupporters());
     }
 
+    @Test
+    void calculateNumberOfSSLSupportersTest() {
+        ReadData readData = new ReadData("testInput2.txt");
+        Service service = new Service(readData.getOutput());
+        assertEquals(3, service.calculateNumberOfSSLSupporters());
+    }
+
+    @Test
+    void calculateNumberOfSSLSupportersProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Service service = new Service(readData.getOutput());
+        assertEquals(260, service.calculateNumberOfSSLSupporters());
+    }
+
 }

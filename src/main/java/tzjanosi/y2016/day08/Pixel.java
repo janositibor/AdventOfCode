@@ -22,6 +22,10 @@ public class Pixel {
         return coordinate.lessThan(other);
     }
 
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
+
     public int getRow() {
         return coordinate.getY();
     }

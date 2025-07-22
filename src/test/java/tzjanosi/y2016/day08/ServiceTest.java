@@ -2,6 +2,7 @@ package tzjanosi.y2016.day08;
 
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ServiceTest {
@@ -17,6 +18,14 @@ class ServiceTest {
         ReadData readData = new ReadData("input.txt");
         Service service = new Service(new Coordinate(50, 6), readData.getOutput());
         assertEquals(110, service.runAllOperations());
+        assertThat(service.showResult())
+                .hasSize(6)
+                .containsExactly("****   ** *  * ***  *  *  **  ***  *    *   *  ** ",
+                        "   *    * *  * *  * * *  *  * *  * *    *   *   * ",
+                        "  *     * **** *  * **   *    *  * *     * *    * ",
+                        " *      * *  * ***  * *  *    ***  *      *     * ",
+                        "*    *  * *  * * *  * *  *  * *    *      *  *  * ",
+                        "****  **  *  * *  * *  *  **  *    ****   *   **  ");
     }
 
 }

@@ -12,6 +12,10 @@ public class Service {
         processInput(input);
     }
 
+    public List<String> showResult() {
+        return display.showResult();
+    }
+
     public int runAllOperations() {
         for (int i = 0; i < operations.size(); i++) {
             runOperation(operations.get(i));

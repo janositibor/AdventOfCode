@@ -60,4 +60,26 @@ public class Display {
     public int calculateNumberOfTurnedOnPixels() {
         return (int) pixels.stream().filter(Pixel::isTurnedOn).count();
     }
+
+    public List<String> showResult() {
+        List<String> output = new ArrayList<>();
+        for (int i = 0; i < limit.getY(); i++) {
+            StringBuilder line = new StringBuilder();
+            for (int j = 0; j < limit.getX(); j++) {
+                Pixel dummy = new Pixel(new Coordinate(j, i));
+                Pixel actual = pixels.stream()
+                        .filter(p -> p.equals(dummy))
+                        .findFirst()
+                        .orElseThrow(() -> new IllegalStateException("No pixel found!"));
+                if (actual.isTurnedOn()) {
+                    line.append('*');
+                } else {
+                    line.append(' ');
+                }
+            }
+            System.out.println(line.toString());
+            output.add(line.toString());
+        }
+        return output;
+    }
 }

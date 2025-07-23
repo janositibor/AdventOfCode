@@ -22,6 +22,16 @@ class DecompressorTest {
         );
     }
 
+    public static Stream<Arguments> decompressVersion2() {
+        return Stream.of(
+                Arguments.of("ADVENT", 6),
+                Arguments.of("(3x3)XYZ", 9),
+                Arguments.of("X(8x2)(3x3)ABCY", 20),
+                Arguments.of("(27x12)(20x12)(13x14)(7x10)(1x12)A", 241920),
+                Arguments.of("(25x3)(3x3)ABC(2x3)XY(5x2)PQRSTX(18x9)(3x2)TWO(5x7)SEVEN", 445)
+        );
+    }
+
     @ParameterizedTest
     @MethodSource
     void decompress(String input, int length, String output) {
@@ -30,11 +40,25 @@ class DecompressorTest {
         assertEquals(output, decompressor.getDecompressed());
     }
 
+    @ParameterizedTest
+    @MethodSource
+    void decompressVersion2(String input, int length) {
+        Decompressor decompressor = new Decompressor(input);
+        assertEquals(length, decompressor.decompressVersion2());
+    }
+
     @Test
     void decompressProblemData() {
         ReadData readData = new ReadData("input.txt");
         Decompressor decompressor = new Decompressor(readData.getOutput().get(0));
         assertEquals(107035, decompressor.decompress());
+    }
+
+    @Test
+    void decompressProblemDataPart2() {
+        ReadData readData = new ReadData("input.txt");
+        Decompressor decompressor = new Decompressor(readData.getOutput().get(0));
+        assertEquals(11451628995L, decompressor.decompressVersion2());
     }
 
 }

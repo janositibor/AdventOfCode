@@ -8,6 +8,28 @@ public class Decompressor {
         this.input = input;
     }
 
+    public long decompressVersion2() {
+        return recursiveDecompress(input);
+    }
+
+    public long recursiveDecompress(String input) {
+        String stringToProcess = input;
+        long output = 0;
+        while (stringToProcess.contains("(")) {
+            int markerStart = stringToProcess.indexOf('(');
+            int markerEnd = stringToProcess.indexOf(')');
+            output += markerStart;
+            int[] lengthOfRepeatedSequenceAndNumberOfRepetition = calculateLengthOfRepeatedSequenceAndNumberOfRepetition(stringToProcess.substring(markerStart + 1, markerEnd));
+            int lengthOfRepeatedSequence = lengthOfRepeatedSequenceAndNumberOfRepetition[0];
+            int numberOfRepetition = lengthOfRepeatedSequenceAndNumberOfRepetition[1];
+
+            output += (numberOfRepetition * recursiveDecompress(stringToProcess.substring(markerEnd + 1, markerEnd + 1 + lengthOfRepeatedSequence)));
+            stringToProcess = stringToProcess.substring(markerEnd + 1 + lengthOfRepeatedSequence);
+        }
+        output += stringToProcess.length();
+        return output;
+    }
+
     public int decompress() {
         String stringToProcess = input;
         while (stringToProcess.contains("(")) {

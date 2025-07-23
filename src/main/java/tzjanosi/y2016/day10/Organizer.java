@@ -7,27 +7,23 @@ import java.util.Optional;
 public class Organizer {
     private List<Bot> bots = new ArrayList<>();
     private List<Integer> numbersToCompare;
+    private long multiplicationFromOutput = 1;
 
     public Organizer(List<String> input, List<Integer> numbersToCompare) {
         this.numbersToCompare = numbersToCompare;
         initialize(input);
     }
 
-    public int run() {
-        Bot bot = getBotToProceed();
-//        int i=0;
-        while (bot != null) {
-//            System.out.println(i);
-//            if(i==1){
-//                System.out.println("debug");
-//            }
+    public int run(boolean part2) {
+        Optional<Bot> optionalBot = getBotToProceed();
+        while (optionalBot.isPresent()) {
+            Bot bot = optionalBot.get();
             Optional<Bot> successor = findSuccessor();
-            if (successor.isPresent()) {
+            if (!part2 && successor.isPresent()) {
                 return successor.get().getId();
             }
             proceedBot(bot);
-            bot = getBotToProceed();
-//            i++;
+            optionalBot = getBotToProceed();
         }
         return 0;
     }
@@ -40,10 +36,18 @@ public class Organizer {
         if (botIdLow >= 0) {
             Bot botLow = findBotById(botIdLow);
             botLow.receive(lowValue);
+        } else {
+            if (-3 <= botIdLow && botIdLow <= -1) {
+                multiplicationFromOutput *= lowValue;
+            }
         }
         if (botIdHigh >= 0) {
             Bot botHigh = findBotById(botIdHigh);
             botHigh.receive(highValue);
+        } else {
+            if (-3 <= botIdLow && botIdLow <= -1) {
+                multiplicationFromOutput *= highValue;
+            }
         }
         bot.erase();
     }
@@ -54,11 +58,10 @@ public class Organizer {
                 .findFirst();
     }
 
-    private Bot getBotToProceed() {
+    private Optional<Bot> getBotToProceed() {
         return bots.stream()
                 .filter(Bot::hasBoth)
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException("No bot found with two microchips"));
+                .findFirst();
     }
 
     private void initialize(List<String> input) {
@@ -97,11 +100,11 @@ public class Organizer {
         int id = Integer.parseInt(words[1]);
         int giveLowTo = Integer.parseInt(words[6]);
         if ("output".equals(words[5])) {
-            giveLowTo = -1;
+            giveLowTo = (-1 * giveLowTo) - 1;
         }
         int giveHighTo = Integer.parseInt(words[11]);
         if ("output".equals(words[10])) {
-            giveHighTo = -1;
+            giveHighTo = (-1 * giveHighTo) - 1;
         }
 
         Bot bot = new Bot(id, giveLowTo, giveHighTo);
@@ -113,5 +116,9 @@ public class Organizer {
                 .filter(b -> b.isIdEqualTo(id))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException(String.format("No bot found with id: %d", id)));
+    }
+
+    public long getMultiplicationFromOutput() {
+        return multiplicationFromOutput;
     }
 }

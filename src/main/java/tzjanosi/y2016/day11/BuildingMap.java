@@ -12,7 +12,6 @@ public class BuildingMap {
         for (int i = 0; i < input.size() - 1; i++) {
             processLine(i + 1, input.get(i).replaceAll("\\.", "").replaceAll(",", "").replaceAll("-compatible", ""));
         }
-        people.sort(Comparator.comparing(Person::getId).thenComparing(p -> !p.isMan()));
     }
 
     public BuildingMap(BuildingMap original) {

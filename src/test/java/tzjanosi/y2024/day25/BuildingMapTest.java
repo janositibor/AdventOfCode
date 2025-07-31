@@ -7,7 +7,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-class OrganizerTest {
+class BuildingMapTest {
     @Test
     void build() {
         ReadData readData = new ReadData("testInput.txt");

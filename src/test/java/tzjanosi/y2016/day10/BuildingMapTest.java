@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class OrganizerTest {
+class BuildingMapTest {
     @Test
     void run() {
         ReadData readData = new ReadData("testInput.txt");

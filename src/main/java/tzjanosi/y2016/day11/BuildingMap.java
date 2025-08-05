@@ -7,21 +7,67 @@ public class BuildingMap {
     private int elevator = 1;
     private int lowestLevel = 1;
     private int steps;
+    private int idMark;
 
     public BuildingMap(List<String> input) {
         for (int i = 0; i < input.size() - 1; i++) {
             processLine(i + 1, input.get(i).replaceAll("\\.", "").replaceAll(",", "").replaceAll("-compatible", ""));
         }
+        createPeopleFrom(people);
     }
 
     public BuildingMap(BuildingMap original) {
-        people = new ArrayList<>();
-        for (int i = 0; i < original.people.size(); i++) {
-            people.add(new Person(original.people.get(i)));
+
+        for (int i = 0; i < original.getPeople().size(); i++) {
+            Person person = new Person(original.getPeople().get(i));
+            people.add(person);
+
         }
         elevator = original.elevator;
         lowestLevel = original.lowestLevel;
         steps = original.steps;
+    }
+
+    private void createPeopleFrom(List<Person> originalPeopleList) {
+        List<Pair> temp = createPairsFrom(originalPeopleList);
+        Collections.sort(temp);
+        fillPeopleWithPairValues(temp);
+    }
+
+    private void fillPeopleWithPairValues(List<Pair> input) {
+        people = new ArrayList<>();
+        int mark = elevator;
+        for (int i = 0; i < input.size(); i++) {
+            Pair actualPair = input.get(i);
+            people.add(actualPair.getMan());
+            people.add(actualPair.getWoman());
+            mark = 10 * ((mark * 10) + actualPair.getMan().getLevel()) + actualPair.getWoman().getLevel();
+        }
+        idMark = mark;
+    }
+
+    private List<Pair> createPairsFrom(List<Person> originalPeopleList) {
+        List<Pair> output = new ArrayList<>();
+        for (int i = 0; i < originalPeopleList.size(); i++) {
+            Person personToAdd = new Person(originalPeopleList.get(i));
+            String id = personToAdd.getId();
+            if (output.contains(new Pair(id))) {
+                Pair actualPair = getPairByID(output, id).get();
+                actualPair.addPartnerPublic(personToAdd);
+            } else {
+                output.add(new Pair(personToAdd));
+            }
+        }
+        return output;
+    }
+
+    private Optional<Pair> getPairByID(List<Pair> set, String id) {
+        for (Pair actual : set) {
+            if (actual.getId().equals(id)) {
+                return Optional.of(actual);
+            }
+        }
+        return Optional.empty();
     }
 
     public boolean equalState(BuildingMap other) {
@@ -40,6 +86,7 @@ public class BuildingMap {
             }
         }
         elevator += direction.getValue();
+        createPeopleFrom(people);
         lowestLevel = calculateLowestLevel();
         return isValid();
     }
@@ -86,12 +133,13 @@ public class BuildingMap {
 
     public List<Direction> calculateDirectionToLevel() {
         List<Direction> output = new ArrayList<>();
-        if (elevator < 4) {
-            output.add(Direction.UP);
-        }
         if (elevator > lowestLevel) {
             output.add(Direction.DOWN);
         }
+        if (elevator < 4) {
+            output.add(Direction.UP);
+        }
+
         return output;
     }
 
@@ -109,12 +157,12 @@ public class BuildingMap {
 
     public List<List<Person>> peopleToMove() {
         List<List<Person>> output = new ArrayList<>();
-        output.addAll(getDoublesToMove());
         output.addAll(getSinglesToMove());
+        output.addAll(getDoublesToMove());
         return output;
     }
 
-    private Collection<List<Person>> getDoublesToMove() {
+    public List<List<Person>> getDoublesToMove() {
         List<List<Person>> output = new ArrayList<>();
         List<Person> peopleFromLevel = peopleFromLevel(elevator);
         for (int i = 0; i < peopleFromLevel.size() - 1; i++) {
@@ -128,7 +176,7 @@ public class BuildingMap {
         return output;
     }
 
-    private Collection<List<Person>> getSinglesToMove() {
+    public List<List<Person>> getSinglesToMove() {
         return peopleFromLevel(elevator).stream().map(p -> List.of(new Person(p))).toList();
     }
 
@@ -159,6 +207,10 @@ public class BuildingMap {
 
     public int getElevator() {
         return elevator;
+    }
+
+    public int getIdMark() {
+        return idMark;
     }
 
     @Override

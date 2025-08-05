@@ -13,10 +13,10 @@ class BuildingMapTest {
         assertThat(buildingMap.getPeople())
                 .hasSize(4)
                 .containsExactly(
-                        new Person("hydrogen", false, 1),
-                        new Person("lithium", false, 1),
                         new Person("hydrogen", true, 2),
-                        new Person("lithium", true, 3)
+                        new Person("hydrogen", false, 1),
+                        new Person("lithium", true, 3),
+                        new Person("lithium", false, 1)
                 );
     }
 }

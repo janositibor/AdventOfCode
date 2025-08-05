@@ -19,5 +19,11 @@ class OrganizerTest {
         assertEquals(31, organizer.findBestWay());
     }
 
+    @Test
+    void findBestWayProblemDataPart2() {
+        ReadData readData = new ReadData("inputPart2.txt");
+        Organizer organizer = new Organizer(readData.getOutput());
+        assertEquals(55, organizer.findBestWay());
+    }
 
 }

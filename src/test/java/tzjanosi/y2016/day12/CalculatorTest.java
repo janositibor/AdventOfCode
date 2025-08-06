@@ -19,4 +19,11 @@ class CalculatorTest {
         assertEquals(318083, calculator.execute());
     }
 
+    @Test
+    void executeProblemDataPart2Test() {
+        ReadData readData = new ReadData("inputPart2.txt");
+        Calculator calculator = new Calculator(readData.getOutput());
+        assertEquals(9227737, calculator.execute());
+    }
+
 }

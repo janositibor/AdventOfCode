@@ -42,6 +42,10 @@ public class Labyrinth {
         return getCostFromInProgressToCoordinate(end);
     }
 
+    public int locationsInDistance(int distance) {
+        return (int) done.stream().filter(n -> n.getCost() <= distance).count();
+    }
+
     private void rotateLists() {
         done.addAll(inProgress);
         inProgress.clear();

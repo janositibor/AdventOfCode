@@ -17,4 +17,11 @@ class OrganizerTest {
         assertEquals(86, organizer.findShortestWay());
     }
 
+    @Test
+    void findNumberOfLocationsInDistanceProblemDataTest() {
+        Organizer organizer = new Organizer(new Coordinate(31, 39), 1364);
+        assertEquals(86, organizer.findShortestWay());
+        assertEquals(127, organizer.numberOfLocationsInDistance());
+    }
+
 }

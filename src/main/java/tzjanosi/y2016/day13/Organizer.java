@@ -7,6 +7,7 @@ public class Organizer {
     private Coordinate end;
     private int favoriteNumber;
     private List<Integer> shortestWays = new ArrayList<>();
+    private List<Integer> numberOfLocations = new ArrayList<>();
     private Coordinate size;
 
 
@@ -21,10 +22,15 @@ public class Organizer {
         while (index < 2 || isBetter(index)) {
             Labyrinth labyrinth = new Labyrinth(size, end, favoriteNumber);
             shortestWays.add(labyrinth.calculateWay());
+            numberOfLocations.add(labyrinth.locationsInDistance(50));
             size = new Coordinate(size.getX() + 1, size.getY() + 1);
             index++;
         }
         return shortestWays.get(index - 1);
+    }
+
+    public int numberOfLocationsInDistance() {
+        return numberOfLocations.get(numberOfLocations.size() - 1);
     }
 
     private boolean isBetter(int index) {

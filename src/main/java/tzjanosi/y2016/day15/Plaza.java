@@ -33,6 +33,15 @@ public class Plaza {
         return time;
     }
 
+    public int findFirstEscapeTimeWithAdditionalDisk() {
+        disks.add(new Disk(disks.size() + 1, 11, 0));
+        int time = 0;
+        while (!allFreeAfterTime(time)) {
+            time++;
+        }
+        return time;
+    }
+
     public List<Disk> getDisks() {
         return disks;
     }

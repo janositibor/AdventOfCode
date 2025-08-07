@@ -19,4 +19,11 @@ class PlazaTest {
         assertEquals(121834, plaza.findFirstEscapeTime());
     }
 
+    @Test
+    void findFirstEscapeTimeWithAdditionalDiskProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Plaza plaza = new Plaza(readData.getOutput());
+        assertEquals(3208099, plaza.findFirstEscapeTimeWithAdditionalDisk());
+    }
+
 }

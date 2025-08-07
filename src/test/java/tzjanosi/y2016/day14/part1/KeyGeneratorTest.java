@@ -1,4 +1,4 @@
-package tzjanosi.y2016.day14;
+package tzjanosi.y2016.day14.part1;
 
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +17,12 @@ class KeyGeneratorTest {
     void findFirstKeyFromIndexTest() {
         KeyGenerator keyGenerator = new KeyGenerator("abc");
         assertEquals(39, keyGenerator.findFirstKeyFromIndex(0));
+    }
+
+    @Test
+    void foundKeysTest() {
+        KeyGenerator keyGenerator = new KeyGenerator("abc");
+        assertEquals(22728, keyGenerator.foundKeys());
     }
 
     @Test

@@ -1,15 +1,14 @@
-package tzjanosi.y2016.day14;
+package tzjanosi.y2016.day14.part2;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class KeyGenerator {
     private String secretKey;
     private List<Integer> keys = new ArrayList<>();
+    private Map<Integer, String> stretchedKeys = new ConcurrentHashMap<>();
 
 
     public KeyGenerator(String secretKey) {
@@ -26,13 +25,21 @@ public class KeyGenerator {
         return keys.get(63);
     }
 
-    public String generateMd5HashForIndex(int index) {
+    public String generateStretchedMd5HashForIndex(int index) {
+        if (stretchedKeys.containsKey(index)) {
+            return stretchedKeys.get(index);
+        }
         String password = secretKey + index;
-        return DigestUtils.md5Hex(password).toLowerCase(Locale.US);
+        for (int i = 0; i < 2017; i++) {
+            String nextPassword = DigestUtils.md5Hex(password).toLowerCase(Locale.US);
+            password = nextPassword;
+        }
+        stretchedKeys.put(index, password);
+        return password;
     }
 
     private Optional<String> containsTriple(String wordToCheck) {
-        for (int i = 0; i < wordToCheck.length() - 3; i++) {
+        for (int i = 0; i < wordToCheck.length() - 2; i++) {
             if (wordToCheck.charAt(i) == wordToCheck.charAt(i + 1) && wordToCheck.charAt(i + 1) == wordToCheck.charAt(i + 2)) {
 
                 return Optional.of(wordToCheck.substring(i, i + 1));
@@ -48,7 +55,7 @@ public class KeyGenerator {
 //            if(indexFrom==40 && i==816){
 //                System.out.println("debug");
 //            }
-            md5 = generateMd5HashForIndex(i);
+            md5 = generateStretchedMd5HashForIndex(i);
             if (md5.contains(stringToCheck)) {
                 return true;
             }
@@ -61,7 +68,7 @@ public class KeyGenerator {
         String md5;
         Optional<String> keyCandidate;
         do {
-            md5 = generateMd5HashForIndex(index);
+            md5 = generateStretchedMd5HashForIndex(index);
             keyCandidate = containsTriple(md5);
             index++;
 //            if(keyCandidate.isPresent()){

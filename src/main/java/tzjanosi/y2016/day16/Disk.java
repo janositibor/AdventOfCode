@@ -1,7 +1,5 @@
 package tzjanosi.y2016.day16;
 
-import java.math.BigInteger;
-
 public class Disk {
     private int size;
     private String startingString;
@@ -41,26 +39,28 @@ public class Disk {
     private void fill() {
         String content = startingString;
         while (content.length() < size) {
-            String extendedContent = extendString(content);
-            content = extendedContent;
+            content = extendString(content);
         }
         fullContent = content.substring(0, size);
     }
 
-    private BigInteger extend(BigInteger input, int originalLength) {
-        String binaryString = input.toString(2);
-        int length = binaryString.length();
-        BigInteger inverse = BigInteger.TWO.pow(length).subtract(BigInteger.ONE).subtract(input);
-        BigInteger reversed = new BigInteger(new StringBuilder(convertValueToString(inverse.toString(2), originalLength)).reverse().toString(), 2);
+    private String extend(String input) {
+        String reversedAsString = inverseAndReverse(input);
+        return input + "0" + reversedAsString;
+    }
 
-        BigInteger temp = input;
-        return temp.multiply(BigInteger.TWO.pow(length + 1)).add(reversed);
+    private String inverseAndReverse(String input) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = input.length() - 1; i >= 0; i--) {
+            char next = input.charAt(i) == '0' ? '1' : '0';
+            sb.append(next);
+        }
+        return sb.toString();
     }
 
     public String extendString(String input) {
-        int expectedLength = 2 * input.length() + 1;
-        String value = extend(new BigInteger(input, 2), input.length()).toString(2);
-        return convertValueToString(value, expectedLength);
+        String value = extend(input);
+        return convertValueToString(value, 2 * input.length() + 1);
     }
 
     private static String convertValueToString(String value, int expectedLength) {

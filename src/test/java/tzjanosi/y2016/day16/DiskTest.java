@@ -22,7 +22,7 @@ class DiskTest {
     @ParameterizedTest
     @MethodSource
     void checkExtension(String input, String result) {
-        Disk disk = new Disk(0, "0");
+        Disk disk = new Disk(0, input);
         assertEquals(result, disk.extendString(input));
     }
 
@@ -36,6 +36,12 @@ class DiskTest {
     void eraseProblemDataTest() {
         Disk disk = new Disk(272, "11011110011011101");
         assertEquals("00000100100001100", disk.erase());
+    }
+
+    @Test
+    void eraseProblemDataPart2Test() {
+        Disk disk = new Disk(35651584, "11011110011011101");
+        assertEquals("00011010100010010", disk.erase());
     }
 
 

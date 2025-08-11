@@ -45,4 +45,12 @@ class MineFieldTest {
         MineField mineField = new MineField(readData.getOutput().get(0));
         assertEquals(1987, mineField.calculateRows(40 - 1));
     }
+
+    @Test
+    void calculateRowsProgramDataPart2Test() {
+        ReadData readData = new ReadData("input.txt");
+        MineField mineField = new MineField(readData.getOutput().get(0));
+        assertEquals(19984714, mineField.calculateRows(400000 - 1));
+    }
+
 }

@@ -38,8 +38,6 @@ public class Labyrinth {
     }
 
     private boolean isValid() {
-//        List<Direction> validDirections=validDirections();
-//        return !validDirections.isEmpty() && insideArea();
         return insideArea();
     }
 

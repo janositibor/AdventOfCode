@@ -53,6 +53,7 @@
     <rule ref="category/java/multithreading.xml"/>
     <rule ref="category/java/performance.xml">
         <exclude name="AvoidInstantiatingObjectsInLoops"/>
+        <exclude name="AvoidArrayLoops"/>
     </rule>
     <rule ref="category/java/security.xml"/>
 

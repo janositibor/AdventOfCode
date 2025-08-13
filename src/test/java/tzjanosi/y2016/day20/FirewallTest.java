@@ -19,4 +19,11 @@ class FirewallTest {
         assertEquals(22887907L, firewall.findFirstFreeIP());
     }
 
+    @Test
+    void findAllFreeIPsProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Firewall firewall = new Firewall(readData.getOutput());
+        assertEquals(109L, firewall.findAllFreeIPs());
+    }
+
 }

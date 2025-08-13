@@ -4,11 +4,28 @@ import java.util.*;
 
 public class Firewall {
     private List<Block> blocks = new ArrayList<>();
+    private List<Long> freeIPs = new ArrayList<>();
 
     public Firewall(List<String> input) {
         for (int i = 0; i < input.size(); i++) {
             processLine(input.get(i));
         }
+    }
+
+    public long findAllFreeIPs() {
+        long ipToCheck = 0;
+        OptionalLong result;
+        do {
+            result = findBlockedTo(ipToCheck);
+            if (result.isPresent()) {
+                ipToCheck = result.getAsLong() + 1;
+            } else {
+                freeIPs.add(ipToCheck);
+                ipToCheck++;
+            }
+        }
+        while (ipToCheck <= 4294967295L);
+        return freeIPs.size();
     }
 
     public long findFirstFreeIP() {

@@ -5,11 +5,22 @@ import java.util.List;
 
 public class Scrambler {
     private List<Operation> operations = new ArrayList<>();
+    private List<Operation> reversedOperations = new ArrayList<>();
 
     public Scrambler(List<String> input) {
         for (int i = 0; i < input.size(); i++) {
             process(input.get(i));
         }
+        reversedOperations = reversedOperations.reversed();
+    }
+
+    public String decryptPassword(String input) {
+        char[] password = input.toCharArray();
+        for (int i = 0; i < reversedOperations.size(); i++) {
+            Operation operation = reversedOperations.get(i);
+            password = operation.run(password);
+        }
+        return new String(password);
     }
 
     public String createPassword(String input) {
@@ -25,6 +36,57 @@ public class Scrambler {
         String[] words = line.split(" ");
         Operation operation = createOperation(words);
         operations.add(operation);
+        Operation reverse = createReverseOperation(operation);
+        reversedOperations.add(reverse);
+    }
+
+    private Operation createReverseOperation(Operation operationToReverse) {
+        switch (operationToReverse.getType()) {
+            case SWAP_POSITION:
+                return reverseForSwapPosition(operationToReverse);
+            case SWAP_LETTER:
+                return reverseForSwapLetter(operationToReverse);
+            case ROTATE_LEFT:
+                return reverseForRotateLeft(operationToReverse);
+            case ROTATE_RIGHT:
+                return reverseForRotateRight(operationToReverse);
+            case ROTATE_BASED_ON_POSITION:
+                return reverseForRotateBasedOnPosition(operationToReverse);
+            case REVERSE_POSITIONS:
+                return reverseForReversePositions(operationToReverse);
+            case MOVE_POSITION:
+                return reverseForMovePosition(operationToReverse);
+            default:
+                throw new IllegalArgumentException("No operation found: " + operationToReverse.getType());
+        }
+    }
+
+    private Operation reverseForMovePosition(Operation operationToReverse) {
+        return new Operation(OperationType.MOVE_POSITION, operationToReverse.getParameter2(), operationToReverse.getParameter1());
+    }
+
+    private Operation reverseForReversePositions(Operation operationToReverse) {
+        return operationToReverse;
+    }
+
+    private Operation reverseForRotateBasedOnPosition(Operation operationToReverse) {
+        return new Operation(OperationType.ROTATE_BACK_BASED_ON_POSITION, operationToReverse.getParameter1(), 0);
+    }
+
+    private Operation reverseForRotateRight(Operation operationToReverse) {
+        return new Operation(OperationType.ROTATE_LEFT, operationToReverse.getParameter1(), 0);
+    }
+
+    private Operation reverseForRotateLeft(Operation operationToReverse) {
+        return new Operation(OperationType.ROTATE_RIGHT, operationToReverse.getParameter1(), 0);
+    }
+
+    private Operation reverseForSwapLetter(Operation operationToReverse) {
+        return operationToReverse;
+    }
+
+    private Operation reverseForSwapPosition(Operation operationToReverse) {
+        return operationToReverse;
     }
 
     private Operation createOperation(String[] words) {

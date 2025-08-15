@@ -1,5 +1,6 @@
 package tzjanosi.y2016.day21;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
 
@@ -7,6 +8,16 @@ public class Operation {
     private OperationType type;
     private int parameter1;
     private int parameter2;
+    private Map<OperationType, UnaryOperator<char[]>> runFunctions = Map.ofEntries(
+            Map.entry(OperationType.SWAP_POSITION, this::swapPosition),
+            Map.entry(OperationType.SWAP_LETTER, this::swapLetter),
+            Map.entry(OperationType.ROTATE_LEFT, this::rotateLeft),
+            Map.entry(OperationType.ROTATE_RIGHT, this::rotateRight),
+            Map.entry(OperationType.ROTATE_BASED_ON_POSITION, this::rotateBasedOnPosition),
+            Map.entry(OperationType.REVERSE_POSITIONS, this::reversePositions),
+            Map.entry(OperationType.MOVE_POSITION, this::movePosition),
+            Map.entry(OperationType.ROTATE_BACK_BASED_ON_POSITION, this::rotateBackBasedOnPosition)
+    );
 
 
     public Operation(OperationType type, int parameter1, int parameter2) {
@@ -16,33 +27,35 @@ public class Operation {
     }
 
     public char[] run(char[] input) {
-        UnaryOperator<char[]> function;
-        switch (type) {
-            case SWAP_POSITION:
-                function = this::swapPosition;
-                break;
-            case SWAP_LETTER:
-                function = this::swapLetter;
-                break;
-            case ROTATE_LEFT:
-                function = this::rotateLeft;
-                break;
-            case ROTATE_RIGHT:
-                function = this::rotateRight;
-                break;
-            case ROTATE_BASED_ON_POSITION:
-                function = this::rotateBasedOnPosition;
-                break;
-            case REVERSE_POSITIONS:
-                function = this::reversePositions;
-                break;
-            case MOVE_POSITION:
-                function = this::movePosition;
-                break;
-            default:
-                throw new IllegalArgumentException("No operation type was found: " + type.name());
+        return runFunctions.get(type).apply(input);
+    }
+
+    private char[] rotateBackBasedOnPosition(char[] input) {
+        int index = calculatePositionOfCharacter(input);
+        if (index <= 1) {
+            parameter1 = 1;
+            return rotateLeft(input);
+        } else {
+            if (index % 2 == 1) {
+                parameter1 = (index / 2) + 1;
+                return rotateLeft(input);
+            }
+            parameter1 = 3 - (index / 2);
+            return rotateRight(input);
         }
-        return function.apply(input);
+    }
+
+    private int calculatePositionOfCharacter(char[] input) {
+        int index = -1;
+        boolean found = false;
+        do {
+            index++;
+            if (input[index] == parameter1) {
+                found = true;
+            }
+        }
+        while (!found);
+        return index;
     }
 
 
@@ -103,21 +116,12 @@ public class Operation {
     }
 
     private int calculateNumberOfRotation(char[] input) {
-        int output = 1;
-        int index = 0;
-        boolean found = false;
-        do {
-            if (input[index] == parameter1) {
-                found = true;
-                output += index;
-                if (index >= 4) {
-                    output++;
-                }
-            }
+        int index = calculatePositionOfCharacter(input);
+        if (index >= 4) {
             index++;
         }
-        while (!found);
-        return output;
+        index++;
+        return index;
     }
 
     private char[] reversePositions(char[] input) {
@@ -156,6 +160,18 @@ public class Operation {
         }
         output[parameter2] = temp;
         return output;
+    }
+
+    public OperationType getType() {
+        return type;
+    }
+
+    public int getParameter1() {
+        return parameter1;
+    }
+
+    public int getParameter2() {
+        return parameter2;
     }
 
     @Override

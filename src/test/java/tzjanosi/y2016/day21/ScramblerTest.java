@@ -36,4 +36,19 @@ class ScramblerTest {
         Scrambler scrambler = new Scrambler(readData.getOutput());
         assertEquals("dbfgaehc", scrambler.createPassword("abcdefgh"));
     }
+
+    @Test
+    void decryptPasswordPart1ProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Scrambler scrambler = new Scrambler(readData.getOutput());
+        assertEquals("abcdefgh", scrambler.decryptPassword("dbfgaehc"));
+//        assertEquals("", scrambler.decryptPassword("fbgdceah"));
+    }
+
+    @Test
+    void decryptPasswordPart2ProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Scrambler scrambler = new Scrambler(readData.getOutput());
+        assertEquals("aghfcdeb", scrambler.decryptPassword("fbgdceah"));
+    }
 }

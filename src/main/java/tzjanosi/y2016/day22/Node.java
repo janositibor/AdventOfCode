@@ -23,6 +23,18 @@ public class Node {
         return used;
     }
 
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public int getAvailable() {
+        return available;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {

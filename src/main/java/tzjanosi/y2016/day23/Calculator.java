@@ -27,9 +27,6 @@ public class Calculator {
     }
 
     private void operation() {
-//        if(index==0){
-//            System.out.println(index);
-//        }
         String stringOperation = instructions.get(index);
         String[] words = stringOperation.split(" ");
         String order = words[0];
@@ -66,7 +63,6 @@ public class Calculator {
             updateOperation(indexOfOperationToUpdate);
         }
         index++;
-//        System.out.println(instructions);
     }
 
     private void updateOperation(int indexOfOperationToUpdate) {

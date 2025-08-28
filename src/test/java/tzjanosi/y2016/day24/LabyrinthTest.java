@@ -19,4 +19,11 @@ class LabyrinthTest {
         assertEquals(428, labyrinth.calculateWay());
     }
 
+    @Test
+    void calculateWayProblemDataTestPart2() {
+        ReadData readData = new ReadData("input.txt");
+        Labyrinth labyrinth = new Labyrinth(readData.getOutput());
+        assertEquals(680, labyrinth.calculateWayPart2());
+    }
+
 }

@@ -23,6 +23,17 @@ public class Labyrinth {
         calculateMinimalDistances();
     }
 
+    public int calculateWayPart2() {
+        int output = Integer.MAX_VALUE;
+        for (List<Integer> perm : createPermutations(createList(numberOfTargets() - 1))) {
+            int routeLength = calculateRouteLengthPart2(perm);
+            if (routeLength < output) {
+                output = routeLength;
+            }
+        }
+        return output;
+    }
+
     public int calculateWay() {
         int output = Integer.MAX_VALUE;
         for (List<Integer> perm : createPermutations(createList(numberOfTargets() - 1))) {
@@ -31,6 +42,19 @@ public class Labyrinth {
                 output = routeLength;
             }
         }
+        return output;
+    }
+
+    private int calculateRouteLengthPart2(List<Integer> input) {
+        int output = 0;
+        int from = 0;
+        for (int i = 0; i < input.size(); i++) {
+            int to = input.get(i);
+            output += minimalDistances[from][to];
+            from = to;
+        }
+        output += minimalDistances[from][0];
+
         return output;
     }
 

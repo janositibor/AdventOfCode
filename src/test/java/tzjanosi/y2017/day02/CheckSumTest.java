@@ -19,4 +19,18 @@ class CheckSumTest {
         assertEquals(21845, checkSum.calculateCheckSum());
     }
 
+    @Test
+    void calculateCheckSumPart2Test() {
+        ReadData readData = new ReadData("testInput2.txt");
+        CheckSum checkSum = new CheckSum(readData.getOutput());
+        assertEquals(9, checkSum.calculateCheckSumPart2());
+    }
+
+    @Test
+    void calculateCheckSumProblemDataPart2Test() {
+        ReadData readData = new ReadData("input.txt");
+        CheckSum checkSum = new CheckSum(readData.getOutput());
+        assertEquals(191, checkSum.calculateCheckSumPart2());
+    }
+
 }

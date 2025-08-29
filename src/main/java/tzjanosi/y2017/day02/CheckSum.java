@@ -17,6 +17,31 @@ public class CheckSum {
         return output;
     }
 
+    public int calculateCheckSumPart2() {
+        int output = 0;
+        for (String line : input) {
+            output += calculateEvenlyDivides(line);
+        }
+        return output;
+    }
+
+    private int calculateEvenlyDivides(String line) {
+        String[] words = line.split("[ ,\t]");
+
+        for (int i = 0; i < words.length - 1; i++) {
+            for (int j = i + 1; j < words.length; j++) {
+                int value1 = Integer.parseInt(words[i]);
+                int value2 = Integer.parseInt(words[j]);
+                int numerator = Math.max(value1, value2);
+                int denominator = Math.min(value1, value2);
+                if (numerator % denominator == 0) {
+                    return numerator / denominator;
+                }
+            }
+        }
+        return 0;
+    }
+
     private int calculateDifference(String line) {
         String[] words = line.split("[ ,\t]");
         int min = Integer.MAX_VALUE;

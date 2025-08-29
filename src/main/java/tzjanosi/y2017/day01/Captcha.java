@@ -20,4 +20,18 @@ public class Captcha {
         }
         return sum;
     }
+
+    public int solveCaptchaPart2() {
+        int sum = 0;
+        char[] chars = inputString.toCharArray();
+        int length = chars.length;
+        int shift = length / 2;
+        for (int i = 0; i < length; i++) {
+            int indexToCheck = (i + shift) % length;
+            if (chars[i] == chars[indexToCheck]) {
+                sum += chars[i] - '0';
+            }
+        }
+        return sum;
+    }
 }

@@ -1,5 +1,7 @@
 package tzjanosi.y2017.day03;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Coordinate {
@@ -17,6 +19,20 @@ public class Coordinate {
 
     public int getManhattanDistanceFromOrigo() {
         return Math.abs(x) + Math.abs(y);
+    }
+
+    public List<Coordinate> getNeighbours() {
+        List<Coordinate> output = new ArrayList<>();
+        int[] differences = {-1, 0, 1};
+        for (int i = 0; i < differences.length; i++) {
+            for (int j = 0; j < differences.length; j++) {
+                if (i != 1 || j != 1) {
+                    Coordinate shift = new Coordinate(differences[i], differences[j]);
+                    output.add(shift(shift));
+                }
+            }
+        }
+        return output;
     }
 
     @Override

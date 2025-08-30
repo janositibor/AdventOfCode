@@ -1,14 +1,48 @@
 package tzjanosi.y2017.day03;
 
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class Spiral {
+    private Map<Coordinate, Integer> slots = new ConcurrentHashMap<>();
+
+    private int calculateSumOfNeighbours(Coordinate actual) {
+        List<Coordinate> neighbours = actual.getNeighbours();
+
+        return slots.entrySet()
+                .stream()
+                .filter(s -> neighbours.contains(s.getKey()))
+                .mapToInt(Map.Entry::getValue)
+                .sum();
+    }
+
+    public int stretch(int limit) {
+        int value = 1;
+        slots.put(new Coordinate(0, 0), value);
+        int counter = 2;
+        while (value <= limit) {
+            Coordinate coordinate = getCoordinate(counter);
+            value = calculateSumOfNeighbours(coordinate);
+            slots.put(coordinate, value);
+            counter++;
+        }
+        return value;
+    }
+
     public int getDistance(int order) {
+        Coordinate coordinate = getCoordinate(order);
+        return coordinate.getManhattanDistanceFromOrigo();
+    }
+
+    private Coordinate getCoordinate(int order) {
         if (order == 1) {
-            return 0;
+            return new Coordinate(0, 0);
         }
         int insideSquareSideLength = getInsideSquareSideLength(order);
         int remain = (int) (order - Math.pow(insideSquareSideLength, 2));
-        Coordinate coordinate = calculateCoordinate(remain, insideSquareSideLength);
-        return coordinate.getManhattanDistanceFromOrigo();
+
+        return calculateCoordinate(remain, insideSquareSideLength);
     }
 
     private Coordinate calculateCoordinate(int input, int insideSquareSideLength) {

@@ -18,4 +18,18 @@ class SecurityTest {
         Security security = new Security(readData.getOutput());
         assertEquals(337, security.numberOfValidPhrases());
     }
+
+    @Test
+    void numberOfValidPhrasesPart2Test() {
+        ReadData readData = new ReadData("testInput2.txt");
+        Security security = new Security(readData.getOutput());
+        assertEquals(3, security.numberOfValidPhrasesPart2());
+    }
+
+    @Test
+    void numberOfValidPhrasesPart2ProgramDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Security security = new Security(readData.getOutput());
+        assertEquals(231, security.numberOfValidPhrasesPart2());
+    }
 }

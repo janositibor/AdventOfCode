@@ -12,4 +12,14 @@ public class Command {
         value++;
         return output;
     }
+
+    public int runPart2() {
+        int output = value;
+        if (value >= 3) {
+            value--;
+        } else {
+            value++;
+        }
+        return output;
+    }
 }

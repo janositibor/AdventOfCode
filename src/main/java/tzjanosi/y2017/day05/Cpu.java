@@ -23,4 +23,14 @@ public class Cpu {
         }
         return counter;
     }
+
+    public int runPart2() {
+        int counter = 0;
+        int limit = commands.size();
+        while (index < limit) {
+            counter++;
+            index += commands.get(index).runPart2();
+        }
+        return counter;
+    }
 }

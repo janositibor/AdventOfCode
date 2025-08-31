@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class Reallocation {
     private List<Integer> state = new ArrayList<>();
-    private Set<List<Integer>> previousStates = new HashSet<>();
+    private List<List<Integer>> previousStates = new ArrayList<>();
 
     public Reallocation(String input) {
         String[] words = input.split("\t");
@@ -19,12 +19,23 @@ public class Reallocation {
     public int process() {
         int counter = 0;
         while (!previousStates.contains(state)) {
-            previousStates.add(state);
+            previousStates.add(new ArrayList<>(state));
             int indexOfMaxSlot = findIndexOfMaxSlot();
             reallocate(indexOfMaxSlot);
             counter++;
         }
         return counter;
+    }
+
+    public int processPart2() {
+        int counter = 0;
+        while (!previousStates.contains(state)) {
+            previousStates.add(new ArrayList<>(state));
+            int indexOfMaxSlot = findIndexOfMaxSlot();
+            reallocate(indexOfMaxSlot);
+            counter++;
+        }
+        return counter - previousStates.indexOf(state);
     }
 
     private int findIndexOfMaxSlot() {

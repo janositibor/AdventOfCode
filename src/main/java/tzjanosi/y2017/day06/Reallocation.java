@@ -1,9 +1,7 @@
 package tzjanosi.y2017.day06;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Reallocation {
     private List<Integer> state = new ArrayList<>();

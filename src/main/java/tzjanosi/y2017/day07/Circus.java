@@ -22,6 +22,19 @@ public class Circus {
 
     }
 
+    public int balance() {
+        int counter = 0;
+        int numberOfPrograms = programs.size();
+        while (true) {
+            int index = counter % numberOfPrograms;
+            Program program = programs.get(index);
+            int result = program.calculateTotalWeight();
+            if (result != 0) {
+                return result;
+            }
+            counter++;
+        }
+    }
 
     private void connectPrograms() {
         for (int i = 0; i < programs.size(); i++) {
@@ -49,10 +62,10 @@ public class Circus {
     private void readLine(String line) {
         if (line.contains(" -> ")) {
             int separatorIndex = line.indexOf(" -> ");
-            Program program = readLeaf(line.substring(0, separatorIndex));
+            Program program = readLeaf(line.substring(0, separatorIndex), false);
             readConnection(program, line.substring(separatorIndex + 4));
         } else {
-            readLeaf(line);
+            readLeaf(line, true);
         }
     }
 
@@ -63,10 +76,10 @@ public class Circus {
         }
     }
 
-    private Program readLeaf(String input) {
+    private Program readLeaf(String input, boolean totalWeightOk) {
         String temp = input.replace(")", "");
         String[] words = temp.split(" \\(");
-        Program program = new Program(words[0], Integer.parseInt(words[1]));
+        Program program = new Program(words[0], Integer.parseInt(words[1]), totalWeightOk);
         programs.add(program);
         return program;
     }

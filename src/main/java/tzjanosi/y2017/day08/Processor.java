@@ -9,6 +9,7 @@ import java.util.function.BiPredicate;
 public class Processor {
     private Set<Register> registers = new HashSet<>();
     private List<String> orders;
+    private int maxValue;
 
     public Processor(List<String> orders) {
         this.orders = orders;
@@ -18,7 +19,20 @@ public class Processor {
         for (int i = 0; i < orders.size(); i++) {
             runOrder(orders.get(i));
         }
-        return maxValue();
+        return findMaxValue();
+    }
+
+    public int runPart2() {
+        for (int i = 0; i < orders.size(); i++) {
+            runOrder(orders.get(i));
+            calculateMaxValue();
+        }
+        return maxValue;
+    }
+
+    private void calculateMaxValue() {
+        int currentMax = findMaxValue();
+        maxValue = Math.max(maxValue, currentMax);
     }
 
     private void runOrder(String line) {
@@ -86,7 +100,7 @@ public class Processor {
                 .findFirst();
     }
 
-    private int maxValue() {
+    private int findMaxValue() {
         return registers.stream()
                 .mapToInt(Register::getValue)
                 .max()

@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StreamProcessorTest {
 
-    private static final Stream<Arguments> calculateTotalScoreTest() {
+    private static Stream<Arguments> calculateTotalScoreTest() {
         return Stream.of(
                 Arguments.of("{}", 1),
                 Arguments.of("{{{}}}", 6),
@@ -21,6 +21,18 @@ class StreamProcessorTest {
                 Arguments.of("{{<ab>},{<ab>},{<ab>},{<ab>}}", 9),
                 Arguments.of("{{<!!>},{<!!>},{<!!>},{<!!>}}", 9),
                 Arguments.of("{{<a!>},{<a!>},{<a!>},{<ab>}}", 3)
+        );
+    }
+
+    private static Stream<Arguments> getNumberOfGarbageCharactersTest() {
+        return Stream.of(
+                Arguments.of("<>", 0),
+                Arguments.of("<random characters>", 17),
+                Arguments.of("<<<<>", 3),
+                Arguments.of("<{!>}>", 2),
+                Arguments.of("<!!>", 0),
+                Arguments.of("<!!!>>", 0),
+                Arguments.of("<{o\"i!a,<{i<a>", 10)
         );
     }
 
@@ -38,4 +50,19 @@ class StreamProcessorTest {
         StreamProcessor streamProcessor = new StreamProcessor(readData.getOutput().get(0));
         assertEquals(10616, streamProcessor.calculateTotalScore());
     }
+
+    @ParameterizedTest
+    @MethodSource
+    void getNumberOfGarbageCharactersTest(String input, int result) {
+        StreamProcessor streamProcessor = new StreamProcessor(input);
+        assertEquals(result, streamProcessor.getNumberOfGarbageCharacters());
+    }
+
+    @Test
+    void getNumberOfGarbageCharactersProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        StreamProcessor streamProcessor = new StreamProcessor(readData.getOutput().get(0));
+        assertEquals(5101, streamProcessor.getNumberOfGarbageCharacters());
+    }
+
 }

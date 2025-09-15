@@ -8,6 +8,7 @@ public class StreamProcessor {
     private Group actual;
     private boolean inGarbage;
     private int index;
+    private int numberOfGarbageCharacters;
 
     public StreamProcessor(String input) {
         actual = new Group(null, 0);
@@ -40,9 +41,16 @@ public class StreamProcessor {
                 skip();
                 break;
             default:
+                garbageCharacter();
                 break;
         }
         index++;
+    }
+
+    private void garbageCharacter() {
+        if (inGarbage) {
+            numberOfGarbageCharacters++;
+        }
     }
 
     private void skip() {
@@ -54,16 +62,21 @@ public class StreamProcessor {
     }
 
     private void enterGarbage() {
-        inGarbage = true;
+        garbageCharacter();
+        if (!inGarbage) {
+            inGarbage = true;
+        }
     }
 
     private void closeGroup() {
+        garbageCharacter();
         if (!inGarbage) {
             actual = actual.getParent();
         }
     }
 
     private void openGroup() {
+        garbageCharacter();
         if (!inGarbage) {
             Group newGroup = new Group(actual, actual.getScore() + 1);
             actual.addChild(newGroup);
@@ -73,5 +86,9 @@ public class StreamProcessor {
 
     public int calculateTotalScore() {
         return groups.stream().mapToInt(Group::totalScore).sum();
+    }
+
+    public int getNumberOfGarbageCharacters() {
+        return numberOfGarbageCharacters;
     }
 }

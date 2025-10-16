@@ -1,4 +1,4 @@
-package tzjanosi.y2017.day10;
+package tzjanosi.y2017.day10.part1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,13 +54,5 @@ public class KnotHash {
             girland[position1Index] = girland[position2Index];
             girland[position2Index] = temp;
         }
-    }
-
-    public int[] getGirland() {
-        return girland;
-    }
-
-    public List<Integer> getLengths() {
-        return lengths;
     }
 }

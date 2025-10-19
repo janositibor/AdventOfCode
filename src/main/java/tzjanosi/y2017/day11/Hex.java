@@ -34,6 +34,16 @@ public class Hex {
         return calculateStepsBackToOrigin();
     }
 
+    public int moveWithMaxDistance() {
+        int output = 0;
+        for (int i = 0; i < directions.size(); i++) {
+            Direction direction = directions.get(i);
+            location.shift(direction.getShift());
+            output = Math.max(output, calculateStepsBackToOrigin());
+        }
+        return output;
+    }
+
     private int calculateStepsBackToOrigin() {
         double x = Math.abs(location.getX());
         double y = Math.abs(location.getY());

@@ -33,4 +33,11 @@ class HexTest {
         Hex hex = new Hex(readData.getOutput().get(0));
         assertEquals(715, hex.move());
     }
+
+    @Test
+    void moveWithMaxDistanceWithProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Hex hex = new Hex(readData.getOutput().get(0));
+        assertEquals(1512, hex.moveWithMaxDistance());
+    }
 }

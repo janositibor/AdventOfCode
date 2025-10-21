@@ -6,17 +6,31 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlumberTest {
     @Test
-    void countClusterTest() {
+    void countClusterZeroTest() {
         ReadData readData = new ReadData("testInput.txt");
         Plumber plumber = new Plumber(readData.getOutput());
-        assertEquals(6, plumber.countCluster());
+        assertEquals(6, plumber.countClusterZero());
     }
 
     @Test
-    void countClusterProblemDataTest() {
+    void countClustersTest() {
+        ReadData readData = new ReadData("testInput.txt");
+        Plumber plumber = new Plumber(readData.getOutput());
+        assertEquals(2, plumber.countClusters());
+    }
+
+    @Test
+    void countClusterZeroProblemDataTest() {
         ReadData readData = new ReadData("input.txt");
         Plumber plumber = new Plumber(readData.getOutput());
-        assertEquals(152, plumber.countCluster());
+        assertEquals(152, plumber.countClusterZero());
+    }
+
+    @Test
+    void countClustersProblemDataTestZero() {
+        ReadData readData = new ReadData("input.txt");
+        Plumber plumber = new Plumber(readData.getOutput());
+        assertEquals(186, plumber.countClusters());
     }
 
 }

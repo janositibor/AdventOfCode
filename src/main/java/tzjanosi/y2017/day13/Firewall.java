@@ -26,4 +26,19 @@ public class Firewall {
     public int calculateTotalSeverity() {
         return layers.stream().mapToInt(Layer::severity).sum();
     }
+
+    public boolean isCaught(int delay) {
+        return layers.stream().anyMatch(l -> l.isCaught(delay));
+    }
+
+    public int calculateDelay() {
+        boolean isCaught;
+        int i = 0;
+        do {
+            isCaught = isCaught(i);
+            i++;
+        }
+        while (isCaught);
+        return --i;
+    }
 }

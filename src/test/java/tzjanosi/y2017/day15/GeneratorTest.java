@@ -29,18 +29,52 @@ class GeneratorTest {
         );
     }
 
+    private static Stream<Arguments> pickyGeneratorATest() {
+        return Stream.of(
+                Arguments.of(65, 1352636452),
+                Arguments.of(1352636452, 1992081072),
+                Arguments.of(1992081072, 530830436),
+                Arguments.of(530830436, 1980017072),
+                Arguments.of(1980017072, 740335192)
+        );
+    }
+
+    private static Stream<Arguments> pickyGeneratorBTest() {
+        return Stream.of(
+                Arguments.of(8921, 1233683848),
+                Arguments.of(1233683848, 862516352),
+                Arguments.of(862516352, 1159784568),
+                Arguments.of(1159784568, 1616057672),
+                Arguments.of(1616057672, 412269392)
+        );
+    }
+
     @ParameterizedTest
     @MethodSource
     void generatorATest(long input, long expected) {
-        Generator generatorA = new Generator(16807);
+        Generator generatorA = new Generator(16807, 4);
         assertEquals(expected, generatorA.generate(input));
     }
 
     @ParameterizedTest
     @MethodSource
     void generatorBTest(long input, long expected) {
-        Generator generatorA = new Generator(48271);
+        Generator generatorA = new Generator(48271, 8);
         assertEquals(expected, generatorA.generate(input));
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    void pickyGeneratorATest(long input, long expected) {
+        Generator generatorB = new Generator(16807, 4);
+        assertEquals(expected, generatorB.generatePicky(input));
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    void pickyGeneratorBTest(long input, long expected) {
+        Generator generatorB = new Generator(48271, 8);
+        assertEquals(expected, generatorB.generatePicky(input));
     }
 
 }

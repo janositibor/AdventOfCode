@@ -1,31 +1,48 @@
 package tzjanosi.y2017.day16;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class Promenade {
-    private int numberOfmembers;
-    private Map<Integer, Integer> team = new ConcurrentHashMap<>();
+    private int numberOfMembers;
+    private List<Integer> team = new ArrayList<>();
     private List<Map.Entry<Character, List<Integer>>> operations = new ArrayList<>();
 
     public Promenade(int numberOfmembers, String input) {
-        this.numberOfmembers = numberOfmembers;
+        this.numberOfMembers = numberOfmembers;
         initTeam();
         processInput(input);
     }
 
-    public void check() {
-//        System.out.println(team);
-        System.out.println(convertTeamToString());
-        System.out.println();
-        System.out.println(operations);
+    public int findPeriod(int count) {
+        for (int i = 0; i < count; i++) {
+            exec();
+            if ("abcdefghijklmnop".equals(convertTeamToString())) {
+                return i + 1;
+            }
+        }
+        return -1;
+    }
+
+    public String repeatedLenientExec(int cycles) {
+        int effective = cycles % findPeriod(10_000);
+        for (int i = 0; i < effective; i++) {
+            exec();
+        }
+        return convertTeamToString();
+    }
+
+
+    public String repeatedExec(int cycles) {
+        for (int i = 0; i < cycles; i++) {
+            exec();
+        }
+        return convertTeamToString();
     }
 
     public String exec() {
         for (int i = 0; i < operations.size(); i++) {
             execCommand(operations.get(i));
-//            check();
         }
         return convertTeamToString();
     }
@@ -48,68 +65,32 @@ public class Promenade {
 
 
     private void spin(int shift) {
-        Deque<Integer> puffer = new LinkedList<>();
-        for (int i = 0; i < numberOfmembers; i++) {
-            Map.Entry<Integer, Integer> entry1 = findEntryByKey(i);
-            if (i - shift < 0) {
-                Map.Entry<Integer, Integer> entry2 = findEntryByKey(i - shift + numberOfmembers);
-                puffer.addLast(entry1.getValue());
-                entry1.setValue(entry2.getValue());
-            } else {
-                puffer.addLast(entry1.getValue());
-                entry1.setValue(puffer.removeFirst());
-
-            }
-        }
+        Collections.rotate(team, shift);
     }
 
     private void exchange(int key1, int key2) {
-        Map.Entry<Integer, Integer> entry1 = findEntryByKey(key1);
-        Map.Entry<Integer, Integer> entry2 = findEntryByKey(key2);
-        swap(entry1, entry2);
+        int temp = team.get(key1);
+        team.set(key1, team.get(key2));
+        team.set(key2, temp);
     }
 
     private void partner(int value1, int value2) {
-        Map.Entry<Integer, Integer> entry1 = findEntryByValue(value1);
-        Map.Entry<Integer, Integer> entry2 = findEntryByValue(value2);
-        swap(entry1, entry2);
-    }
-
-    private void swap(Map.Entry<Integer, Integer> entry1, Map.Entry<Integer, Integer> entry2) {
-        int temp = entry1.getValue();
-        entry1.setValue(entry2.getValue());
-        entry2.setValue(temp);
-    }
-
-    private Map.Entry<Integer, Integer> findEntryByKey(int keyToFound) {
-        return team.entrySet().stream()
-                .filter(e -> e.getKey() == keyToFound)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No item found with key: " + keyToFound));
-    }
-
-    private Map.Entry<Integer, Integer> findEntryByValue(int valueToFound) {
-        return team.entrySet().stream()
-                .filter(e -> e.getValue() == valueToFound)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No item found with value: " + valueToFound));
+        int key1 = team.indexOf(value1);
+        int key2 = team.indexOf(value2);
+        team.set(key1, value2);
+        team.set(key2, value1);
     }
 
     private String convertTeamToString() {
-        return team.entrySet().stream()
-                .sorted(Comparator.comparingInt(Map.Entry::getKey))
-//                .peek(e-> System.out.println((char) e.getValue().intValue()))
-                .map(e -> String.valueOf((char) e.getValue().intValue()))
-//                 .peek(s-> System.out.println(s))
+        return team.stream()
+                .map(d -> String.valueOf((char) d.intValue()))
                 .collect(Collectors.joining());
-
-
     }
 
     private void initTeam() {
         int startingcode = 'a';
-        for (int i = 0; i < numberOfmembers; i++) {
-            team.put(i, startingcode + i);
+        for (int i = 0; i < numberOfMembers; i++) {
+            team.add(startingcode + i);
         }
     }
 

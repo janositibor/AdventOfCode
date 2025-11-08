@@ -1,6 +1,7 @@
 package tzjanosi.y2017.day17;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Spinlock {
@@ -18,5 +19,19 @@ public class Spinlock {
             spin.add(actualPosition, i);
         }
         return spin.get((actualPosition + 1) % spin.size());
+    }
+
+    public int longCreate(int shift) {
+        int actualPosition = 0;
+        int actualSize = 1;
+        int output = 0;
+        for (int i = 1; i <= 50_000_000; i++) {
+            actualPosition = ((actualPosition + shift) % actualSize) + 1;
+            actualSize++;
+            if (actualPosition == 1) {
+                output = i;
+            }
+        }
+        return output;
     }
 }

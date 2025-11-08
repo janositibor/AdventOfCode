@@ -17,4 +17,10 @@ class SpinlockTest {
         assertEquals(1487, spinlock.create(367));
     }
 
+    @Test
+    void longCreateProblemDataTest() {
+        Spinlock spinlock = new Spinlock();
+        assertEquals(25674054, spinlock.longCreate(367));
+    }
+
 }

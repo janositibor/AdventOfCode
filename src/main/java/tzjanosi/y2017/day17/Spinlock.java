@@ -1,7 +1,6 @@
 package tzjanosi.y2017.day17;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Spinlock {

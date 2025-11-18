@@ -1,4 +1,6 @@
-package tzjanosi.y2017.day18;
+package tzjanosi.y2017.day18.part2;
+
+import java.util.Objects;
 
 public class Register {
     private String name;
@@ -36,6 +38,20 @@ public class Register {
 
     public void setValue(long value) {
         this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Register register = (Register) o;
+        return value == register.value && Objects.equals(name, register.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, value);
     }
 
     @Override

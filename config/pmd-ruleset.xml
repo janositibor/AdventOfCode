@@ -50,7 +50,10 @@
         <exclude name="AvoidDuplicateLiterals"/>
     </rule>
 
-    <rule ref="category/java/multithreading.xml"/>
+    <rule ref="category/java/multithreading.xml">
+        <exclude name="DoNotUseThreads"/>
+    </rule>
+
     <rule ref="category/java/performance.xml">
         <exclude name="AvoidInstantiatingObjectsInLoops"/>
         <exclude name="AvoidArrayLoops"/>

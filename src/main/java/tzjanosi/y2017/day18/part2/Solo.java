@@ -1,24 +1,38 @@
-package tzjanosi.y2017.day18;
+package tzjanosi.y2017.day18.part2;
 
 import java.util.*;
 
-public class Duet {
+public class Solo implements Runnable {
+    private int id;
     private Set<Register> registers = new HashSet<>();
     private List<Operation> operations = new ArrayList<>();
-    private long lastPlayedFrequency;
-    private boolean stop;
+    private Connection connection;
 
-    public Duet(List<String> input) {
+    public Solo(int id, List<String> input, Connection connection) {
+        this.id = id;
+        this.connection = connection;
         process(input);
     }
 
-    public long execute() {
+    @Override
+    public void run() {
+        execute();
+    }
+
+    public Integer execute() {
         int index = 0;
-        while (!stop) {
+        while (connection.outputFlagRunValue()) {
             Operation operationToExecute = operations.get(index);
             index += executeOperation(operationToExecute);
+            setOutputFlag(index);
         }
-        return lastPlayedFrequency;
+        return connection.getResultValue();
+    }
+
+    private void setOutputFlag(int index) {
+        if (index < 0 || index >= operations.size()) {
+            connection.setOutputFlagRun(false);
+        }
     }
 
     private long executeOperation(Operation operationToExecute) {
@@ -28,7 +42,7 @@ public class Duet {
         long output = 0;
         switch (name) {
             case "snd":
-                output = sound(parameter1);
+                output = send(parameter1);
                 break;
             case "set":
                 output = updateRegister(parameter1, parameter2);
@@ -43,7 +57,7 @@ public class Duet {
                 output = modRegister(parameter1, parameter2);
                 break;
             case "rcv":
-                output = recover(parameter1);
+                output = receive(parameter1);
                 break;
             case "jgz":
                 output = jump(parameter1, parameter2);
@@ -58,12 +72,27 @@ public class Duet {
         return parameter1.getValue() > 0 ? parameter2 : 1;
     }
 
-    private long recover(Register parameter1) {
-        if (parameter1.getValue() != 0) {
-            stop = true;
-            return 0;
+    private long receive(Register parameter1) {
+        while (connection.shouldWait()) {
+            connection.setOutputFlagWait(true);
+            pause(5);
+
+        }
+        if (connection.hasInputNumbers()) {
+            connection.setOutputFlagWait(false);
+            parameter1.setValue(connection.readInputNumbers());
+        } else {
+            connection.setOutputFlagRun(false);
         }
         return 1;
+    }
+
+    private void pause(int duration) {
+        try {
+            Thread.sleep(duration);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     private long modRegister(Register parameter1, long parameter2) {
@@ -86,8 +115,8 @@ public class Duet {
         return 1;
     }
 
-    private long sound(Register parameter1) {
-        lastPlayedFrequency = parameter1.getValue();
+    private long send(Register parameter1) {
+        connection.addOutputNumber(parameter1);
         return 1;
     }
 
@@ -131,10 +160,48 @@ public class Duet {
         Register output;
         if ("one".equals(registerName)) {
             output = new Register(registerName, 1);
+        } else if ("p".equals(registerName)) {
+            output = new Register(registerName, this.id);
         } else {
             output = new Register(registerName);
         }
         registers.add(output);
         return output;
+    }
+
+    public Set<Register> getRegisters() {
+        return registers;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public List<Operation> getOperations() {
+        return operations;
+    }
+
+    public Deque<Long> getInputNumbers() {
+        return connection.getInputNumbers();
+    }
+
+    public Deque<Long> getOutputNumbers() {
+        return connection.getOutputNumbers();
+    }
+
+//    public List<Boolean> getInputFlag() {
+//        return inputFlag;
+//    }
+//
+//    public List<Boolean> getOutputFlag() {
+//        return outputFlag;
+//    }
+
+    public List<Integer> getResultValue() {
+        return connection.getResult();
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 }

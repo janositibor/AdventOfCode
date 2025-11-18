@@ -1,4 +1,4 @@
-package tzjanosi.y2017.day18;
+package tzjanosi.y2017.day18.part1;
 
 public class Operation {
     private String name;

@@ -1,4 +1,4 @@
-package tzjanosi.y2017.day18;
+package tzjanosi.y2017.day18.part2;
 
 public class OperationRegister extends Operation {
     private Register parameter2;

@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Pipeline {
     private Set<Sign> signs = new HashSet<>();
+    private int numberOfSteps;
 
     public Pipeline(List<String> input) {
         processInput(input);
@@ -12,13 +13,11 @@ public class Pipeline {
     public String read() {
         StringBuilder output = new StringBuilder();
         Sign actual = findStart();
-//        System.out.println(String.format("Start: %s",actual.toString()));
         Optional<Coordinate> optionalNextDirection = Optional.of(new Coordinate(0, 1));
         while (optionalNextDirection.isPresent()) {
             Coordinate direction = optionalNextDirection.get();
-//            System.out.println(String.format("direction: %s",direction));
             Sign next = findNextSign(actual, direction);
-//            System.out.println(String.format("next: %s",next));
+            numberOfSteps += actual.getCoordinate().distance(next.getCoordinate());
             String text = findLettersBetween(actual, next);
             if (!text.isEmpty()) {
                 output.append(text);
@@ -100,6 +99,10 @@ public class Pipeline {
             isletter = true;
         }
         return new Sign(value, isletter, new Coordinate(x, y));
+    }
+
+    public int getNumberOfSteps() {
+        return numberOfSteps;
     }
 
     public Set<Sign> getSigns() {

@@ -25,6 +25,7 @@ class PipelineTest {
         ReadData readData = new ReadData("testInput.txt");
         Pipeline pipeline = new Pipeline(readData.getOutput());
         assertEquals("ABCDEF", pipeline.read());
+        assertEquals(38, pipeline.getNumberOfSteps());
     }
 
     @Test
@@ -32,5 +33,6 @@ class PipelineTest {
         ReadData readData = new ReadData("input.txt");
         Pipeline pipeline = new Pipeline(readData.getOutput());
         assertEquals("NDWHOYRUEA", pipeline.read());
+        assertEquals(17540, pipeline.getNumberOfSteps());
     }
 }

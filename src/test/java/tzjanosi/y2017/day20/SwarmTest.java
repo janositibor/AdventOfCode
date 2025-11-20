@@ -19,4 +19,18 @@ class SwarmTest {
         assertEquals(344, swarm.idForLongTermMinimalManhattanDistance());
     }
 
+    @Test
+    void startTest() {
+        ReadData readData = new ReadData("testInput2.txt");
+        Swarm swarm = new Swarm(readData.getOutput());
+        assertEquals(0, swarm.start());
+    }
+
+    @Test
+    void startProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Swarm swarm = new Swarm(readData.getOutput());
+        assertEquals(404, swarm.start());
+    }
+
 }

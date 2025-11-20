@@ -1,15 +1,60 @@
 package tzjanosi.y2017.day20;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Swarm {
     private Set<Particle> particles = new HashSet<>();
 
     public Swarm(List<String> input) {
         processInput(input);
+    }
+
+    public int start() {
+        int maxStep = findMaxStep();
+        for (int i = 0; (i < maxStep && particles.size() > 1); i++) {
+            step();
+        }
+        return particles.size();
+    }
+
+    public void step() {
+        Map<Vector, Set<Particle>> distribution = createDistribution();
+        removeMatch(distribution);
+        moveParticles();
+    }
+
+    private void moveParticles() {
+        particles.forEach(Particle::step);
+    }
+
+    private int findMaxStep() {
+        return particles.stream()
+                .map(Particle::maxDistant)
+                .sorted(Comparator.reverseOrder())
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("No particles found!"));
+    }
+
+    private Map<Vector, Set<Particle>> createDistribution() {
+        Map<Vector, Set<Particle>> distribution = new ConcurrentHashMap<>();
+        for (Particle particle : particles) {
+            Vector key = particle.getPosition();
+            if (distribution.containsKey(key)) {
+                distribution.get(key).add(particle);
+            } else {
+                distribution.put(key, new HashSet<>(Set.of(particle)));
+            }
+        }
+        return distribution;
+    }
+
+    private void removeMatch(Map<Vector, Set<Particle>> distribution) {
+        List<Particle> particlessToRemove = distribution.entrySet().stream()
+                .filter(e -> e.getValue().size() > 1)
+                .flatMap(e -> e.getValue().stream())
+                .toList();
+        particles.removeAll(particlessToRemove);
     }
 
     public int idForLongTermMinimalManhattanDistance() {

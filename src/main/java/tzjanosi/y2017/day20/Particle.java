@@ -13,6 +13,15 @@ public class Particle {
         this.acceleration = acceleration;
     }
 
+    public void step() {
+        velocity = velocity.plus(acceleration);
+        position = position.plus(velocity);
+    }
+
+    public int maxDistant() {
+        return position.maxDistant();
+    }
+
     public int longTermManhattanDistanceForAcceleration() {
         return acceleration.manhattanLength();
     }

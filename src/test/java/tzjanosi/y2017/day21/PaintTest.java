@@ -29,4 +29,11 @@ class PaintTest {
         Paint paint = new Paint(readData.getOutput());
         assertEquals(120, paint.numberOfOnsAfterSteps(5));
     }
+
+    @Test
+    void numberOfOnsAfterStepsProblemDataPart2Test() {
+        ReadData readData = new ReadData("input.txt");
+        Paint paint = new Paint(readData.getOutput());
+        assertEquals(2204099, paint.numberOfOnsAfterSteps(18));
+    }
 }

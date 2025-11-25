@@ -1,8 +1,8 @@
-package tzjanosi.y2017.day22;
+package tzjanosi.y2017.day22.part2;
 
 import java.util.Objects;
 
-public class Coordinate {
+public class Coordinate implements Comparable<Coordinate> {
     private int x;
     private int y;
 
@@ -15,6 +15,14 @@ public class Coordinate {
         this.y = y;
     }
 
+    @Override
+    public int compareTo(Coordinate o) {
+        if (this.x != o.x) {
+            return Integer.compare(this.x, o.x);
+        }
+        return Integer.compare(this.y, o.y);
+    }
+
     public Coordinate move(Coordinate direction) {
         return new Coordinate(x + direction.x, y + direction.y);
     }
@@ -25,6 +33,10 @@ public class Coordinate {
 
     public Coordinate left() {
         return new Coordinate(y, -1 * x);
+    }
+
+    public Coordinate turnBack() {
+        return new Coordinate(-1 * x, -1 * y);
     }
 
     @Override

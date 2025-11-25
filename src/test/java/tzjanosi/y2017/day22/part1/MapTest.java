@@ -1,4 +1,4 @@
-package tzjanosi.y2017.day22;
+package tzjanosi.y2017.day22.part1;
 
 import org.junit.jupiter.api.Test;
 
@@ -22,5 +22,6 @@ class MapTest {
         Map map = new Map(readData.getOutput());
         assertEquals(5223, map.steps(10000));
     }
+
 
 }

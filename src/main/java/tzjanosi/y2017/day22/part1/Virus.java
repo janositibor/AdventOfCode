@@ -1,4 +1,4 @@
-package tzjanosi.y2017.day22;
+package tzjanosi.y2017.day22.part1;
 
 import java.util.Set;
 

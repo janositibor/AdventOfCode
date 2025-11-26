@@ -1,4 +1,4 @@
-package tzjanosi.y2017.day23;
+package tzjanosi.y2017.day23.part2;
 
 public class OperationNumerical extends Operation {
     private long parameter2;

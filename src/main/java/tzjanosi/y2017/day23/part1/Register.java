@@ -1,4 +1,4 @@
-package tzjanosi.y2017.day23;
+package tzjanosi.y2017.day23.part1;
 
 public class Register {
     private String name;

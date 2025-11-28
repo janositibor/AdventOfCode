@@ -7,19 +7,20 @@ import java.util.Set;
 public class Handler {
     private Set<Node> bridges = new HashSet<>();
     private int maxStrength;
+    private int maxLength;
+    private int localMaxStrength;
 
     public Handler(List<String> input) {
         processInput(input);
     }
 
-    public int build() {
+    public void build() {
         while (!bridges.isEmpty()) {
             Node buildable = selectABuildableNode();
             Set<Node> children = buildable.createChildren();
             bridges.remove(buildable);
             putBackBuildableChildren(children);
         }
-        return maxStrength;
     }
 
     private void putBackBuildableChildren(Set<Node> children) {
@@ -28,6 +29,16 @@ public class Handler {
                 bridges.add(child);
             } else {
                 maxStrength = Math.max(maxStrength, child.getStrength());
+                int length = child.getLength();
+                if (length >= maxLength) {
+                    int strength = child.getStrength();
+                    if (length == maxLength) {
+                        localMaxStrength = Math.max(strength, localMaxStrength);
+                    } else {
+                        maxLength = length;
+                        localMaxStrength = strength;
+                    }
+                }
             }
         }
     }
@@ -51,5 +62,13 @@ public class Handler {
     private Magnet processLine(String line) {
         String[] pinsAsStrings = line.split("/");
         return new Magnet(Integer.parseInt(pinsAsStrings[0]), Integer.parseInt(pinsAsStrings[1]));
+    }
+
+    public int getMaxStrength() {
+        return maxStrength;
+    }
+
+    public int getLocalMaxStrength() {
+        return localMaxStrength;
     }
 }

@@ -38,6 +38,10 @@ public class Node {
         return output;
     }
 
+    public int getLength() {
+        return bridge.size();
+    }
+
     public int getStrength() {
         return bridge.stream().mapToInt(Magnet::getStrength).sum();
     }

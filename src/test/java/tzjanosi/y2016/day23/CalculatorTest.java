@@ -1,5 +1,6 @@
 package tzjanosi.y2016.day23;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,10 +41,26 @@ class CalculatorTest {
         assertEquals(11120, calculator.execute());
     }
 
+//    @Test
+//    @Disabled("Terrible slow, replaced with executeFastProblemDataPart2Test")
+//    void executeProblemDataPart2Test() {
+//        ReadData readData = new ReadData("inputPart2.txt");
+//        Calculator calculator = new Calculator(readData.getOutput());
+//        assertEquals(479007680, calculator.execute());
+//    }
+
     @Test
-    void executeProblemDataPart2Test() {
+    void executeFastProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Calculator calculator = new Calculator(readData.getOutput());
+        assertEquals(11120, calculator.executeFast());
+    }
+
+    @Test
+    void executeFastProblemDataPart2Test() {
         ReadData readData = new ReadData("inputPart2.txt");
         Calculator calculator = new Calculator(readData.getOutput());
-        assertEquals(479007680, calculator.execute());
+        assertEquals(479007680, calculator.executeFast());
     }
+
 }

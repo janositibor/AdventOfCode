@@ -1,11 +1,19 @@
 package tzjanosi.y2016.day23;
 
+import java.math.BigInteger;
 import java.util.*;
 
 public class Calculator {
     private Set<Register> registers = new HashSet<>();
     private List<String> instructions;
     private int index;
+    private Map<String, String> newOperations = Map.ofEntries(
+            Map.entry("cpy", "jnz"),
+            Map.entry("jnz", "cpy"),
+            Map.entry("inc", "dec"),
+            Map.entry("dec", "inc"),
+            Map.entry("tgl", "inc")
+    );
 
     public Calculator(List<String> input) {
         createRegisters();
@@ -19,11 +27,30 @@ public class Calculator {
         }
     }
 
+    public BigInteger factorial(int n) {
+        BigInteger result = BigInteger.ONE;
+        for (int i = 2; i <= n; i++) {
+            result = result.multiply(BigInteger.valueOf(i));
+        }
+        return result;
+    }
+
+    public int executeFast() {
+        int factorialAsInt = factorial(getFirstParameterAsInt(0)).intValue();
+        return factorialAsInt + (getFirstParameterAsInt(20) * getFirstParameterAsInt(21));
+    }
+
     public int execute() {
         while (index < instructions.size()) {
             operation();
         }
         return findRegister("a").getValue();
+    }
+
+    private int getFirstParameterAsInt(int index) {
+        String stringOperation = instructions.get(index);
+        String[] words = stringOperation.split(" ");
+        return Integer.parseInt(words[1]);
     }
 
     private void operation() {
@@ -69,20 +96,30 @@ public class Calculator {
         String stringOperation = instructions.get(indexOfOperationToUpdate);
         String order = stringOperation.substring(0, 3);
         String remain = stringOperation.substring(3);
-        Map<String, String> newOperations = Map.ofEntries(
-                Map.entry("cpy", "jnz"),
-                Map.entry("jnz", "cpy"),
-                Map.entry("inc", "dec"),
-                Map.entry("dec", "inc"),
-                Map.entry("tgl", "inc")
-        );
         String newInstruction = newOperations.get(order) + remain;
         instructions.set(indexOfOperationToUpdate, newInstruction);
     }
 
     private void jump(String parameter1, String parameter2) {
+
+
         int check = getValueForParameter(parameter1);
         int shift = getValueForParameter(parameter2);
+//        if(parameter1.equals("80")){
+//            System.out.println("STOP by 80");
+//        }
+//        if(parameter1.equals("c") && parameter2.equals("-5")){
+//            System.out.println(String.format("Reach jnz c -5, c=%d, a=%d",findRegister("c").getValue(),findRegister("a").getValue()));
+//            if(check==0) {
+//                System.out.println("STOP by c -5");
+//            }
+//        }
+//        if(parameter1.equals("d") && parameter2.equals("-5")){
+//            System.out.println(String.format("Reach jnz d -5, a=%d, b=%d, c=%d, d=%d",findRegister("a").getValue(),findRegister("b").getValue(),findRegister("c").getValue(),findRegister("d").getValue()));
+//        }
+//        if(parameter1.equals("1") && parameter2.equals("c")){
+//            System.out.println(String.format("Reach jnz 1 c, a=%d, b=%d, c=%d, d=%d",findRegister("a").getValue(),findRegister("b").getValue(),findRegister("c").getValue(),findRegister("d").getValue()));
+//        }
         if (check == 0) {
             index++;
         } else {

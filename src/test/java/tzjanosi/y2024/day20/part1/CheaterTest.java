@@ -21,7 +21,6 @@ class CheaterTest {
                 Arguments.of(38, 3),
                 Arguments.of(3, 30),
                 Arguments.of(2, 44)
-//                ,Arguments.of(70,"input1.txt", 322)
         );
     }
 
@@ -31,10 +30,7 @@ class CheaterTest {
         ReadData readData = new ReadData("testInput.txt");
         Cheater cheater = new Cheater(readData.getOutput(), gainLimit);
         assertEquals(84, cheater.getOriginalLength());
-//        System.out.println(cheater.getWallsToOmit());
-
         assertEquals(result, cheater.calculateCheatRoutes());
-//        System.out.println(cheater.getResults());
     }
 
     @Test
@@ -42,10 +38,7 @@ class CheaterTest {
         ReadData readData = new ReadData("input.txt");
         Cheater cheater = new Cheater(readData.getOutput(), 100);
         assertEquals(9432, cheater.getOriginalLength());
-//        System.out.println(cheater.getWallsToOmit());
 
         assertEquals(1518, cheater.calculateCheatRoutes());
-//        System.out.println(cheater.getResults());
     }
-
 }

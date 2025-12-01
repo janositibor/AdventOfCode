@@ -10,7 +10,6 @@ class LabyrinthTest {
         ReadData readData = new ReadData("testInput.txt");
         Labyrinth labyrinth = new Labyrinth(readData.getOutput());
         assertEquals(84, labyrinth.calculateWay());
-        System.out.println(labyrinth.getWayOutList());
     }
 
     @Test
@@ -18,6 +17,5 @@ class LabyrinthTest {
         ReadData readData = new ReadData("input.txt");
         Labyrinth labyrinth = new Labyrinth(readData.getOutput());
         assertEquals(9432, labyrinth.calculateWay());
-//        System.out.println(labyrinth.getWayOut());
     }
 }

@@ -26,47 +26,36 @@ public class Cheater {
     }
 
     public int calculateCheatRoutes() {
-        System.out.println("gainLimit: " + gainLimit);
-//        System.out.printf("Number of possible searches is: %d\n", wallsToOmit.size());
         int output = 0;
         for (int i = 0; i < wallsToOmit.size(); i++) {
-            System.out.printf("Actual search is: %d/%d\n", i + 1, wallsToOmit.size());
             List<Coordinate> neighbourWaysCoordinates = neighbourWayCoordinates(wallsToOmit.get(i));
             int numberOfNeighbours = neighbourWaysCoordinates.size();
-            int newLength = 0;
-            int calculateLength;
-            Labyrinth newLabyrinth;
-//            System.out.printf("numberOfNeighbours is: %d, ",numberOfNeighbours);
-            switch (numberOfNeighbours) {
-                case 3:
-                    newLength = originalLength - 2;
-                    break;
-                case 2:
-                    newLabyrinth = createNewLabyrinth(i, neighbourWaysCoordinates.get(0), neighbourWaysCoordinates.get(1), originalLength + 2);
-                    newLabyrinth.setWalls(originalWalls);
-                    calculateLength = newLabyrinth.calculateWay();
-//                    System.out.printf("calculateLength is: %d, ",calculateLength);
-                    newLength = (originalLength - calculateLength + 2) > 0 ? originalLength - calculateLength + 2 : Integer.MAX_VALUE;
-                    break;
-                case 1:
-                    newLabyrinth = createNewLabyrinth(i, labyrinth.getStart(), labyrinth.getEnd(), originalLength - gainLimit);
-                    newLength = newLabyrinth.calculateWay();
-//                    System.out.printf("newLength is: %d, ",newLength);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Number of neighbours should be between 1 and 3.");
+            if (numberOfNeighbours > 1) {
+                int newLength = 0;
+                switch (numberOfNeighbours) {
+                    case 3:
+                        newLength = originalLength - 2;
+                        break;
+                    case 2:
+                        newLength = calculateLength(neighbourWaysCoordinates.get(0), neighbourWaysCoordinates.get(1));
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Number of neighbours should be between 1 and 3.");
+                }
+                results.put(wallsToOmit.get(i), newLength);
+                if (originalLength - newLength >= gainLimit) {
+                    output++;
+                }
             }
-
-//            System.out.printf("newLength is: %d, ", newLength);
-            results.put(wallsToOmit.get(i), newLength);
-            if (originalLength - newLength >= gainLimit) {
-                output++;
-//                System.out.printf("so count is: %d", output);
-            }
-//            System.out.println();
 
         }
         return output;
+    }
+
+    private int calculateLength(Coordinate from, Coordinate to) {
+        int indexFrom = originalWay.indexOf(from);
+        int indexTo = originalWay.indexOf(to);
+        return originalLength - (Math.abs(indexFrom - indexTo)) + 2;
     }
 
     private List<Coordinate> neighbourWayCoordinates(Coordinate location) {
@@ -87,21 +76,7 @@ public class Cheater {
         return output;
     }
 
-    private Labyrinth createNewLabyrinth(int i, Coordinate start, Coordinate end, int limit) {
-        Labyrinth output = new Labyrinth();
-        output.setStart(start);
-        output.setEnd(end);
-        output.setGlobalLimit(limit);
-
-        List<Coordinate> newWalls = new ArrayList<>(originalWalls);
-        newWalls.remove(wallsToOmit.get(i));
-        output.setWalls(newWalls);
-        return output;
-    }
-
-
     private List<Coordinate> findWallsToOmit() {
-//        return originalWalls.stream().filter(this::notInTheFrame).filter(c -> neighbours(c).stream().anyMatch(c2 -> originalWay.contains(c2))).toList();
         return originalWalls.stream().filter(this::notInTheFrame).filter(c -> neighbours(c).stream().anyMatch(originalWay::contains)).toList();
     }
 

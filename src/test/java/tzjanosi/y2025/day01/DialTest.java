@@ -32,7 +32,4 @@ class DialTest {
         Dial dial = new Dial(readData.getOutput());
         assertEquals(6689, dial.calculatePasswordPart2());
     }
-
-
-
 }

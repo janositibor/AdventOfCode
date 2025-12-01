@@ -6,6 +6,7 @@ import java.util.List;
 public class Dial {
     private List<Integer> steps = new ArrayList<>();
     private int startingPosition = 50;
+    private int maxDecrement;
 
     public Dial(List<String> input) {
         processInput(input);
@@ -42,6 +43,31 @@ public class Dial {
         return output;
     }
 
+    public int calculatePasswordPart2Ver2() {
+        int output = 0;
+        int position = startingPosition + (maxDecrement * steps.size() * 100);
+        for (int i = 0; i < steps.size(); i++) {
+            int nextPosition = position + steps.get(i);
+            output += calculateCrossing(position, nextPosition);
+            position = nextPosition;
+        }
+        return output;
+    }
+
+    private int calculateCrossing(int position, int nextPosition) {
+        int difference = (position / 100) - (nextPosition / 100);
+        int output = Math.abs(difference);
+        if (nextPosition < position) {
+            if (nextPosition % 100 == 0) {
+                output++;
+            }
+            if (position % 100 == 0) {
+                output--;
+            }
+        }
+        return output;
+    }
+
     private void processInput(List<String> input) {
         for (int i = 0; i < input.size(); i++) {
             Integer step = createStepFromLine(input.get(i));
@@ -51,6 +77,9 @@ public class Dial {
 
     private int createStepFromLine(String line) {
         Integer length = Integer.valueOf(line.substring(1));
+        if (line.charAt(0) == 'L') {
+            maxDecrement = Math.max(maxDecrement, length);
+        }
         return line.charAt(0) == 'R' ? length : -1 * length;
     }
 }

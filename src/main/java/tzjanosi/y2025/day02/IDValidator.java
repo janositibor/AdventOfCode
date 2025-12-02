@@ -16,6 +16,12 @@ public class IDValidator {
                 .sum();
     }
 
+    public long calculateSumOfInvalidIdsForPart2() {
+        return ranges.stream()
+                .mapToLong(Range::sumOfInvalidNumbersForPart2)
+                .sum();
+    }
+
     private void processInput(String line) {
         String[] parts = line.split(",");
         for (int i = 0; i < parts.length; i++) {

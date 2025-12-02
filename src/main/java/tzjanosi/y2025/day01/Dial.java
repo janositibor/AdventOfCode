@@ -45,7 +45,7 @@ public class Dial {
 
     public int calculatePasswordPart2Ver2() {
         int output = 0;
-        int position = startingPosition + (maxDecrement * steps.size() * 100);
+        int position = startingPosition + (Math.max(maxDecrement / 100, 1) * steps.size() * 100);
         for (int i = 0; i < steps.size(); i++) {
             int nextPosition = position + steps.get(i);
             output += calculateCrossing(position, nextPosition);

@@ -1,6 +1,7 @@
 package tzjanosi.y2017.day18.part2;
 
 import java.util.*;
+import java.util.concurrent.BlockingQueue;
 
 public class Solo implements Runnable {
     private int id;
@@ -31,6 +32,7 @@ public class Solo implements Runnable {
 
     private void setOutputFlag(int index) {
         if (index < 0 || index >= operations.size()) {
+            connection.addOutputNumber(null);
             connection.setOutputFlagRun(false);
         }
     }
@@ -80,7 +82,12 @@ public class Solo implements Runnable {
         }
         if (connection.hasInputNumbers()) {
             connection.setOutputFlagWait(false);
-            parameter1.setValue(connection.readInputNumbers());
+            long value = connection.readInputNumbers();
+            if (value == Long.MIN_VALUE) {
+                connection.setOutputFlagRun(false);
+            } else {
+                parameter1.setValue(value);
+            }
         } else {
             connection.setOutputFlagRun(false);
         }
@@ -181,11 +188,11 @@ public class Solo implements Runnable {
         return operations;
     }
 
-    public Deque<Long> getInputNumbers() {
+    public BlockingQueue<Long> getInputNumbers() {
         return connection.getInputNumbers();
     }
 
-    public Deque<Long> getOutputNumbers() {
+    public BlockingQueue<Long> getOutputNumbers() {
         return connection.getOutputNumbers();
     }
 

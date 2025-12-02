@@ -1,13 +1,15 @@
 package tzjanosi.y2017.day18.part2;
 
 import java.util.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Duet {
     private List<String> input;
     private Solo solo0;
     private Solo solo1;
-    private Deque<Long> numbersTo0 = new ArrayDeque<>();
-    private Deque<Long> numbersTo1 = new ArrayDeque<>();
+    private BlockingQueue<Long> numbersTo0 = new LinkedBlockingQueue<>();
+    private BlockingQueue<Long> numbersTo1 = new LinkedBlockingQueue<>();
     private List<Boolean> runFlagTo0 = new ArrayList<>(List.of(true));
     private List<Boolean> runFlagTo1 = new ArrayList<>(List.of(true));
     private List<Boolean> waitFlagTo0 = new ArrayList<>(List.of(false));
@@ -51,11 +53,11 @@ public class Duet {
         return solo1;
     }
 
-    public Deque<Long> getNumbersTo0() {
+    public BlockingQueue<Long> getNumbersTo0() {
         return numbersTo0;
     }
 
-    public Deque<Long> getNumbersTo1() {
+    public BlockingQueue<Long> getNumbersTo1() {
         return numbersTo1;
     }
 

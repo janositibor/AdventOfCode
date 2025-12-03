@@ -16,6 +16,12 @@ public class Lobby {
                 .sum();
     }
 
+    public long calculateMaxValueByDigits(int digits) {
+        return banks.stream()
+                .mapToLong(b -> b.calculateMaxValueByDigits(digits))
+                .sum();
+    }
+
     private void processInput(List<String> input) {
         for (int i = 0; i < input.size(); i++) {
             Bank bank = new Bank(input.get(i));

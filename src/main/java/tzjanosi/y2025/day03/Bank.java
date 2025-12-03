@@ -1,7 +1,6 @@
 package tzjanosi.y2025.day03;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Bank {
     private String value;
@@ -10,6 +9,49 @@ public class Bank {
     public Bank(String value) {
         this.value = value;
         buildNumbers();
+    }
+
+    public long calculateMaxValueByDigits(int digits) {
+        int[] winner = new int[digits];
+        Queue<Integer> remains = new LinkedList<>(numbers);
+        initWinner(winner, remains);
+        while (!remains.isEmpty()) {
+            improve(winner, remains);
+        }
+        return valueOfArray(winner);
+
+    }
+
+    private long valueOfArray(int[] array) {
+        long output = 0;
+        for (int i = 0; i < array.length; i++) {
+            output = (10 * output) + array[i];
+        }
+        return output;
+    }
+
+    private void improve(int[] to, Queue<Integer> from) {
+        int valueToAdd = from.remove();
+        for (int i = 0; i < to.length - 1; i++) {
+            if (to[i] < to[i + 1]) {
+                insertElement(to, i, valueToAdd);
+                return;
+            }
+        }
+        to[to.length - 1] = Math.max(to[to.length - 1], valueToAdd);
+    }
+
+    private void insertElement(int[] array, int indexToRemove, int elementToAdd) {
+        for (int i = indexToRemove; i < array.length - 1; i++) {
+            array[i] = array[i + 1];
+        }
+        array[array.length - 1] = elementToAdd;
+    }
+
+    private void initWinner(int[] to, Queue<Integer> from) {
+        for (int i = 0; i < to.length; i++) {
+            to[i] = from.remove();
+        }
     }
 
     public int calculateValue() {

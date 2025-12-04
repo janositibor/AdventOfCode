@@ -3,12 +3,32 @@ package tzjanosi.y2025.day04;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Storage {
     private Set<Coordinate> rolls = new HashSet<>();
 
     public Storage(List<String> input) {
         processInput(input);
+    }
+
+    public int numberOfAllRemovableRolls() {
+        int totalNumberOfRolls = rolls.size();
+        Set<Coordinate> rollsToRemove;
+        do {
+            rollsToRemove = accessibleRolls();
+            if (!rollsToRemove.isEmpty()) {
+                rolls.removeAll(rollsToRemove);
+            }
+        } while (!rollsToRemove.isEmpty());
+        return totalNumberOfRolls - rolls.size();
+    }
+
+    private Set<Coordinate> accessibleRolls() {
+        return rolls.stream()
+                .filter(r -> rolls.stream().filter(r2 -> r2.neighbour(r)).count() < 4)
+                .collect(Collectors.toSet());
+
     }
 
     public int numberOfAccessibleRolls() {

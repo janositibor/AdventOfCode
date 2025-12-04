@@ -19,4 +19,20 @@ class StorageTest {
         assertEquals(1370, storage.numberOfAccessibleRolls());
     }
 
+    @Test
+    void numberOfAllRemovableRollsTest() {
+        ReadData readData = new ReadData("testInput.txt");
+        Storage storage = new Storage(readData.getOutput());
+        assertEquals(43, storage.numberOfAllRemovableRolls());
+    }
+
+    @Test
+    void numberOfAllRemovableRollsProgramDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Storage storage = new Storage(readData.getOutput());
+        assertEquals(8437, storage.numberOfAllRemovableRolls());
+    }
+
+
+
 }

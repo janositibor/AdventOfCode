@@ -3,6 +3,7 @@ package tzjanosi.y2017.day18.part2;
 import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Duet {
     private List<String> input;
@@ -10,20 +11,18 @@ public class Duet {
     private Solo solo1;
     private BlockingQueue<Long> numbersTo0 = new LinkedBlockingQueue<>();
     private BlockingQueue<Long> numbersTo1 = new LinkedBlockingQueue<>();
-    private List<Boolean> runFlagTo0 = new ArrayList<>(List.of(true));
-    private List<Boolean> runFlagTo1 = new ArrayList<>(List.of(true));
-    private List<Boolean> waitFlagTo0 = new ArrayList<>(List.of(false));
-    private List<Boolean> waitFlagTo1 = new ArrayList<>(List.of(false));
-    private List<Integer> resultFrom0 = new ArrayList<>(List.of(0));
-    private List<Integer> resultFrom1 = new ArrayList<>(List.of(0));
+    private AtomicInteger flagTo0 = new AtomicInteger(1);
+    private AtomicInteger flagTo1 = new AtomicInteger(1);
+    private AtomicInteger resultFrom0 = new AtomicInteger(0);
+    private AtomicInteger resultFrom1 = new AtomicInteger(0);
 
     public Duet(List<String> input) {
         this.input = input;
 
-        Connection connection0 = new Connection(numbersTo0, numbersTo1, runFlagTo0, runFlagTo1, waitFlagTo0, waitFlagTo1, resultFrom0);
+        Connection connection0 = new Connection(numbersTo0, numbersTo1, flagTo0, flagTo1, resultFrom0);
         solo0 = new Solo(0, input, connection0);
 
-        Connection connection1 = new Connection(numbersTo1, numbersTo0, runFlagTo1, runFlagTo0, waitFlagTo1, waitFlagTo0, resultFrom1);
+        Connection connection1 = new Connection(numbersTo1, numbersTo0, flagTo1, flagTo0, resultFrom1);
         solo1 = new Solo(1, input, connection1);
     }
 
@@ -38,7 +37,7 @@ public class Duet {
         } catch (InterruptedException ie) {
             throw new IllegalArgumentException("ajaj", ie);
         }
-        return resultFrom1.get(0);
+        return resultFrom1.get();
     }
 
     public List<String> getInput() {
@@ -59,21 +58,5 @@ public class Duet {
 
     public BlockingQueue<Long> getNumbersTo1() {
         return numbersTo1;
-    }
-
-    public List<Boolean> getRunFlagTo0() {
-        return runFlagTo0;
-    }
-
-    public List<Boolean> getRunFlagTo1() {
-        return runFlagTo1;
-    }
-
-    public List<Integer> getResultFrom0() {
-        return resultFrom0;
-    }
-
-    public List<Integer> getResultFrom1() {
-        return resultFrom1;
     }
 }

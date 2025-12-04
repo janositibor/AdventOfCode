@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayDeque;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,7 +14,7 @@ class SoloTest {
     @Test
     void initTest() {
         ReadData readData = new ReadData("input.txt");
-        Connection connection = new Connection(new LinkedBlockingQueue<Long>(), new LinkedBlockingQueue<Long>(), List.of(false), List.of(false), List.of(false), List.of(false), List.of(0));
+        Connection connection = new Connection(new LinkedBlockingQueue<Long>(), new LinkedBlockingQueue<Long>(), new AtomicInteger(0), new AtomicInteger(0), new AtomicInteger(0));
         Solo solo0 = new Solo(0, readData.getOutput(), connection);
         assertEquals(0L, (long) solo0.getRegisters().stream().filter(r -> "p".equals(r.getName())).map(r -> r.getValue()).findFirst().get());
         assertThat(solo0.getRegisters())

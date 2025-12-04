@@ -22,7 +22,7 @@ public class Solo implements Runnable {
 
     public Integer execute() {
         int index = 0;
-        while (connection.outputFlagRunValue()) {
+        while (connection.outputFlagValue() > -1) {
             Operation operationToExecute = operations.get(index);
             index += executeOperation(operationToExecute);
             setOutputFlag(index);
@@ -33,7 +33,7 @@ public class Solo implements Runnable {
     private void setOutputFlag(int index) {
         if (index < 0 || index >= operations.size()) {
             connection.addOutputNumber(null);
-            connection.setOutputFlagRun(false);
+            connection.setOutputFlag(-1);
         }
     }
 
@@ -76,20 +76,20 @@ public class Solo implements Runnable {
 
     private long receive(Register parameter1) {
         while (connection.shouldWait()) {
-            connection.setOutputFlagWait(true);
+            connection.setOutputFlag(0);
             pause(5);
 
         }
         if (connection.hasInputNumbers()) {
-            connection.setOutputFlagWait(false);
+            connection.setOutputFlag(1);
             long value = connection.readInputNumbers();
             if (value == Long.MIN_VALUE) {
-                connection.setOutputFlagRun(false);
+                connection.setOutputFlag(-1);
             } else {
                 parameter1.setValue(value);
             }
         } else {
-            connection.setOutputFlagRun(false);
+            connection.setOutputFlag(-1);
         }
         return 1;
     }
@@ -194,21 +194,5 @@ public class Solo implements Runnable {
 
     public BlockingQueue<Long> getOutputNumbers() {
         return connection.getOutputNumbers();
-    }
-
-//    public List<Boolean> getInputFlag() {
-//        return inputFlag;
-//    }
-//
-//    public List<Boolean> getOutputFlag() {
-//        return outputFlag;
-//    }
-
-    public List<Integer> getResultValue() {
-        return connection.getResult();
-    }
-
-    public Connection getConnection() {
-        return connection;
     }
 }

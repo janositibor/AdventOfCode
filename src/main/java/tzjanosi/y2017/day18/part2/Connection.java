@@ -1,26 +1,23 @@
 package tzjanosi.y2017.day18.part2;
 
-import java.util.List;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Connection {
     private BlockingQueue<Long> inputNumbers;
     private BlockingQueue<Long> outputNumbers;
-    private List<Boolean> inputFlagRun;
-    private List<Boolean> outputFlagRun;
-    private List<Boolean> inputFlagWait;
-    private List<Boolean> outputFlagWait;
-    private List<Integer> result;
+    private AtomicInteger inputFlag;
+    private AtomicInteger outputFlag;
+    private AtomicInteger result;
 
-    public Connection(BlockingQueue<Long> inputNumbers, BlockingQueue<Long> outputNumbers, List<Boolean> inputFlagRun, List<Boolean> outputFlagRun, List<Boolean> inputFlagWait, List<Boolean> outputFlagWait, List<Integer> result) {
+    public Connection(BlockingQueue<Long> inputNumbers, BlockingQueue<Long> outputNumbers, AtomicInteger inputFlag, AtomicInteger outputFlag, AtomicInteger result) {
         this.inputNumbers = inputNumbers;
         this.outputNumbers = outputNumbers;
-        this.inputFlagRun = inputFlagRun;
-        this.outputFlagRun = outputFlagRun;
-        this.inputFlagWait = inputFlagWait;
-        this.outputFlagWait = outputFlagWait;
+        this.inputFlag = inputFlag;
+        this.outputFlag = outputFlag;
         this.result = result;
     }
+
 
     public BlockingQueue<Long> getInputNumbers() {
         return inputNumbers;
@@ -30,41 +27,30 @@ public class Connection {
         return outputNumbers;
     }
 
-    public List<Boolean> getInputFlagRun() {
-        return inputFlagRun;
-    }
-
-    public Boolean outputFlagRunValue() {
-        return outputFlagRun.get(0);
+    public int inputFlagValue() {
+        return inputFlag.get();
 
     }
 
-    public List<Boolean> getOutputFlagRun() {
-        return outputFlagRun;
+    public int outputFlagValue() {
+        return outputFlag.get();
+
     }
 
-    public List<Integer> getResult() {
-        return result;
-    }
-
-    public Integer getResultValue() {
-        return result.get(0);
+    public int getResultValue() {
+        return result.get();
     }
 
     public void incrementResult() {
-        result.set(0, (result.get(0) + 1));
+        result.set((result.get() + 1));
     }
 
-    public void setOutputFlagRun(Boolean flag) {
-        this.outputFlagRun.set(0, flag);
-    }
-
-    public void setOutputFlagWait(Boolean flag) {
-        this.outputFlagWait.set(0, flag);
+    public void setOutputFlag(int flag) {
+        this.outputFlag.set(flag);
     }
 
     public boolean shouldWait() {
-        return (inputNumbers.isEmpty() && inputFlagRun.get(0) && (!inputFlagWait.get(0) || !outputNumbers.isEmpty()));
+        return (inputNumbers.isEmpty() && inputFlagValue() > -1 && (inputFlagValue() > 0 || !outputNumbers.isEmpty()));
     }
 
     public boolean hasInputNumbers() {
@@ -81,7 +67,6 @@ public class Connection {
         }
         return value;
     }
-
 
     public void addOutputNumber(Register parameter1) {
         long value = parameter1 == null ? Long.MIN_VALUE : parameter1.getValue();

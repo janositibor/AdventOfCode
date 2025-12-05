@@ -2,6 +2,7 @@ package tzjanosi.y2025.day05;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class Cafeteria {
@@ -10,6 +11,33 @@ public class Cafeteria {
 
     public Cafeteria(List<String> input) {
         processInput(input);
+    }
+
+    public long totalRange() {
+        Set<Range> actual = ranges;
+        Set<Range> next = null;
+        do {
+            if (next != null) {
+                actual = next;
+            }
+            next = union(actual);
+        } while (!actual.equals(next));
+
+        return actual.stream().mapToLong(Range::numberOfElements).sum();
+    }
+
+    private Set<Range> union(Set<Range> setToUnion) {
+        Set<Range> newRanges = new HashSet<>();
+        for (Range range : setToUnion) {
+            Optional<Range> toOverLap = RangeHandler.findOverLappingRange(range, newRanges);
+            if (toOverLap.isPresent()) {
+                newRanges.remove(toOverLap.get());
+                newRanges.add(RangeHandler.union(range, toOverLap.get()));
+            } else {
+                newRanges.add(range);
+            }
+        }
+        return newRanges;
     }
 
     public int numberOfIngredientsInRanges() {

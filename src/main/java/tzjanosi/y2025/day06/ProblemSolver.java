@@ -35,7 +35,6 @@ public class ProblemSolver {
         part2Numbers.add(value);
         char lastChar = input[input.length - 1];
         if (lastChar == '+' || lastChar == '*') {
-            System.out.println(lastChar);
             long result;
             if (lastChar == '+') {
                 result = addPart2Numbers();

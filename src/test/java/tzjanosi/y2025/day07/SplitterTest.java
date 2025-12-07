@@ -19,4 +19,18 @@ class SplitterTest {
         assertEquals(1642, splitter.split());
     }
 
+    @Test
+    void countTimeLinesTest() {
+        ReadData readData = new ReadData("testInput.txt");
+        Splitter splitter = new Splitter(readData.getOutput());
+        assertEquals(40, splitter.countTimeLines());
+    }
+
+    @Test
+    void countTimeLinesProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Splitter splitter = new Splitter(readData.getOutput());
+        assertEquals(47274292756692L, splitter.countTimeLines());
+    }
+
 }

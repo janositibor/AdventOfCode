@@ -1,16 +1,19 @@
 package tzjanosi.y2025.day07;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Splitter {
     private List<List<Integer>> hardware = new ArrayList<>();
-    private Set<Integer> beams = new HashSet<>();
+    private Map<Integer, Long> beams = new ConcurrentHashMap<>();
 
     public Splitter(List<String> input) {
         processInput(input);
+    }
+
+    public long countTimeLines() {
+        split();
+        return beams.entrySet().stream().mapToLong(Map.Entry::getValue).sum();
     }
 
     public int split() {
@@ -27,7 +30,7 @@ public class Splitter {
         int numberOfIncomingBeams = beams.size();
         for (int i = 0; (i < splitterLine.size() && output < numberOfIncomingBeams); i++) {
             int position = splitterLine.get(i);
-            if (beams.contains(position)) {
+            if (beams.containsKey(position)) {
                 output++;
                 updateBeams(position);
             }
@@ -36,10 +39,16 @@ public class Splitter {
     }
 
     private void updateBeams(int position) {
-        beams.remove(position);
-        beams.add(position - 1);
-        beams.add(position + 1);
+        long value = beams.remove(position);
+        insertBeans(position - 1, value);
+        insertBeans(position + 1, value);
     }
+
+    private void insertBeans(int position, long value) {
+        long old = beams.containsKey(position) ? beams.get(position) : 0;
+        beams.put(position, old + value);
+    }
+
 
     private void processInput(List<String> input) {
         for (int i = 0; i < input.size(); i++) {
@@ -68,6 +77,6 @@ public class Splitter {
     }
 
     private void initBeams(String line) {
-        beams.add(line.indexOf('S'));
+        beams.put(line.indexOf('S'), 1L);
     }
 }

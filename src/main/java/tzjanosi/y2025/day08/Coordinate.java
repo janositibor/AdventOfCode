@@ -40,4 +40,8 @@ public class Coordinate {
                 ", z=" + z +
                 '}';
     }
+
+    public int getX() {
+        return x;
+    }
 }

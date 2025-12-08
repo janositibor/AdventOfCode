@@ -15,6 +15,19 @@ public class ChristmasDecoration {
         buildMinDistancePairs();
     }
 
+    public long decorateAll() {
+        long output = 0;
+        while (circuits.size() > 1) {
+            Map.Entry<Double, Circuit> pair = ((TreeMap) minDistancePairs).pollFirstEntry();
+            Circuit c = pair.getValue();
+            Coordinate c1 = c.pollElement();
+            Coordinate c2 = c.pollElement();
+            processPair(c1, c2);
+            output = c1.getX() * c2.getX();
+        }
+        return output;
+    }
+
     public long decorate() {
         for (int i = 0; i < numberOfSteps; i++) {
             Map.Entry<Double, Circuit> pair = ((TreeMap) minDistancePairs).pollFirstEntry();

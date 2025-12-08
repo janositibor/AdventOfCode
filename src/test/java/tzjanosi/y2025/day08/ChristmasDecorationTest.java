@@ -19,4 +19,18 @@ class ChristmasDecorationTest {
         assertEquals(66640L, decoration.decorate());
     }
 
+    @Test
+    void decorateAllTest() {
+        ReadData readData = new ReadData("testInput.txt");
+        ChristmasDecoration decoration = new ChristmasDecoration(0, readData.getOutput());
+        assertEquals(25272L, decoration.decorateAll());
+    }
+
+    @Test
+    void decorateAllProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        ChristmasDecoration decoration = new ChristmasDecoration(0, readData.getOutput());
+        assertEquals(78894156L, decoration.decorateAll());
+    }
+
 }

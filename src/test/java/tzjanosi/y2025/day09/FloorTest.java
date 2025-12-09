@@ -19,4 +19,20 @@ class FloorTest {
         assertEquals(4745816424L, floor.findMaxArea());
     }
 
+    @Test
+    void findMaxAreaInsideTest() {
+        ReadData readData = new ReadData("testInput.txt");
+        Floor floor = new Floor(readData.getOutput());
+        assertEquals(24L, floor.findMaxAreaInside());
+    }
+
+    @Test
+    void findMaxAreaInsideProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Floor floor = new Floor(readData.getOutput());
+        assertEquals(1351617690L, floor.findMaxAreaInside());
+    }
+
+
+
 }

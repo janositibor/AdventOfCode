@@ -1,22 +1,21 @@
-package tzjanosi.y2025.day10;
+package tzjanosi.y2025.day10.part2;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FactoryTest {
     @Test
-    void initAllMachineTest() {
+    void findVoltageForAllMachineTest() {
         ReadData readData = new ReadData("testInput.txt");
         Factory factory = new Factory(readData.getOutput());
-        assertEquals(7, factory.initAllMachine());
+        assertEquals(33, factory.findVoltageForAllMachine());
     }
 
     @Test
-    void initAllMachineProblemDataTest() {
+    void findVoltageForAllMachineProblemDataTest() {
         ReadData readData = new ReadData("input.txt");
         Factory factory = new Factory(readData.getOutput());
-        assertEquals(522, factory.initAllMachine());
+        assertEquals(18105, factory.findVoltageForAllMachine());
     }
-
 }

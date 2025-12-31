@@ -12,7 +12,23 @@ public class Reactor {
         processInput(input);
     }
 
-    public int findDistanceToOut() {
+    public long findDistanceToOutPart2() {
+        Rack from = findRackByName("svr").get();
+        boolean upgraded;
+        do {
+            upgraded = false;
+            for (Rack rack : racks) {
+                if (rack.getDistanceToOut() == 0) {
+                    boolean success = rack.calculateDistanceToOut();
+                    upgraded = upgraded || success;
+                }
+            }
+        }
+        while (from.getDistanceToOut() == 0 && upgraded);
+        return from.getDistanceToOutWithBoth();
+    }
+
+    public long findDistanceToOut() {
         Rack you = findRackByName("you").get();
         boolean upgraded;
         do {
@@ -44,7 +60,6 @@ public class Reactor {
         String[] names = connectionsAsString.split(" ");
         for (int i = 0; i < names.length; i++) {
             Rack rackToAdd = createOrFindRackByName(names[i]);
-            racks.add(rackToAdd);
             rack.addConnection(rackToAdd);
         }
     }
@@ -55,7 +70,12 @@ public class Reactor {
             return optionalRack.get();
         } else {
             Rack output = new Rack(name);
-            racks.add(output);
+            if (!"out".equals(name)) {
+//                System.out.println("OUT itt?");
+                racks.add(output);
+            }
+
+
             return output;
         }
     }

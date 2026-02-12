@@ -11,4 +11,18 @@ class FrequencyTest {
         Frequency frequency = new Frequency(readData.getOutput());
         assertEquals(416, frequency.sumOfShifts());
     }
+
+    @Test
+    void firstDuplicateTest() {
+        ReadData readData = new ReadData("testInput.txt");
+        Frequency frequency = new Frequency(readData.getOutput());
+        assertEquals(2, frequency.firstDuplicate());
+    }
+
+    @Test
+    void firstDuplicateProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Frequency frequency = new Frequency(readData.getOutput());
+        assertEquals(56752, frequency.firstDuplicateFast());
+    }
 }

@@ -19,5 +19,19 @@ class ManagementTest {
         assertEquals(6888, management.manage());
     }
 
+    @Test
+    void findSimilarsTest() {
+        ReadData readData = new ReadData("testInput2.txt");
+        Management management = new Management(readData.getOutput());
+        assertEquals("fgij", management.findSimilars());
+    }
+
+    @Test
+    void findSimilarsProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Management management = new Management(readData.getOutput());
+        assertEquals("icxjvbrobtunlelzpdmfkahgs", management.findSimilars());
+    }
+
 
 }

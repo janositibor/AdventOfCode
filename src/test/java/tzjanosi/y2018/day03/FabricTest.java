@@ -19,4 +19,19 @@ class FabricTest {
         assertEquals(105047, fabric.areaOfConflictingClaims());
     }
 
+    @Test
+    void idOfTheNonOverlappingRectangleTest() {
+        ReadData readData = new ReadData("testInput.txt");
+        Fabric fabric = new Fabric(readData.getOutput());
+        assertEquals(3, fabric.idOfTheNonOverlappingRectangle());
+    }
+
+    @Test
+    void idOfTheNonOverlappingRectangleProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Fabric fabric = new Fabric(readData.getOutput());
+        assertEquals(658, fabric.idOfTheNonOverlappingRectangle());
+    }
+
+
 }

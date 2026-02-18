@@ -27,4 +27,20 @@ class DairyTest {
         assertEquals(87681, diary.bestChanceToSneak());
     }
 
+    @Test
+    void bestChanceToSneakStrategy2Test() {
+        ReadData readData = new ReadData("testInput.txt");
+        Dairy diary = new Dairy(readData.getOutput());
+        assertEquals(4455, diary.bestChanceToSneakStrategy2());
+    }
+
+    @Test
+    void bestChanceToSneakStrategy2ProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Dairy diary = new Dairy(readData.getOutput());
+        assertEquals(136461, diary.bestChanceToSneakStrategy2());
+    }
+
+
+
 }

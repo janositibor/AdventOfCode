@@ -19,4 +19,18 @@ class ReductorTest {
         assertEquals(10766, reductor.reduce());
     }
 
+    @Test
+    void enhancedReduceTest() {
+        ReadData readData = new ReadData("testInput.txt");
+        Reductor reductor = new Reductor(readData.getOutput().get(0));
+        assertEquals(4, reductor.enhancedReduce());
+    }
+
+    @Test
+    void enhancedReduceProblemSataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Reductor reductor = new Reductor(readData.getOutput().get(0));
+        assertEquals(6538, reductor.enhancedReduce());
+    }
+
 }

@@ -7,6 +7,7 @@ public class Position {
     private Coordinate coordinate;
     private Map<LightHouse, Integer> distancesFromLightHouses = new ConcurrentHashMap<>();
     private Optional<LightHouse> nearestLightHouse = Optional.empty();
+    private int totalDistanceFromLightHouses;
 
     public Position(Coordinate coordinate) {
         this.coordinate = coordinate;
@@ -22,6 +23,10 @@ public class Position {
         int y = coordinate.getY();
 
         return x > xMinLimit && x < xMaxLimit && y > yMinLimit && y < yMaxLimit;
+    }
+
+    public void calculateTotalDistancesFromLightHouses() {
+        totalDistanceFromLightHouses = distancesFromLightHouses.entrySet().stream().mapToInt(Map.Entry::getValue).sum();
     }
 
     public void findNearestLightHouse() {
@@ -81,5 +86,9 @@ public class Position {
 
     public Coordinate getCoordinate() {
         return coordinate;
+    }
+
+    public int getTotalDistanceFromLightHouses() {
+        return totalDistanceFromLightHouses;
     }
 }

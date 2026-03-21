@@ -16,7 +16,6 @@ class ChronalMapTest {
     void greatestAreaProblemDataTest() {
         ReadData readData = new ReadData("input.txt");
         ChronalMap chronalMap = new ChronalMap(readData.getOutput());
-        // 5105 is too high
         assertEquals(3882, chronalMap.greatestArea());
     }
 
@@ -28,4 +27,17 @@ class ChronalMapTest {
 //        chronalMap.draw();
     }
 
+    @Test
+    void safeAreaTest() {
+        ReadData readData = new ReadData("testInput.txt");
+        ChronalMap chronalMap = new ChronalMap(readData.getOutput());
+        assertEquals(16, chronalMap.safeArea(32));
+    }
+
+    @Test
+    void safeAreaProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        ChronalMap chronalMap = new ChronalMap(readData.getOutput());
+        assertEquals(43852, chronalMap.safeArea(10000));
+    }
 }

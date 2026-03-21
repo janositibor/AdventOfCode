@@ -17,8 +17,13 @@ public class ChronalMap {
         buildiInfiniteLocations();
     }
 
-    private void buildiInfiniteLocations() {
-        infiniteLocations = positions.stream().filter(p -> !p.inside(limits)).filter(p -> p.getNearestLightHouse().isPresent()).map(p -> p.getNearestLightHouse().get()).collect(Collectors.toSet());
+    public int safeArea(int limit) {
+        return (int) positions.stream().filter(p -> p.getTotalDistanceFromLightHouses() < limit).count();
+    }
+
+    public int greatestArea() {
+        Map<LightHouse, Long> tempMap = positions.stream().filter(position -> position.getNearestLightHouse().isPresent()).collect(Collectors.groupingBy(p -> p.getNearestLightHouse().get(), Collectors.counting()));
+        return (int) tempMap.entrySet().stream().filter(entry -> !infiniteLocations.contains(entry.getKey())).mapToLong(Map.Entry<LightHouse, Long>::getValue).max().getAsLong();
     }
 
     public void draw() {
@@ -34,6 +39,10 @@ public class ChronalMap {
             }
             System.out.println(line);
         }
+    }
+
+    private void buildiInfiniteLocations() {
+        infiniteLocations = positions.stream().filter(p -> !p.inside(limits)).filter(p -> p.getNearestLightHouse().isPresent()).map(p -> p.getNearestLightHouse().get()).collect(Collectors.toSet());
     }
 
     private char getMark(int x, int y) {
@@ -61,15 +70,11 @@ public class ChronalMap {
         return lightHouses.get(index).getName();
     }
 
-    public int greatestArea() {
-        Map<LightHouse, Long> tempMap = positions.stream().filter(position -> position.getNearestLightHouse().isPresent()).collect(Collectors.groupingBy(p -> p.getNearestLightHouse().get(), Collectors.counting()));
-        return (int) tempMap.entrySet().stream().filter(entry -> !infiniteLocations.contains(entry.getKey())).mapToLong(Map.Entry<LightHouse, Long>::getValue).max().getAsLong();
-    }
-
     private void calculateDistancesForPositions() {
         for (Position position : positions) {
             position.addLightHouses(lightHouses);
             position.findNearestLightHouse();
+            position.calculateTotalDistancesFromLightHouses();
         }
     }
 

@@ -26,5 +26,19 @@ class TreeTest {
         assertEquals("ADEFKLBVJQWUXCNGORTMYSIHPZ", tree.findWay());
     }
 
+    @Test
+    void testFindTime() {
+        ReadData readData = new ReadData("testInput.txt");
+        Tree tree = new Tree(readData.getOutput());
+        assertEquals(15, tree.findTime(2, 0));
+    }
+
+    @Test
+    void testProblemDataFindTime() {
+        ReadData readData = new ReadData("input.txt");
+        Tree tree = new Tree(readData.getOutput());
+        assertEquals(1120, tree.findTime(5, 60));
+    }
+
 
 }

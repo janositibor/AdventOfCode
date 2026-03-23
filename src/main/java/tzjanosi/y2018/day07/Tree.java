@@ -10,6 +10,49 @@ public class Tree {
         processInput(input);
     }
 
+    public int findTime(int numberOfAgents, int delay) {
+        List<Agent> agents;
+        List<Character> inProgress = new ArrayList<>();
+        agents = createAgents(numberOfAgents, delay);
+        int counter = 0;
+        while (!nodes.isEmpty() || !ready.isEmpty() || !inProgress.isEmpty()) {
+            moveNodesIntoReady();
+            for (int i = 0; i < numberOfAgents; i++) {
+                agentWorks(agents, i, counter, inProgress);
+            }
+            counter++;
+        }
+        return counter - 1;
+    }
+
+    private void agentWorks(List<Agent> agents, int i, int counter, List<Character> inProgress) {
+        char nextStep;
+        char charToRemove;
+        Agent agent = agents.get(i);
+        if (agent.isIdle(counter)) {
+            charToRemove = agent.getWorkWith();
+            agent.setWorkWith((char) 0);
+            if (charToRemove > 0) {
+                removeFromPreconditions(charToRemove);
+                inProgress.remove((Character) charToRemove);
+                moveNodesIntoReady();
+            }
+            if (!ready.isEmpty()) {
+                nextStep = selectNextStep();
+                agent.work(nextStep, counter);
+                inProgress.add(nextStep);
+            }
+        }
+    }
+
+    private List<Agent> createAgents(int numberOfAgents, int delay) {
+        List<Agent> result = new ArrayList<>();
+        for (int i = 0; i < numberOfAgents; i++) {
+            result.add(new Agent(delay));
+        }
+        return result;
+    }
+
     public String findWay() {
         StringBuilder result = new StringBuilder();
         char nextStep;

@@ -11,6 +11,10 @@ public class Tree {
         processInput(input);
     }
 
+    public int value() {
+        return root.value();
+    }
+
     public int sumOfMetaData() {
         return root.sumOfMetaData();
     }

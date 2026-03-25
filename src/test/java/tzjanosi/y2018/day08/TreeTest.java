@@ -19,4 +19,18 @@ class TreeTest {
         assertEquals(41555, tree.sumOfMetaData());
     }
 
+    @Test
+    void valueTest() {
+        ReadData readData = new ReadData("testInput.txt");
+        Tree tree = new Tree(readData.getOutput().get(0));
+        assertEquals(66, tree.value());
+    }
+
+    @Test
+    void valueProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Tree tree = new Tree(readData.getOutput().get(0));
+        assertEquals(16653, tree.value());
+    }
+
 }

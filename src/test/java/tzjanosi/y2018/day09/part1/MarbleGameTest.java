@@ -1,4 +1,4 @@
-package tzjanosi.y2018.day09;
+package tzjanosi.y2018.day09.part1;
 
 import org.junit.jupiter.api.Test;
 
@@ -46,5 +46,4 @@ class MarbleGameTest {
         MarbleGame marbleGame = new MarbleGame(458, 71307);
         assertEquals(398048, marbleGame.findWinnerScore());
     }
-
 }

@@ -1,4 +1,4 @@
-package tzjanosi.y2018.day09;
+package tzjanosi.y2018.day09.part1;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -10,7 +10,7 @@ public class MarbleGame {
     private int numberOfPlayers;
     private int lastMarble;
     private List<Integer> marbles = new LinkedList<>(List.of(0));
-    List<Integer> results = new ArrayList<>();
+    private List<Long> results = new ArrayList<>();
 
     public MarbleGame(int numberOfPlayers, int lastMarble) {
         this.numberOfPlayers = numberOfPlayers;
@@ -21,30 +21,30 @@ public class MarbleGame {
 
     private void buildResults() {
         for (int i = 0; i < numberOfPlayers; i++) {
-            results.add(0);
+            results.add(0L);
         }
     }
 
-    public int findWinnerScore() {
+    public long findWinnerScore() {
         return results.stream().max(Comparator.naturalOrder()).orElseThrow(() -> new IllegalStateException("Empty result list!"));
     }
 
     private void buildGame() {
         int index = 0;
         for (int i = 1; i <= lastMarble; i++) {
-            if (i % STAR != 0) {
-                index = addMarble(index, i);
-            } else {
+            if (i % STAR == 0) {
                 index = starAction(index, i);
+            } else {
+                index = addMarble(index, i);
             }
         }
     }
 
     private int starAction(int index, int value) {
         int actualPlayer = value % numberOfPlayers;
-        int result = results.get(actualPlayer);
+        long result = results.get(actualPlayer);
         int actualIndex = getActualIndexForStarAction(index);
-        int gained = value + marbles.remove(actualIndex);
+        long gained = value + marbles.remove(actualIndex);
         results.set(actualPlayer, result + gained);
         return actualIndex;
     }

@@ -51,4 +51,22 @@ class BoardTest {
         assertEquals(new Coordinate(235, 85), board.findMaxArea());
     }
 
+    @Test
+    void findExtendedMaxAreaTest() {
+        Board board = new Board(18);
+        assertEquals("90,269,16", board.findExtendedMaxArea());
+    }
+
+    @Test
+    void findExtendedMaxAreaTest2() {
+        Board board = new Board(42);
+        assertEquals("232,251,12", board.findExtendedMaxArea());
+    }
+
+    @Test
+    void findExtendedMaxAreaProgramDataTest() {
+        Board board = new Board(2187);
+        assertEquals("233,40,13", board.findExtendedMaxArea());
+    }
+
 }

@@ -8,9 +8,54 @@ public class Board {
 
     private Map<Coordinate, Element> elements = new ConcurrentHashMap<>();
     private int limit = 300;
+    private int[][] prefix = new int[limit + 1][limit + 1];
 
     public Board(int gridSerialNumber) {
         buildElements(gridSerialNumber);
+    }
+
+    public String findExtendedMaxArea() {
+        buildPrefix();
+        return maxFromPrefix();
+    }
+
+    private String maxFromPrefix() {
+        int maxSum = Integer.MIN_VALUE;
+        String output = "";
+
+        for (int size = 1; size <= limit; size++) {
+            for (int i = 0; i <= limit - size; i++) {
+                for (int j = 0; j <= limit - size; j++) {
+                    int actual = sum(i, j, size);
+                    if (actual > maxSum) {
+                        maxSum = actual;
+                        output = String.format("%d,%d,%d", i + 1, j + 1, size);
+                    }
+                }
+            }
+        }
+        return output;
+    }
+
+    private int sum(int fromX, int fromY, int size) {
+        int toX = fromX + size;
+        int toY = fromY + size;
+
+        return prefix[toX][toY]
+                - prefix[fromX][toY]
+                - prefix[toX][fromY]
+                + prefix[fromX][fromY];
+    }
+
+    private void buildPrefix() {
+        for (int i = 1; i <= limit; i++) {
+            for (int j = 1; j <= limit; j++) {
+                prefix[i][j] = elements.get(new Coordinate(i, j)).getPower()
+                        + prefix[i - 1][j]
+                        + prefix[i][j - 1]
+                        - prefix[i - 1][j - 1];
+            }
+        }
     }
 
     public Coordinate findMaxArea() {

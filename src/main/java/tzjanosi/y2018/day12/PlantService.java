@@ -13,6 +13,12 @@ public class PlantService {
         processinput(input);
     }
 
+    public long quickPotCounter(long steps) {
+        long start = 1562212;
+        long increment = 780000;
+        return (start + increment * (steps - 20000) / 10000);
+    }
+
     public int potCounter(int steps) {
         String plants = applyRules(steps);
         return calculatePots(plants);
@@ -38,7 +44,7 @@ public class PlantService {
     }
 
     private StringBuilder extend(StringBuilder input) {
-        StringBuilder actual = input;
+        StringBuilder actual = new StringBuilder(input);
         int firstIndex = actual.indexOf("#");
         while (firstIndex < 3) {
             actual = extendFirst(actual);

@@ -1,5 +1,7 @@
 package tzjanosi.y2018.day13;
 
+import java.util.Objects;
+
 public class Cart implements Comparable<Cart> {
     private Coordinate position;
     private Coordinate direction;
@@ -38,6 +40,20 @@ public class Cart implements Comparable<Cart> {
     private void cross() {
         direction = turn.action().apply(direction);
         turn = turn.next();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Cart cart = (Cart) o;
+        return Objects.equals(position, cart.position);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(position);
     }
 
     @Override

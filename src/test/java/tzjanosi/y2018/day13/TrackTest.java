@@ -19,4 +19,18 @@ class TrackTest {
         assertEquals("41,17", track.findCrash());
     }
 
+    @Test
+    void findLastCartTest() {
+        ReadData readData = new ReadData("testInput2.txt");
+        Track track = new Track(readData.getOutput());
+        assertEquals("6,4", track.findLastCart());
+    }
+
+    @Test
+    void findLastCartProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Track track = new Track(readData.getOutput());
+        assertEquals("134,117", track.findLastCart());
+    }
+
 }

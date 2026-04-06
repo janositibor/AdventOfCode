@@ -11,16 +11,24 @@ public class Track {
         processInput(input);
     }
 
+    public String findLastCart() {
+        while (carts.size() > 1) {
+            step(true);
+        }
+        Coordinate lastCartPosition = carts.poll().getPosition();
+        return lastCartPosition.stringRepresentation();
+    }
+
     public String findCrash() {
         Optional<Coordinate> foundCrash = Optional.empty();
         while (foundCrash.isEmpty()) {
-            foundCrash = step();
+            foundCrash = step(false);
         }
         Coordinate crashPosition = foundCrash.get();
         return crashPosition.stringRepresentation();
     }
 
-    private Optional<Coordinate> step() {
+    private Optional<Coordinate> step(boolean removeCrashedCart) {
         Queue<Cart> newCarts = new PriorityQueue<>();
         while (!carts.isEmpty()) {
             Cart cart = carts.remove();
@@ -29,13 +37,34 @@ public class Track {
                 Character sign = signs.get(newPosition);
                 cart.changeDirection(sign);
             }
-            if (isCrash(newPosition, newCarts)) {
-                return Optional.of(newPosition);
+            if (removeCrashedCart) {
+                boolean foundCrash = foundCrash(newPosition, newCarts);
+                if (!foundCrash) {
+                    newCarts.add(cart);
+                }
+            } else {
+                if (isCrash(newPosition, newCarts)) {
+                    return Optional.of(newPosition);
+                }
+                newCarts.add(cart);
             }
-            newCarts.add(cart);
         }
         carts = newCarts;
         return Optional.empty();
+    }
+
+    private boolean foundCrash(Coordinate position, Queue<Cart> newCarts) {
+        if (isCrash(position, newCarts)) {
+            if (newCarts.stream().anyMatch(c -> c.getPosition().equals(position))) {
+                newCarts.remove(new Cart(position, null));
+            }
+            if (carts.stream().anyMatch(c -> c.getPosition().equals(position))) {
+                carts.remove(new Cart(position, null));
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private boolean isCrash(Coordinate newPosition, Queue<Cart> newCarts) {

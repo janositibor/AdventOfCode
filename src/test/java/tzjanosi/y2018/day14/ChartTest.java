@@ -18,6 +18,14 @@ class ChartTest {
         );
     }
 
+    static Stream<Arguments> calculateIndexTest() {
+        return Stream.of(Arguments.of(9, "51589"),
+                Arguments.of(5, "01245"),
+                Arguments.of(18, "92510"),
+                Arguments.of(2018, "59414")
+        );
+    }
+
     @ParameterizedTest
     @MethodSource
     void calculateScoreTest(int input, String output) {
@@ -29,6 +37,20 @@ class ChartTest {
     void calculateScoreProblemDataTest() {
         Chart chart = new Chart();
         assertEquals("6548103910", chart.calculateScore(768071, 10));
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    void calculateIndexTest(int output, String input) {
+        Chart chart = new Chart();
+        assertEquals(output, chart.calculateIndex(input));
+
+    }
+
+    @Test
+    void calculateIndexProblemDataTest() {
+        Chart chart = new Chart();
+        assertEquals(20198090, chart.calculateIndex("768071"));
     }
 
 

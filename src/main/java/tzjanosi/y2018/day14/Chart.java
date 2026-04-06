@@ -1,14 +1,31 @@
 package tzjanosi.y2018.day14;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
 
 public class Chart {
     private List<Integer> scores = new ArrayList<>(List.of(3, 7));
     private int index1;
     private int index2 = 1;
+    private StringBuilder scoresAsAStringBuilder = new StringBuilder();
+    private int shift;
+
+    public Chart() {
+        for (int i = 0; i < scores.size(); i++) {
+            scoresAsAStringBuilder.append(scores.get(i));
+        }
+    }
+
+    public int calculateIndex(String stringToFind) {
+        int index = -1;
+        int stringLength = stringToFind.length();
+        while (index == -1) {
+            step(stringLength + 2);
+            if (scoresAsAStringBuilder.length() >= stringLength) {
+                index = scoresAsAStringBuilder.indexOf(stringToFind);
+            }
+        }
+        return index + shift;
+    }
 
     public String calculateScore(int numberOfDigitsToSkip, int numberOfEvaluatedDigits) {
         buildScoresToTheLength(numberOfDigitsToSkip + numberOfEvaluatedDigits);
@@ -26,12 +43,12 @@ public class Chart {
 
     private void buildScoresToTheLength(int desiredLength) {
         while (scores.size() < desiredLength) {
-            step();
+            step(0);
         }
     }
 
-    private void step() {
-        extendScores();
+    private void step(int stringLength) {
+        extendScores(stringLength);
         rePositionOfIndexes();
     }
 
@@ -41,7 +58,7 @@ public class Chart {
         index2 = (index2 + 1 + scores.get(index2)) % numberOfScores;
     }
 
-    private void extendScores() {
+    private void extendScores(int stringLength) {
         int value = scores.get(index1) + scores.get(index2);
         Deque<Integer> scoresToAdd = new ArrayDeque<>();
         while (value > 9) {
@@ -51,7 +68,15 @@ public class Chart {
         }
         scoresToAdd.addFirst(value);
         while (!scoresToAdd.isEmpty()) {
-            scores.add(scoresToAdd.removeFirst());
+            int digit = scoresToAdd.removeFirst();
+            scores.add(digit);
+            scoresAsAStringBuilder.append(digit);
+            int actualLength = scoresAsAStringBuilder.length();
+            if (actualLength > stringLength) {
+                int actualShift = actualLength - stringLength;
+                shift += actualShift;
+                scoresAsAStringBuilder = new StringBuilder(scoresAsAStringBuilder.substring(actualShift));
+            }
         }
     }
 

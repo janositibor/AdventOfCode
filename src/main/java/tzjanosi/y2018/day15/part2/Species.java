@@ -1,4 +1,4 @@
-package tzjanosi.y2018.day15;
+package tzjanosi.y2018.day15.part2;
 
 public enum Species {
     ELF {

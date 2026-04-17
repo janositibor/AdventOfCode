@@ -1,4 +1,4 @@
-package tzjanosi.y2018.day15;
+package tzjanosi.y2018.day15.part2;
 
 import java.util.List;
 
@@ -15,6 +15,12 @@ public class Warrior implements Comparable<Warrior> {
         this.location = location;
         buildNeighbours();
     }
+
+    public Warrior(Species type, Coordinate location, int attackPower) {
+        this(type, location);
+        this.attackPower = attackPower;
+    }
+
 
     public Species getEnemy() {
         return type.getEnemy();

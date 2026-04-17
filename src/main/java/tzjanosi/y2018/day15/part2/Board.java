@@ -1,4 +1,4 @@
-package tzjanosi.y2018.day15;
+package tzjanosi.y2018.day15.part2;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -8,9 +8,23 @@ public class Board {
     private Queue<Warrior> warriors = new PriorityQueue<>();
     private Set<Coordinate> alreadyVisited = new HashSet<>();
     private Queue<List<Coordinate>> routesToCheck = new LinkedList<>();
+    private int elfAttackPower = 3;
+    private int originalNumberOfElves;
 
     public Board(List<String> input) {
         processInput(input);
+    }
+
+    public Board(List<String> input, int elfAttackPower) {
+        this.elfAttackPower = elfAttackPower;
+        processInput(input);
+        originalNumberOfElves = actualNumberOfElves();
+    }
+
+    private int actualNumberOfElves() {
+        return (int) warriors.stream()
+                .filter(w -> w.getType().equals(Species.ELF))
+                .count();
     }
 
     public int game() {
@@ -20,6 +34,9 @@ public class Board {
             noMoreEnemy = roundForAWarrior(warrior);
             warrior.incrementRounds();
             warriors.add(warrior);
+            if (warrior.getType().equals(Species.GOBLIN) && actualNumberOfElves() < originalNumberOfElves) {
+                return -1;
+            }
         }
         return calculateFinalScore();
     }
@@ -177,7 +194,7 @@ public class Board {
                 warriors.add(goblin);
                 break;
             case 'E':
-                Warrior elf = new Warrior(Species.ELF, coordinate);
+                Warrior elf = new Warrior(Species.ELF, coordinate, elfAttackPower);
                 warriors.add(elf);
                 break;
             default:

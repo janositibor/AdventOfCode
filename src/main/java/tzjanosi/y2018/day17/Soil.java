@@ -6,11 +6,18 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Soil {
     private Set<Coordinate> walls = new HashSet<>();
     private Set<Coordinate> wet = new HashSet<>();
+    private Set<Coordinate> inReservoirs = new HashSet<>();
+    private Set<Coordinate> alreadyFilled = new HashSet<>();
 
     private Map<String, Integer> limits = new ConcurrentHashMap<>(Map.of("min", Integer.MAX_VALUE, "max", Integer.MIN_VALUE));
 
     public Soil(List<String> input) {
         processInput(input);
+    }
+
+    public int findWaterInReservoirs() {
+        irrigate();
+        return inReservoirs.size();
     }
 
     public int irrigate() {
@@ -20,8 +27,9 @@ public class Soil {
             Coordinate entry = entryPoints.iterator().next();
             entryPoints.remove(entry);
             if (!wet.contains(entry)) {
-                Coordinate pointToFill = falling(entry);
-                if (pointToFill.getY() > 0 && !wet.contains(pointToFill)) {
+                Coordinate pointToFill = falling(entry, false);
+                if (pointToFill.getY() > 0 && !alreadyFilled.contains(pointToFill)) {
+                    alreadyFilled.add(pointToFill);
                     Set<Coordinate> newSprings = fill(pointToFill);
                     entryPoints.addAll(newSprings);
                 }
@@ -31,24 +39,33 @@ public class Soil {
     }
 
     private Set<Coordinate> fill(Coordinate pointToFill) {
+        boolean fromBottom = walls.contains(pointToFill);
         Set<Coordinate> output = new HashSet<>();
-        Set<Integer> froms = new HashSet<>();
-        Set<Integer> tos = new HashSet<>();
+
         boolean inProgress = true;
-        int wallFrom = plateauFrom(pointToFill);
-        int wallTo = plateauTo(pointToFill);
+        int wallFrom;
+        int wallTo;
+        if (fromBottom) {
+            wallFrom = plateauFrom(pointToFill);
+            wallTo = plateauTo(pointToFill);
+        } else {
+            Coordinate temp = pointToFill.shift(new Coordinate(0, -1));
+            wallFrom = findWallFrom(temp);
+            wallTo = findWallTo(temp);
+        }
         Coordinate actual = pointToFill.shift(new Coordinate(0, -1));
         while (inProgress) {
             int actualWallFrom = findWallFrom(actual);
             int actualWallTo = findWallTo(actual);
-            water(new Coordinate(Math.max(wallFrom, actualWallFrom), actual.getY()), new Coordinate(Math.min(wallTo, actualWallTo), actual.getY()));
+            boolean top = true;
+            if (regularLine(wallFrom, actualWallFrom, actualWallTo, wallTo)) {
+                top = false;
+            }
+            water(new Coordinate(Math.max(wallFrom, actualWallFrom), actual.getY()), new Coordinate(Math.min(wallTo, actualWallTo), actual.getY()), top);
             Set<Coordinate> waterfall = createWaterfall(new Coordinate(Math.max(wallFrom, actualWallFrom), actual.getY()), new Coordinate(Math.min(wallTo, actualWallTo), actual.getY()));
             output.addAll(waterfall);
-            if ((wallFrom <= actualWallFrom || froms.contains(actualWallFrom)) && (actualWallTo <= wallTo || tos.contains(actualWallTo))) {
-                wallFrom = actualWallFrom;
-                froms.add(wallFrom);
-                wallTo = actualWallTo;
-                tos.add(wallTo);
+
+            if (regularLine(wallFrom, actualWallFrom, actualWallTo, wallTo)) {
                 actual = actual.shift(new Coordinate(0, -1));
             } else {
                 inProgress = false;
@@ -63,14 +80,18 @@ public class Soil {
         return output;
     }
 
+    private boolean regularLine(int wallFrom, int actualWallFrom, int actualWallTo, int wallTo) {
+        return (wallFrom <= actualWallFrom) && (actualWallTo <= wallTo);
+    }
+
     private Set<Coordinate> createWaterfall(Coordinate from, Coordinate to) {
         Set<Coordinate> output = new HashSet<>();
         int y = from.getY();
         for (int i = from.getX(); i <= to.getX(); i++) {
-            Coordinate below = new Coordinate(i, y).shift(new Coordinate(0, 1));
+            Coordinate actual = new Coordinate(i, y);
+            Coordinate below = actual.shift(new Coordinate(0, 1));
             if (!wet.contains(below) && !walls.contains(below)) {
-                output.add(below);
-                return output;
+                falling(actual, true);
             }
         }
 
@@ -109,22 +130,25 @@ public class Soil {
         return actual.getX() + 1;
     }
 
-    private Coordinate falling(Coordinate from) {
+    private Coordinate falling(Coordinate from, boolean reservoir) {
         Coordinate to = walls.stream()
                 .filter(b -> (b.getX() == from.getX() && b.getY() > from.getY()))
                 .min(Comparator.comparingInt(Coordinate::getY))
                 .orElse(new Coordinate(from.getX(), -1));
-        water(from, (to.getY() == -1) ? new Coordinate(to.getX(), limits.get("max")) : to);
+        water(from, (to.getY() == -1) ? new Coordinate(to.getX(), limits.get("max")) : to, !reservoir);
         return to;
     }
 
-    private void water(Coordinate from, Coordinate to) {
-//        System.out.println(from+" -> "+to);
+    private void water(Coordinate from, Coordinate to, boolean top) {
+        boolean reservoir = !top;
         for (int x = from.getX(); x <= to.getX(); x++) {
             for (int y = from.getY(); y <= to.getY(); y++) {
                 Coordinate actualPosition = new Coordinate(x, y);
                 if (limits.get("min") <= actualPosition.getY() && actualPosition.getY() <= limits.get("max") && !walls.contains(actualPosition)) {
                     wet.add(actualPosition);
+                    if (reservoir) {
+                        inReservoirs.add(actualPosition);
+                    }
                 }
             }
         }
@@ -144,6 +168,8 @@ public class Soil {
                 Coordinate actual = new Coordinate(j, i);
                 if (walls.contains(actual)) {
                     line.append('#');
+                } else if (inReservoirs.contains(actual)) {
+                    line.append('+');
                 } else if (wet.contains(actual)) {
                     line.append('~');
                 } else {

@@ -21,5 +21,19 @@ class BoardTest {
 //        board.print();
     }
 
+    @Test
+    void findPeriodProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Board board = new Board(readData.getOutput());
+        assertEquals("512-28", board.findPeriod(600));
+    }
+
+    @Test
+    void longEvolveTest() {
+        ReadData readData = new ReadData("input.txt");
+        Board board = new Board(readData.getOutput());
+        assertEquals(189720, board.longEvolve(1000000000));
+    }
+
 
 }

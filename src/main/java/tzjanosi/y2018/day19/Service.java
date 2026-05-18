@@ -7,8 +7,19 @@ public class Service {
     private State state;
     private List<Command> commands = new ArrayList<>();
 
-    public Service(List<String> input) {
-        processInput(input);
+    public Service(List<String> input, int firstRegister) {
+        processInput(input, firstRegister);
+    }
+
+    public int findSumOfDividers(int input) {
+        int output = 0;
+        for (int i = 1; i <= Math.sqrt(input); i++) {
+            if (input % i == 0) {
+                output += i;
+                output += (input / i);
+            }
+        }
+        return output;
     }
 
     public int execute() {
@@ -25,9 +36,9 @@ public class Service {
         return output;
     }
 
-    private void processInput(List<String> input) {
+    private void processInput(List<String> input, int firstRegister) {
         int ipRegister = input.get(0).charAt(4) - '0';
-        state = new State(ipRegister, new ArrayList<>(List.of(0, 0, 0, 0, 0, 0)));
+        state = new State(ipRegister, new ArrayList<>(List.of(firstRegister, 0, 0, 0, 0, 0)));
         for (int i = 1; i < input.size(); i++) {
             processLine(input.get(i));
         }

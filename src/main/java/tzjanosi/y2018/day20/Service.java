@@ -8,14 +8,24 @@ public class Service {
     private int originalLength = -1;
     private Map<Coordinate, Integer> lengthMap = new ConcurrentHashMap<>();
 
-    private int check() {
-        return lengthMap.entrySet().stream().mapToInt(Map.Entry::getValue).max().getAsInt();
+    public int processPart2(String input) {
+        root = new Node();
+        buildPaths(root, input);
+        return checkRoomsAtLeastSteps(1000);
+    }
+
+    private int checkRoomsAtLeastSteps(int limit) {
+        return (int) lengthMap.entrySet().stream().filter(e -> e.getValue() >= limit).count();
     }
 
     public int process(String input) {
         root = new Node();
         buildPaths(root, input);
         return check();
+    }
+
+    private int check() {
+        return lengthMap.entrySet().stream().mapToInt(Map.Entry::getValue).max().getAsInt();
     }
 
     private void buildPaths(Node actual, String input) {

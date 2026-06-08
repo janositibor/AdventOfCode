@@ -1,34 +1,53 @@
 package tzjanosi.y2018.day21;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Service {
     private State state;
     private List<Command> commands = new ArrayList<>();
+    @SuppressWarnings("PMD.LooseCoupling")
+    private LinkedHashSet<Long> reg3Values = new LinkedHashSet<>();
 
     public Service(List<String> input, long firstRegister) {
         processInput(input, firstRegister);
     }
 
+    public long findMaxBySimplifiedExecution() {
+        long reg3 = 0;
+        int reg4;
+        while (true) {
+            reg4 = (int) (reg3 | 65536);
+            reg3 = commands.get(7).getArguments().get(0);
+            int reg5 = 0;
+            while (reg4 >= 256) {
+                reg5 = reg4 % 256;
+                reg3 = updateRegister3(reg3, reg5);
+                reg5 = reg4 / 256;
+                reg4 = reg5;
+            }
+            reg3 = updateRegister3(reg3, reg5);
+            if (reg3Values.contains(reg3)) {
+                return reg3Values.getLast();
+            } else {
+                reg3Values.add(reg3);
+            }
+        }
+    }
+
     public long simplifiedExecution() {
         long reg3 = commands.get(7).getArguments().get(0);
         int reg4 = commands.get(6).getArguments().get(1);
-//        System.out.println(reg3+" "+reg4);
         int reg5 = 0;
         while (reg4 >= 256) {
             reg5 = reg4 % 256;
-            reg3 = manipulateRegister3(reg3, reg5);
+            reg3 = updateRegister3(reg3, reg5);
             reg5 = reg4 / 256;
-            if (reg4 % 256 > 0) {
-                reg5++;
-            }
             reg4 = reg5;
         }
-        return manipulateRegister3(reg3, reg5);
+        return updateRegister3(reg3, reg5);
     }
 
-    private long manipulateRegister3(long reg3, int reg5) {
+    private long updateRegister3(long reg3, int reg5) {
         long output = reg3 + reg5;
         output = output % (256 * 256 * 256);
         output *= 65899;

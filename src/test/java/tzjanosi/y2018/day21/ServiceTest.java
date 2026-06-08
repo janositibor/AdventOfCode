@@ -12,4 +12,11 @@ class ServiceTest {
         assertEquals(16134795, service.simplifiedExecution());
     }
 
+    @Test
+    void findMaxBySimplifiedExecutionProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Service service = new Service(readData.getOutput(), 0);
+        assertEquals(14254292, service.findMaxBySimplifiedExecution());
+    }
+
 }

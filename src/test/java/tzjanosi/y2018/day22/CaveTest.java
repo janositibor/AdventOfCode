@@ -19,4 +19,25 @@ class CaveTest {
         assertEquals(9659, cave.calculateRisk());
     }
 
+    @Test
+    void findShortestWayTest() {
+        ReadData readData = new ReadData("testInput.txt");
+        Cave cave = new Cave(readData.getOutput());
+        assertEquals(45, cave.findShortestWay());
+    }
+
+    @Test
+    void findShortestWay2Test() {
+        ReadData readData = new ReadData("testInput2.txt");
+        Cave cave = new Cave(readData.getOutput());
+        assertEquals(23, cave.findShortestWay());
+
+    }
+
+    @Test
+    void findShortestWayProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Cave cave = new Cave(readData.getOutput());
+        assertEquals(1043, cave.findShortestWay());
+    }
 }

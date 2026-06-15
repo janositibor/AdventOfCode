@@ -19,4 +19,19 @@ class ServiceTest {
         assertEquals(652, service.calculateNanobotsNearByTheStrongest());
     }
 
+    @Test
+    void findManhattanDistanceToMostPopularPointTest() {
+        ReadData readData = new ReadData("testInput2.txt");
+        Service service = new Service(readData.getOutput());
+        assertEquals(36, service.findManhattanDistanceToMostPopularPoint());
+    }
+
+
+    @Test
+    void findManhattanDistanceToMostPopularPointProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Service service = new Service(readData.getOutput());
+        assertEquals(164960498, service.findManhattanDistanceToMostPopularPoint());
+    }
+
 }

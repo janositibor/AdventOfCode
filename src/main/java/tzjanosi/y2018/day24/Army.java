@@ -23,6 +23,21 @@ public class Army {
         this.initiative = initiative;
     }
 
+    public Army(Army original) {
+        this.nation = original.nation;
+        this.unitNumber = original.unitNumber;
+        this.unitsHitPoint = original.unitsHitPoint;
+        this.attackType = original.attackType;
+        this.damage = original.damage;
+        this.initiative = original.initiative;
+        this.immunities = new ArrayList<>(original.immunities);
+        this.weaknesses = new ArrayList<>(original.weaknesses);
+    }
+
+    public void boost(int value) {
+        damage += value;
+    }
+
     public int attackedBy(Army other) {
         int damage = damageBy(other);
         int lostunits = damage / unitsHitPoint;
@@ -79,30 +94,31 @@ public class Army {
         return Objects.hash(nation, unitsHitPoint, immunities, weaknesses, attackType, damage, initiative);
     }
 
-    @Override
-    public String toString() {
-        return "Army{" +
-                "nation='" + nation + '\'' +
-                ", unitNumber=" + unitNumber +
-                ", damage=" + damage +
-                ", initiative=" + initiative +
-                ", effectivePower=" + getEffectivePower() +
-                '}';
-    }
-
 //    @Override
 //    public String toString() {
 //        return "Army{" +
 //                "nation='" + nation + '\'' +
 //                ", unitNumber=" + unitNumber +
-//                ", unitsHitPoint=" + unitsHitPoint +
-//                ", immunities=" + immunities +
-//                ", weaknesses=" + weaknesses +
-//                ", attackType='" + attackType + '\'' +
 //                ", damage=" + damage +
 //                ", initiative=" + initiative +
+//                ", effectivePower=" + getEffectivePower() +
 //                '}';
 //    }
+
+    @Override
+    public String toString() {
+        return "Army{" +
+                "nation='" + nation + '\'' +
+                ", unitNumber=" + unitNumber +
+                ", unitsHitPoint=" + unitsHitPoint +
+                ", immunities=" + immunities +
+                ", weaknesses=" + weaknesses +
+                ", attackType='" + attackType + '\'' +
+                ", damage=" + damage +
+                ", initiative=" + initiative +
+                ", effectivePower=" + getEffectivePower() +
+                '}';
+    }
 }
 
 

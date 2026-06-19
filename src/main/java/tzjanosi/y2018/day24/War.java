@@ -2,18 +2,55 @@ package tzjanosi.y2018.day24;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class War {
+    private List<Army> originalArmies = new ArrayList<>();
     private List<Army> armies = new ArrayList<>();
 
     public War(List<String> input) {
         processInput(input);
+        armies = createCopyOfOriginalArmies();
+    }
+
+    public int findMinimalBoost() {
+        int boostValue = 0;
+
+        while (nationUnitsNumber("Infection") > 0) {
+            reset();
+            boost(boostValue);
+            battle();
+            boostValue++;
+        }
+        return winnerUnitsNumber();
+    }
+
+    private void boost(int value) {
+        armies.stream().filter(a -> "Immune System".equals(a.getNation())).forEach(a -> a.boost(value));
+    }
+
+    private void reset() {
+        armies = createCopyOfOriginalArmies();
+    }
+
+    private List<Army> createCopyOfOriginalArmies() {
+        return originalArmies.stream().map(a -> new Army(a)).collect(Collectors.toList());
     }
 
     public int battle() {
-        while (thereAreArmiesForBothNation()) {
+        int immuneNumbers = nationUnitsNumber("Immune System");
+        int infectionNumbers = nationUnitsNumber("Infection");
+        int actualImmuneNumbers = Integer.MAX_VALUE;
+        int actualInfectionNumbers = Integer.MAX_VALUE;
+
+        while (thereAreArmiesForBothNation() && (immuneNumbers != actualImmuneNumbers || infectionNumbers != actualInfectionNumbers)) {
+            immuneNumbers = actualImmuneNumbers;
+            infectionNumbers = actualInfectionNumbers;
+
             Map<Army, Army> opponents = createOpponents();
             fight(opponents);
+            actualImmuneNumbers = nationUnitsNumber("Immune System");
+            actualInfectionNumbers = nationUnitsNumber("Infection");
         }
         return winnerUnitsNumber();
     }
@@ -22,9 +59,11 @@ public class War {
         Queue<Army> armiesOrderedByInitiative = createArmiesOrderedByInitiative(opponents.keySet());
         while (!armiesOrderedByInitiative.isEmpty()) {
             Army attacker = armiesOrderedByInitiative.poll();
-            Army defender = opponents.get(attacker);
-            if (defender.attackedBy(attacker) <= 0) {
-                armies.remove(defender);
+            if (attacker.getEffectivePower() > 0) {
+                Army defender = opponents.get(attacker);
+                if (defender.attackedBy(attacker) <= 0) {
+                    armies.remove(defender);
+                }
             }
         }
     }
@@ -77,6 +116,10 @@ public class War {
         return armies.stream().mapToInt(Army::getUnitNumber).sum();
     }
 
+    private int nationUnitsNumber(String nation) {
+        return armies.stream().filter(a -> a.getNation().equals(nation)).mapToInt(Army::getUnitNumber).sum();
+    }
+
     private boolean thereAreArmiesForBothNation() {
         return existsArmiesByNation("Immune System") && existsArmiesByNation("Infection");
     }
@@ -116,7 +159,7 @@ public class War {
             List<String> weaknesses = collectTypes(details, "weak");
             army.setWeaknesses(weaknesses);
         }
-        armies.add(army);
+        originalArmies.add(army);
     }
 
     private List<String> collectTypes(String details, String type) {

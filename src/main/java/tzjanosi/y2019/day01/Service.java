@@ -14,6 +14,20 @@ public class Service {
         return masses.stream().mapToInt(x -> (x / 3) - 2).sum();
     }
 
+    public int calculateAdvancedFuelRequirements() {
+        return masses.stream().mapToInt(this::advancedFuel).sum();
+    }
+
+    public int advancedFuel(int input) {
+        int output = (input / 3) - 2;
+        int fuel = output;
+        while (fuel > 8) {
+            fuel = (fuel / 3) - 2;
+            output += fuel;
+        }
+        return output;
+    }
+
     private void processInput(List<String> input) {
         for (int i = 0; i < input.size(); i++) {
             processLine(input.get(i));

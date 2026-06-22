@@ -37,8 +37,16 @@ class ServiceTest {
     void runProblemDataTest() {
         ReadData readData = new ReadData("input.txt");
         Service service = new Service(readData.getOutput().get(0));
-        service.preparation();
+        service.preparation(12, 2);
         assertEquals(9581917, service.run());
+    }
+
+    @Test
+    void findNounAndVerbTest() {
+        ReadData readData = new ReadData("input.txt");
+        Service service = new Service(readData.getOutput().get(0));
+        assertEquals(2505, service.findNounAndVerb());
+
     }
 
 }

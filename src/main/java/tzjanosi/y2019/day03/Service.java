@@ -1,21 +1,31 @@
 package tzjanosi.y2019.day03;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Service {
     private List<String> instructions1 = new ArrayList<>();
     private List<String> instructions2 = new ArrayList<>();
-    private Set<Coordinate> route1 = new HashSet<>();
-    private Set<Coordinate> route2 = new HashSet<>();
+    private Map<Coordinate, Integer> route1 = new ConcurrentHashMap<>();
+    private Map<Coordinate, Integer> route2 = new ConcurrentHashMap<>();
 
     public Service(List<String> input) {
         processInput(input);
     }
 
+    public int findCombinedNearestCrossing() {
+        createPaths();
+        return route1.entrySet().stream()
+                .filter(e -> route2.keySet().contains(e.getKey()))
+                .mapToInt(e -> e.getValue() + route2.get(e.getKey()))
+                .min()
+                .orElseThrow(() -> new IllegalStateException("No crossing found"));
+    }
+
     public int findNearestCrossing() {
         createPaths();
-        return route1.stream()
-                .filter(route2::contains)
+        return route1.keySet().stream()
+                .filter(route2.keySet()::contains)
                 .mapToInt(Coordinate::manhattanDistance)
                 .min()
                 .orElseThrow(() -> new IllegalStateException("No crossing found"));
@@ -26,15 +36,19 @@ public class Service {
         createPath(route2, instructions2);
     }
 
-    private void createPath(Set<Coordinate> path, List<String> instructions) {
+    private void createPath(Map<Coordinate, Integer> path, List<String> instructions) {
         Coordinate actual = new Coordinate(0, 0);
+        int totalLength = 0;
         for (int i = 0; i < instructions.size(); i++) {
             String instruction = instructions.get(i);
             Coordinate direction = findDirection(instruction.charAt(0));
             int length = Integer.parseInt(instruction.substring(1));
             for (int j = 1; j <= length; j++) {
                 actual = actual.shift(direction);
-                path.add(actual);
+                totalLength++;
+                if (!path.keySet().contains(actual)) {
+                    path.put(actual, totalLength);
+                }
             }
         }
     }

@@ -18,6 +18,14 @@ class ServiceTest {
         );
     }
 
+    public static Stream<Arguments> findCombinedNearestCrossingTest() {
+        return Stream.of(
+                Arguments.of("testInput.txt", 30),
+                Arguments.of("testInput2.txt", 610),
+                Arguments.of("testInput3.txt", 410)
+        );
+    }
+
     @ParameterizedTest
     @MethodSource
     void findNearestCrossingTest(String input, int expected) {
@@ -26,11 +34,26 @@ class ServiceTest {
         assertEquals(expected, service.findNearestCrossing());
     }
 
+    @ParameterizedTest
+    @MethodSource
+    void findCombinedNearestCrossingTest(String input, int expected) {
+        ReadData readData = new ReadData(input);
+        Service service = new Service(readData.getOutput());
+        assertEquals(expected, service.findCombinedNearestCrossing());
+    }
+
     @Test
     void findNearestCrossingProblemDataTest() {
         ReadData readData = new ReadData("input.txt");
         Service service = new Service(readData.getOutput());
         assertEquals(446, service.findNearestCrossing());
+    }
+
+    @Test
+    void findCombinedNearestCrossingProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Service service = new Service(readData.getOutput());
+        assertEquals(9006, service.findCombinedNearestCrossing());
     }
 
 }

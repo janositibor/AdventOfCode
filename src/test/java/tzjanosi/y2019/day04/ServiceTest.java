@@ -6,9 +6,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ServiceTest {
     @Test
-    void counterTest() {
+    void counterPart1Test() {
         Service service = new Service();
-        assertEquals(460, service.counter());
+        assertEquals(460, service.counterPart1());
+    }
+
+    @Test
+    void counterPart2Test() {
+        Service service = new Service();
+        assertEquals(290, service.counterPart2());
     }
 
 }

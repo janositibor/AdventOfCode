@@ -59,6 +59,7 @@ public class Service {
         throw new IllegalStateException("No halt order found!");
     }
 
+    @SuppressWarnings({"PMD.NcssCount", "PMD.CyclomaticComplexity"})
     private Result execute(int index) {
         boolean stop = false;
         Optional<Integer> output = Optional.empty();
@@ -91,9 +92,30 @@ public class Service {
                 shift = 2;
                 break;
             case 4:
-                target = program[index + 1];
-                output = Optional.of(program[target]);
+                output = Optional.of(findParameter(firstParameterImmediate, index + 1));
                 shift = 2;
+                break;
+            case 5:
+                firstParameter = findParameter(firstParameterImmediate, index + 1);
+                secondParameter = findParameter(secondParameterImmediate, index + 2);
+                shift = (firstParameter == 0 ? 3 : secondParameter - index);
+                break;
+            case 6:
+                firstParameter = findParameter(firstParameterImmediate, index + 1);
+                secondParameter = findParameter(secondParameterImmediate, index + 2);
+                shift = (firstParameter == 0 ? secondParameter - index : 3);
+                break;
+            case 7:
+                firstParameter = findParameter(firstParameterImmediate, index + 1);
+                secondParameter = findParameter(secondParameterImmediate, index + 2);
+                target = program[index + 3];
+                program[target] = (firstParameter < secondParameter ? 1 : 0);
+                break;
+            case 8:
+                firstParameter = findParameter(firstParameterImmediate, index + 1);
+                secondParameter = findParameter(secondParameterImmediate, index + 2);
+                target = program[index + 3];
+                program[target] = (firstParameter == secondParameter ? 1 : 0);
                 break;
             case 99:
                 stop = true;

@@ -19,5 +19,19 @@ class ServiceTest {
         assertEquals(249308, service.findTotalNumberOfOrbits());
     }
 
+    @Test
+    void findNumberOfJumpsToSantaTest() {
+        ReadData readData = new ReadData("testInput2.txt");
+        Service service = new Service(readData.getOutput());
+        assertEquals(4, service.findNumberOfJumpsToSanta());
+    }
+
+    @Test
+    void findNumberOfJumpsToSantaProblemDataTest() {
+        ReadData readData = new ReadData("input.txt");
+        Service service = new Service(readData.getOutput());
+        assertEquals(349, service.findNumberOfJumpsToSanta());
+    }
+
 
 }

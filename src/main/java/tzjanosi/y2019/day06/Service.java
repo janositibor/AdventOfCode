@@ -9,6 +9,37 @@ public class Service {
         processInput(input);
     }
 
+    public int findNumberOfJumpsToSanta() {
+        return findNumberOfJumpsFromTo("YOU", "SAN");
+    }
+
+    private int findNumberOfJumpsFromTo(String from, String to) {
+        Node jointAncestor = findJointAncestor(from, to);
+        Node fromNode = findOrCreateNode(from);
+        Node toNode = findOrCreateNode(to);
+        return distanceFromAncestor(fromNode, jointAncestor) + distanceFromAncestor(toNode, jointAncestor);
+
+    }
+
+    private int distanceFromAncestor(Node descendant, Node ancestor) {
+        int output = 0;
+        Node actual = descendant.getParent();
+        while (!actual.equals(ancestor)) {
+            actual = actual.getParent();
+            output++;
+        }
+        return output;
+    }
+
+    private Node findJointAncestor(String from, String to) {
+        Node youNode = findOrCreateNode(from);
+        Node actual = youNode.getParent();
+        while (actual.findNodeById(to).isEmpty()) {
+            actual = actual.getParent();
+        }
+        return actual;
+    }
+
     public int findTotalNumberOfOrbits() {
         return treesToBuild.stream().filter(n -> "COM".equals(n.getId())).mapToInt(Node::getNumberOfOrbits).findFirst().getAsInt();
     }

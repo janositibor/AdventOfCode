@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import tzjanosi.y2019.day07.part2.ReadData;
+import tzjanosi.y2019.day07.part2.Service;
 
 import java.util.List;
 

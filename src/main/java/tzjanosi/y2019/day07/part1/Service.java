@@ -1,4 +1,4 @@
-package tzjanosi.y2019.day07.day01;
+package tzjanosi.y2019.day07.part1;
 
 import java.util.ArrayList;
 import java.util.Iterator;

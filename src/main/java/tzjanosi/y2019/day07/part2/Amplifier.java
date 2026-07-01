@@ -1,15 +1,16 @@
-package tzjanosi.y2019.day07.day01;
+package tzjanosi.y2019.day07.part2;
 
 import java.util.Optional;
 
 public class Amplifier {
-    private long[] inputNumber;
+    private long phase;
+    private long inputNumber;
     private long[] program;
-    private int whichInput;
+    private boolean usePhase = true;
+    private int index;
 
-
-    public Amplifier(long inputNumber[], String input) {
-        this.inputNumber = inputNumber;
+    public Amplifier(long phase, String input) {
+        this.phase = phase;
         processInput(input);
     }
 
@@ -21,18 +22,18 @@ public class Amplifier {
         }
     }
 
-    public long run() {
-        int index = 0;
-        long value = 0;
+    public Optional<Long> run(long inputValue) {
+        inputNumber = inputValue;
         while (index < program.length) {
             Result result = execute(index);
+            index += result.getShift();
             if (result.isStop()) {
-                return value;
+                return Optional.empty();
             }
             if (result.getOutput().isPresent()) {
-                value = result.getOutput().get();
+                return Optional.of(result.getOutput().get());
             }
-            index += result.getShift();
+
         }
         throw new IllegalStateException("No halt order found!");
     }
@@ -66,8 +67,14 @@ public class Amplifier {
                 break;
             case 3:
                 target = (int) program[index + 1];
-                program[target] = inputNumber[whichInput];
-                whichInput++;
+                long value;
+                if (usePhase) {
+                    value = phase;
+                    usePhase = false;
+                } else {
+                    value = inputNumber;
+                }
+                program[target] = value;
                 shift = 2;
                 break;
             case 4:

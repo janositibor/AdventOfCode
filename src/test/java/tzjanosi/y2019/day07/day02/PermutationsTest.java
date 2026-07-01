@@ -1,12 +1,12 @@
 package tzjanosi.y2019.day07.day02;
 
 import org.junit.jupiter.api.Test;
+import tzjanosi.y2019.day07.part2.Permutations;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PermutationsTest {
     @Test

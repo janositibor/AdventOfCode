@@ -1,4 +1,4 @@
-package tzjanosi.y2019.day07;
+package tzjanosi.y2019.day07.day01;
 
 import java.util.Optional;
 

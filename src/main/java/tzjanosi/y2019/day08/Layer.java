@@ -14,6 +14,13 @@ public class Layer {
         this.yLimit = yLimit;
     }
 
+    public void show() {
+        for (int i = 0; i < rows.size(); i++) {
+            String converted = rows.get(i).replaceAll("0", " ").replaceAll("1", "#");
+            System.out.println(converted);
+        }
+    }
+
     public int numberOfZeros() {
         return countOfChar('0');
     }
@@ -51,5 +58,17 @@ public class Layer {
             String row = input.substring(from, to);
             rows.add(row);
         }
+    }
+
+    public int getxLimit() {
+        return xLimit;
+    }
+
+    public int getyLimit() {
+        return yLimit;
+    }
+
+    public List<String> getRows() {
+        return rows;
     }
 }

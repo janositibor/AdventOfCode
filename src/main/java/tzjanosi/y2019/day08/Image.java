@@ -5,10 +5,37 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Image {
+    private String data;
     private List<Layer> layers = new ArrayList<>();
+    private Layer merged;
 
     public Image(int x, int y, String input) {
+        data = input;
         processInput(x, y, input);
+    }
+
+    public void merge() {
+        int size = layers.get(0).getSize();
+        StringBuilder sb = new StringBuilder(size);
+        for (int i = 0; i < size; i++) {
+            sb.append(findColor(i));
+        }
+        int x = layers.get(0).getxLimit();
+        int y = layers.get(0).getyLimit();
+        merged = new Layer(x, y);
+        merged.fillData(sb.toString());
+        merged.show();
+    }
+
+    private char findColor(int startingIndex) {
+        int index = startingIndex;
+        int step = layers.get(0).getSize();
+        char output = data.charAt(index);
+        while (output == '2') {
+            index += step;
+            output = data.charAt(index);
+        }
+        return output;
     }
 
     public int checkSum() {
@@ -30,5 +57,9 @@ public class Image {
             layer.fillData(layerData);
             layers.add(layer);
         }
+    }
+
+    public Layer getMerged() {
+        return merged;
     }
 }

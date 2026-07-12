@@ -77,5 +77,12 @@ class ServiceTest {
         assertEquals(2932210790L, service.runConveyorBelt().get(0));
     }
 
+    @Test
+    void runProblemDataPart2Test() {
+        ReadData readData = new ReadData("input.txt");
+        Service service = new Service(2, readData.getOutput().get(0));
+        assertEquals(73144L, service.runConveyorBelt().get(0));
+    }
+
 
 }

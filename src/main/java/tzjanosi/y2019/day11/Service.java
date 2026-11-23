@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Service {
-    private long inputNumber = 0;
+    private long inputNumber;
     private List<Long> program = new ArrayList<>();
     private int relativeBase;
     private List<Long> outputNumbers = new ArrayList<>();

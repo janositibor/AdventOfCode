@@ -1,7 +1,5 @@
 package tzjanosi.y2019.day10;
 
-import tzjanosi.y2018.day07.Tree;
-
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -16,30 +14,25 @@ public class Service {
 
     public int findTheAsteroidInSequence(int order) {
         findWatchTower();
-        Map<ViewDirection, TreeSet<ViewDirection>> map = orderAsteroidsFromWatchtower();
-//        System.out.println(map);
+        Map<ViewDirection, NavigableSet<ViewDirection>> map = orderAsteroidsFromWatchtower();
         List<ViewDirection> orderAsteroids = orderAsteroidList(map);
-        System.out.println(orderAsteroids);
         ViewDirection actualView = orderAsteroids.get(order - 1);
-        System.out.println(actualView);
         Coordinate asteroid = new Coordinate(watchTower);
-        System.out.println(asteroid);
         asteroid.shift(actualView.getOriginal());
         return asteroid.getCoordinateID();
-
-
     }
 
-    private List<ViewDirection> orderAsteroidList(Map<ViewDirection, TreeSet<ViewDirection>> map) {
-        return map.values().stream().map(TreeSet::first).sorted(Comparator.comparing(ViewDirection::getAngle)).toList();
+    private List<ViewDirection> orderAsteroidList(Map<ViewDirection, NavigableSet<ViewDirection>> map) {
+        return map.values().stream().map(NavigableSet::first).sorted(Comparator.comparing(ViewDirection::getAngle)).toList();
     }
 
-    private Map<ViewDirection, TreeSet<ViewDirection>> orderAsteroidsFromWatchtower() {
+    @SuppressWarnings({"PMD.UnnecessaryLocalBeforeReturn"})
+    private Map<ViewDirection, NavigableSet<ViewDirection>> orderAsteroidsFromWatchtower() {
         List<ViewDirection> others = asteroids.stream()
                 .filter(c -> !c.equals(watchTower))
                 .map(c -> new ViewDirection(watchTower.difference(c)))
                 .toList();
-        Map<ViewDirection, TreeSet<ViewDirection>> map = others.stream()
+        Map<ViewDirection, NavigableSet<ViewDirection>> map = others.stream()
                 .collect(Collectors.groupingBy(
                         Function.identity(),
                         Collectors.toCollection(TreeSet::new)
@@ -57,7 +50,7 @@ public class Service {
         watchTower = mapAsteroidsAnVisibility.entrySet().stream()
                 .sorted(Comparator.comparingInt(Map.Entry<Coordinate, Integer>::getValue).reversed())
                 .findFirst()
-                .map(e -> e.getKey())
+                .map(Map.Entry::getKey)
                 .get();
     }
 

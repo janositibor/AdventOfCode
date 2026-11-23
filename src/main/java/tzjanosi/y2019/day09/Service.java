@@ -42,9 +42,7 @@ public class Service {
 
     private void processInput(String input) {
         String[] numbers = input.split(",");
-//        program = new int[numbers.length];
         for (int i = 0; i < numbers.length; i++) {
-//            program[i] = Integer.parseInt(numbers[i]);
             program.add(Long.parseLong(numbers[i]));
         }
     }
@@ -191,13 +189,13 @@ public class Service {
         int position;
         switch (parameterType) {
             case 0:
-                position = (int) (long) program.get(index);
+                position = program.get(index).intValue();
                 return (position < program.size()) ? program.get(position) : 0;
             case 1:
                 return program.get(index);
             case 2:
 //                System.out.println("relativeBase: "+relativeBase);
-                position = relativeBase + (int) (long) program.get(index);
+                position = relativeBase + program.get(index).intValue();
                 return position < program.size() ? program.get(position) : 0;
             default:
                 throw new IllegalArgumentException("Unexpected parameter type: " + parameterType);
@@ -208,10 +206,10 @@ public class Service {
         int position;
         switch (parameterType) {
             case 0:
-                position = (int) (long) program.get(index);
+                position = program.get(index).intValue();
                 return position;
             case 2:
-                position = relativeBase + (int) (long) program.get(index);
+                position = relativeBase + program.get(index).intValue();
                 return position;
             default:
                 throw new IllegalArgumentException("Unexpected parameter type: " + parameterType);

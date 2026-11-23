@@ -2,13 +2,28 @@ package tzjanosi.y2019.day10;
 
 import java.util.Objects;
 
-public class ViewDirection {
+public class ViewDirection implements Comparable<ViewDirection> {
     private Coordinate original;
     private Coordinate simplified;
+    private double angle;
 
     public ViewDirection(Coordinate original) {
         this.original = original;
+        angle = calculateAngle();
         simplified = simplification();
+    }
+
+    private double calculateAngle() {
+        int x = original.getX();
+        int y = original.getY();
+        double output;
+        if (x == 0) {
+            output = (1 + (y / Math.abs(y))) * (Math.PI / 2);
+        } else {
+            int sign = x / Math.abs(x);
+            output = Math.PI - sign * ((Math.PI / 2)) - Math.atan((-1.0 * y) / x);
+        }
+        return output;
     }
 
     private Coordinate simplification() {
@@ -50,6 +65,24 @@ public class ViewDirection {
         return "ViewDirection{" +
                 "original=" + original +
                 ", simplified=" + simplified +
+                ", angle=" + angle +
                 '}';
+    }
+
+    public double getAngle() {
+        return angle;
+    }
+
+    @Override
+    public int compareTo(ViewDirection other) {
+        if (Math.abs(original.getX()) != Math.abs(other.original.getX())) {
+            return Math.abs(original.getX()) - Math.abs(other.original.getX());
+        }
+        return Math.abs(original.getY()) - Math.abs(other.original.getY());
+
+    }
+
+    public Coordinate getOriginal() {
+        return original;
     }
 }

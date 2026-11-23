@@ -21,12 +21,9 @@ public class Coordinate {
         y = y / divider;
     }
 
-    public int minValue() {
-        return Math.min(Math.abs(x), Math.abs(y));
-    }
-
-    public boolean isPositiveX() {
-        return x > 0 || (x == 0 && y > 0);
+    public void shift(Coordinate shift) {
+        x += shift.x;
+        y += shift.y;
     }
 
     public Coordinate difference(Coordinate other) {
@@ -71,4 +68,7 @@ public class Coordinate {
                 '}';
     }
 
+    public int getCoordinateID() {
+        return 100 * x + y;
+    }
 }

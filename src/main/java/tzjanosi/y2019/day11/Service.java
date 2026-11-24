@@ -43,6 +43,45 @@ public class Service {
         processInput(input);
     }
 
+    public void displayHull() {
+        List<String> hullAsList = displayHullAsList();
+        for (int i = 0; i < hullAsList.size(); i++) {
+            System.out.println(hullAsList.get(i));
+        }
+    }
+
+    public List<String> displayHullAsList() {
+        int minX = hull.entrySet().stream().filter(e -> e.getValue().equals(1)).mapToInt(e -> e.getKey().getX()).min().orElseThrow(() -> new IllegalStateException("Empty map!"));
+        int maxX = hull.entrySet().stream().filter(e -> e.getValue().equals(1)).mapToInt(e -> e.getKey().getX()).max().orElseThrow(() -> new IllegalStateException("Empty map!"));
+        int minY = hull.entrySet().stream().filter(e -> e.getValue().equals(1)).mapToInt(e -> e.getKey().getY()).min().orElseThrow(() -> new IllegalStateException("Empty map!"));
+        int maxY = hull.entrySet().stream().filter(e -> e.getValue().equals(1)).mapToInt(e -> e.getKey().getY()).max().orElseThrow(() -> new IllegalStateException("Empty map!"));
+
+        int stringLength = maxX - minX + 1;
+        int numberOfStrings = maxY - minY + 1;
+
+        List<String> output = new ArrayList<>();
+        String line;
+        for (int i = 0; i < numberOfStrings; i++) {
+            line = " ".repeat(stringLength);
+            output.add(paintALine(i + minY, minX, line));
+        }
+        return output;
+    }
+
+    private String paintALine(int row, int minX, String line) {
+        List<Integer> whiteDots = hull.entrySet().stream()
+                .filter(e -> e.getKey().getY() == row)
+                .filter(e -> e.getValue().equals(1))
+                .map(e -> e.getKey().getX() - minX)
+                .toList();
+        StringBuilder sb = new StringBuilder(line);
+        for (Integer i : whiteDots) {
+            sb.setCharAt(i, '#');
+        }
+        return sb.toString();
+    }
+
+
     private void move(int turn) {
         direction = direction.rotate(turn == 1);
         position = position.shift(direction.getTo());
@@ -75,9 +114,10 @@ public class Service {
         return hull.size();
     }
 
-    public void run() {
+    public void run(long startingInput) {
         int index = 0;
         long value;
+        setInputNumber(startingInput);
         while (index < program.size()) {
             Result result = execute(index);
             if (result.isStop()) {

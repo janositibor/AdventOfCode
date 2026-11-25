@@ -33,6 +33,14 @@ public class Moon {
         position = position.add(velocity);
     }
 
+    public Vector getPosition() {
+        return position;
+    }
+
+    public Vector getVelocity() {
+        return velocity;
+    }
+
     public int getX() {
         return position.getX();
     }
